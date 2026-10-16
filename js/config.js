@@ -67,8 +67,8 @@ window.CONFIG = {
       photos: [
         { src: "assets/photos/2018/watch.png", cutout: true },
         { src: "assets/photos/2018/3.jpg", cap: "Madam ka pout 😗 vs Golu ka swag 😎" },
-        { src: "assets/photos/2018/4.jpg" },
-        { src: "assets/photos/2018/5.jpg", fit: "contain" },
+        { src: "assets/photos/2018/4.jpg", cap: "Khir ki photo nahi hai 😜" },
+        { src: "assets/photos/2018/5.jpg", cap: "Papa ka meme of the year 😂", fit: "contain" },
       ],
     },
     { year: 2019, title: "Dosti se kuch zyada",          caption: "Baatein lambi hone lagi, aur raatein chhoti.",                 photos: ["assets/photos/2019/1.jpg", "assets/photos/2019/2.jpg", "assets/photos/2019/3.jpg"] },
