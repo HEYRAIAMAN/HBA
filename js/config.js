@@ -26,6 +26,7 @@ window.CONFIG = {
     timeline: { file: "assets/music/chalte-chalte.m4a",           title: "Chalte Chalte Yun Hi Koi Mil Gaya Tha" },
     seene:    { file: "assets/music/seene-se-lag-jao.m4a",        title: "Chal Wahan Jaate Hain 💞 (Seene se tum aake lag jao na) — Arijit Singh" },
     college:  { file: "assets/music/milne-lage-dil.m4a",          title: "Milne Lage Dil 💞" },
+    covid:    { file: "assets/music/tu-chahiye.m4a",              title: "Tu Chahiye 💞 — Atif Aslam" },
     bholi:    { file: "assets/music/voh-dekhne-mein.m4a",         title: "Voh Dekhne Mein — Ali Zafar" },
     videos:   { file: "assets/music/offcampus-reconnect.m4a",     title: "When you both reconnect again 💛" },
     thennow:  { file: "assets/music/kal-chaudhvin.m4a",           title: "Kal Chaudhvin Ki Raat — Jagjit Singh" },
@@ -56,6 +57,7 @@ window.CONFIG = {
        journey: true  → 🏍️ "safar shuru" wali road
        meme:    { no: "...", yes: "..." } → 🙅 / 😍 wala meme
        firstPhoto: { src: "...jpg", say: "...", label: "..." } → side mein poori photo (polaroid) + bolne wala bubble
+       grow:    { src, say, btn, meters, steps, hint } → tap karne pe badi hone wala interactive cutout (2021 mein dekho)
        cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
        photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke), wide: true (landscape photo, poori chaudai mein), span: true / stick: "🎓" (collage mein poori chaudai / emoji sticker), pos: "50% 15%" (lambi photo ka kaunsa hissa dikhe — chehra kat raha ho to isse upar/neeche khiskao) } */
   timeline: [
@@ -110,6 +112,7 @@ window.CONFIG = {
     {
       year: 2020, title: "Door reh ke bhi paas",
       caption: "Covid ka time… ghar pe game khelna, aur milna mask ke saath 😷🎮",
+      song: "covid",
       photos: [
         { src: "assets/photos/2020/1.jpg", pos: "50% 30%" },
         { src: "assets/photos/2020/2.jpg", fit: "contain" },
@@ -119,7 +122,28 @@ window.CONFIG = {
         { src: "assets/photos/2020/6.jpg", pos: "50% 20%" },
       ],
     },
-    { year: 2021, title: "Saath mein badhte hue",        caption: "Tum badi hoti gayi, aur pyaar bhi.",                           photos: ["assets/photos/2021/1.jpg", "assets/photos/2021/2.jpg", "assets/photos/2021/3.jpg"] },
+    {
+      year: 2021, title: "Saath mein badhte hue",
+      caption: "Tum badi hoti gayi, moti bhi… aur pyaar bhi. Kitni pyaari ho, bata pana mushkil hai 😍",
+      meme: { no: "Dubli Nishu", yes: "Moti Nishu ❤️" },
+      grow: {
+        src: "assets/photos/2021/grow.png",
+        say: "Main to badi ho gayi 😎 (tap karo!)",
+        btn: "🍔 Khana khilao",
+        meters: ["Badi hui 📏", "Moti bhi 🍩", "Pyaar ❤️"],
+        steps: ["Ek samosa aur… 🥟", "Aaj to pizza hi pizza 🍕", "Waffle bhi chalega 🧇", "Thodi si badi ho gayi 😋", "Ab to kapde tight 😅", "Aur bhi pyaari lag rahi ho 🥰", "Bas bas! Par pyaar ka kya? 💞", "Pyaar to infinity ♾️ hi rahega ❤️"],
+        hint: "pyaar-meter ko ∞ tak le jao 👇",
+      },
+      photos: [
+        { src: "assets/photos/2021/hug.png", cutout: true },
+        "assets/photos/2021/1.jpg",
+        "assets/photos/2021/2.jpg",
+        "assets/photos/2021/3.jpg",
+        "assets/photos/2021/4.jpg",
+        "assets/photos/2021/5.jpg",
+        "assets/photos/2021/6.jpg",
+      ],
+    },
     { year: 2022, title: "Hasi, jhagde aur pyaar",       caption: "Roothna-manana bhi humara favourite game ban gaya.",          photos: ["assets/photos/2022/1.jpg", "assets/photos/2022/2.jpg", "assets/photos/2022/3.jpg"] },
     { year: 2023, title: "Har din tumhare naam",         caption: "Tumhari smile mera sabse bada sukoon.",                       photos: ["assets/photos/2023/1.jpg", "assets/photos/2023/2.jpg", "assets/photos/2023/3.jpg"] },
     { year: 2024, title: "Aur bhi khoobsurat",           caption: "Har saal tum aur pyaari ho jaati ho, ye kaise karti ho?",     photos: ["assets/photos/2024/1.jpg", "assets/photos/2024/2.jpg", "assets/photos/2024/3.jpg"] },

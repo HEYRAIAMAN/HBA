@@ -376,6 +376,8 @@
         if (p.cap) f.appendChild(el('figcaption', 'pol-cap', esc(p.cap)));
         grid.appendChild(f);
       });
+      // 🍔 interactive: tap karo to cutout badi hoti jati hai, meters bharte hain
+      if (t.grow?.src) grid.prepend(growCard(t.grow));
       inner.appendChild(grid);
       // 🧷 collage ke tukde scroll karke jab dikhein tab gir ke aate hain (bars bhi tab bharte hain)
       if (t.collage) {
@@ -444,6 +446,45 @@
       burst(x, y, 14, 6);
     });
   });
+
+  // 🍔 "Badi hoti gayi" wala interactive card (config: timeline[].grow)
+  function growCard(g) {
+    const steps = g.steps?.length ? g.steps : ['Aur khilao! 🍔'];
+    const max = steps.length;
+    const card = el('div', 'grow-card anim', `
+      <div class="grow-left">
+        <div class="bubble"></div>
+        <div class="grow-stage"><img src="${esc(g.src)}" alt="" draggable="false"></div>
+      </div>
+      <div class="grow-right">
+        ${(g.meters || []).map(m => `<div class="meter"><span>${esc(m)}</span><i><b></b></i></div>`).join('')}
+        <button class="btn grow-btn">${esc(g.btn || 'Aur khilao 🍔')}</button>
+        <p class="tiny muted grow-hint">${esc(g.hint || 'tap karke dekho 👇')}</p>
+      </div>`);
+    const img = $('img', card), bubble = $('.bubble', card), btn = $('.grow-btn', card);
+    const bars = $$('.meter b', card), tags = $$('.meter span', card);
+    let k = 0;
+    img.addEventListener('error', () => card.remove());
+    const render = () => {
+      const f = k / max;
+      img.style.transform = `scale(${(1 + f * 0.55).toFixed(3)}, ${(1 + f * 0.3).toFixed(3)})`;
+      bars.forEach((b, i) => { b.style.width = (i === bars.length - 1 ? Math.min(100, f * 160) : f * (i ? 75 : 100)) + '%'; });
+      if (bars.length) tags[tags.length - 1].textContent = (g.meters[g.meters.length - 1] || '') + (f > 0.45 ? '  ∞' : '');
+      bubble.textContent = k ? steps[Math.min(k, max) - 1] : (g.say || '');
+      bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop');
+      btn.textContent = k >= max ? 'Phir se chhoti karo 🔄' : (g.btn || 'Aur khilao 🍔');
+    };
+    btn.addEventListener('click', () => {
+      k = k >= max ? 0 : k + 1;
+      render();
+      const [x, y] = center(img);
+      sparkle(x, y - 30, 8, 80, 120, ['🍔', '🍩', '🍕', '❤️', '✨']);
+      burst(x, y, k >= max ? 70 : 12, k >= max ? 10 : 5);
+    });
+    img.addEventListener('click', () => btn.click());
+    render();
+    return card;
+  }
 
   // 🌟 Spotlights
   [['#spot-bholi', 'bholi'], ['#spot-tuhotoh', 'tuhotoh']].forEach(([sel, key]) => {

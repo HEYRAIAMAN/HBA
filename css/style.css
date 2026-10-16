@@ -851,3 +851,30 @@ body.locked .stage { visibility: hidden; }
 .bunk .bar i { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, #ff7aa8, #e8c27a); transition: width 1.6s cubic-bezier(.2, .8, .2, 1) .6s; }
 .bunk-row.low .bar i { background: linear-gradient(90deg, #ef5350, #ff8a65); }
 .bunk.in .bar i { width: var(--pct); }
+
+/* 🍔 "badi hoti gayi" interactive card (2021) */
+.grow-card {
+  grid-column: 1 / -1; display: grid; grid-template-columns: minmax(120px, 42%) 1fr; gap: 14px; align-items: end;
+  padding: 14px 12px 14px; border-radius: 18px; text-align: left;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02)); border: 1px solid var(--line);
+}
+.grow-left { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.grow-left .bubble { min-height: 3.4em; max-width: 100%; font-size: 1.05rem; margin-bottom: 12px; }
+.grow-stage { height: min(26vh, 230px); width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+.grow-stage img {
+  height: 76%; width: auto; max-width: 100%; cursor: pointer; transform-origin: 50% 100%;   /* 76% = badi hone ki jagah chhodi hai, bubble par na chadhe */
+  transition: transform .6s cubic-bezier(.3, 1.6, .5, 1); -webkit-user-drag: none;
+  filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 8px 12px rgba(0, 0, 0, .5));
+}
+.grow-right { display: flex; flex-direction: column; gap: 10px; justify-content: flex-end; min-width: 0; }
+.meter span { display: block; font-size: .8rem; color: var(--gold2); margin-bottom: 3px; }
+.meter i { display: block; height: 10px; border-radius: 10px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+.meter b { display: block; height: 100%; width: 0; border-radius: 10px; background: linear-gradient(90deg, var(--gold), var(--rose)); transition: width .6s cubic-bezier(.3, 1.2, .4, 1); }
+.grow-btn { padding: 11px 16px; font-size: .95rem; white-space: normal; }
+.grow-hint { margin-top: -2px; }
+@media (max-width: 420px) {
+  .grow-card { grid-template-columns: 38% 1fr; gap: 10px; padding: 12px 10px; }
+  .grow-left .bubble { font-size: .95rem; padding: 7px 10px; }
+  .grow-stage { height: min(27vh, 230px); }
+  .grow-btn { padding: 10px 10px; font-size: .88rem; }
+}
