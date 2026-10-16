@@ -27,6 +27,7 @@ window.CONFIG = {
     seene:    { file: "assets/music/seene-se-lag-jao.m4a",        title: "Chal Wahan Jaate Hain 💞 (Seene se tum aake lag jao na) — Arijit Singh" },
     roothna:  { file: "assets/music/pal.m4a",                     title: "Pal 💞 — Arijit Singh, Shreya Ghoshal" },
     college:  { file: "assets/music/milne-lage-dil.m4a",          title: "Milne Lage Dil 💞" },
+    y2024:    { file: "assets/music/saath-2024.m4a",             title: "Romance is ok… but this feeling 💓" },
     y2023:    { file: "assets/music/saath-2023.m4a",             title: "Varoon Forvere 💘" },
     y2021:    { file: "assets/music/saath-2021.m4a",             title: "Charley Charley Baal 💗" },
     covid:    { file: "assets/music/tu-chahiye.m4a",              title: "Tu Chahiye 💞 — Atif Aslam" },
@@ -237,6 +238,7 @@ window.CONFIG = {
     },
     {
       year: 2024, title: "Aur bhi khoobsurat",
+      song: "y2024",
       caption: "Is saal tum ek level aur upar chali gayi… Har saal tum aur pyaari ho jaati ho, ye kaise kar leti ho? 💖",
       love: {
         title: "Love Level Up ❤️",
