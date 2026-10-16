@@ -30,7 +30,7 @@ window.CONFIG = {
     y2025:    { file: "assets/music/saath-2025.m4a",             title: "Dil Kya Kare ❤️ — Kishore Kumar" },
     y2024:    { file: "assets/music/saath-2024.m4a",             title: "Romance is ok… but this feeling 💓" },
     y2023:    { file: "assets/music/saath-2023.m4a",             title: "Varoon Forvere 💘" },
-    y2021:    { file: "assets/music/saath-2021.m4a",             title: "Charley Charley Baal 💗" },
+    y2021:    { file: "assets/music/saath-2021-b.m4a",           title: "Chalrey Chalrey Waal 💘" },
     covid:    { file: "assets/music/tu-chahiye.m4a",              title: "Tu Chahiye 💞 — Atif Aslam" },
     bholi:    { file: "assets/music/voh-dekhne-mein.m4a",         title: "Voh Dekhne Mein — Ali Zafar" },
     videos:   { file: "assets/music/offcampus-reconnect.m4a",     title: "When you both reconnect again 💛" },
