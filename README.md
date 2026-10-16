@@ -65,6 +65,7 @@ assets/photos/
 | `tu-chahiye.m4a` | Tu Chahiye (Atif Aslam) | 2020 wali slide (covid) | [link](https://youtube.com/shorts/iuT7uymjWHw) |
 | `pal.m4a` | Pal (Arijit Singh, Shreya Ghoshal) | 2022 wali slide | [link](https://youtube.com/shorts/4w18rVG2Zso) |
 | `saath-2021.m4a` | Charley Charley Baal | 2021 wali slide | [link](https://youtube.com/shorts/YoyoBsQX3jA) |
+| `saath-2023.m4a` | Varoon Forvere | 2023 wali slide | [link](https://youtube.com/shorts/U1uWFyDKcq4) |
 | `kal-chaudhvin.m4a` | Kal Chaudhvin Ki Raat (Jagjit Singh) | Tab vs Ab | [link](https://youtube.com/shorts/wU1YwyH4DIs) |
 | `pal-pal-dil-ke-paas.m4a` | Pal Pal Dil Ke Paas | Swipe photos | [link](https://youtube.com/shorts/vGj0UiBlAyM) |
 | `tu-ho-toh.m4a` | Tu Ho Toh | "Tu ho toh" photo | [link](https://youtube.com/shorts/iw4A57Asp-4) |
