@@ -390,6 +390,9 @@ body.locked .stage { visibility: hidden; }
 .polaroid .ph-wrap { aspect-ratio: 1; }
 .polaroid:first-child:nth-last-child(odd) { grid-column: span 2; }
 .polaroid:first-child:nth-last-child(odd) .ph-wrap { aspect-ratio: 16 / 10; }
+/* landscape photo poori chaudai mein (4:3 taaki sar/chehra na kate) */
+.polaroid.wide { grid-column: span 2; }
+.polaroid.wide .ph-wrap { aspect-ratio: 4 / 3; }
 /* photo ke neeche meme wali line */
 .polaroid:has(.pol-cap) { padding-bottom: 8px; }
 .pol-cap { margin-top: 6px; font-family: var(--hand); font-weight: 700; font-size: 1.05rem; line-height: 1.1; color: var(--ink); text-align: center; }
@@ -765,3 +768,86 @@ body.locked .stage { visibility: hidden; }
 @media (min-width: 1280px) {
   .meme-year .year-cut.full { bottom: 14px; }
 }
+
+/* ============ 🧷 COLLAGE / SCRAPBOOK (year mein `collage: true`) ============
+   2 column mein photos natural size mein, thodi tedhi aur ek doosre pe chadhi hui.
+   Beech mein tape, emoji stickers, sticky notes, Drake meme aur attendance register. */
+.collage-year .slide-inner { max-width: 600px; }
+.polaroids.collage {
+  container-type: inline-size;
+  display: block; max-width: none; width: 100%;
+  column-count: 2; column-gap: 3cqw;
+  padding: 5cqw 2cqw 6cqw;
+}
+.collage > .piece {
+  position: relative; break-inside: avoid;
+  width: var(--w, 100%); margin: 0 0 -1cqw; translate: var(--dx, 0) 0;
+  --tape: rgba(255, 233, 160, .78);
+}
+.collage > .piece:nth-child(3n + 2) { --tape: rgba(255, 176, 204, .75); }
+.collage > .piece:nth-child(3n) { --tape: rgba(170, 220, 255, .72); }
+.collage > .span { column-span: all; width: 94%; margin: 3cqw auto; translate: none; }
+.collage > .piece { opacity: 0; transform: rotate(var(--r, 0deg)); }
+.slide.active .collage > .piece { animation: none; }
+.slide.active .collage > .piece.in { animation: drop .8s cubic-bezier(.2, .9, .3, 1.15) both; }
+/* photo natural size mein (crop nahi), frame patla */
+.collage .polaroid { padding: 1.6cqw 1.6cqw 5cqw; }
+.collage .polaroid .ph-wrap { aspect-ratio: auto; }
+.collage .polaroid .ph-wrap img { height: auto; display: block; }
+.collage .polaroid .ph-wrap.missing { aspect-ratio: 1; }
+/* 📎 tape */
+.collage .tape::before {
+  content: ''; position: absolute; z-index: 2; top: -2.4cqw; left: 50%;
+  width: 15cqw; height: 4.6cqw; background: var(--tape);
+  transform: translateX(-50%) rotate(var(--tr, -4deg));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+  clip-path: polygon(0 0, 100% 0, 98% 25%, 100% 50%, 98% 75%, 100% 100%, 0 100%, 2% 75%, 0 50%, 2% 25%);
+}
+/* emoji sticker */
+.stk {
+  position: absolute; z-index: 3; right: -3.5cqw; bottom: -3.5cqw; font-size: 10cqw; line-height: 1;
+  rotate: 14deg; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .45)); pointer-events: none;
+}
+.stk.l { right: auto; left: -3.5cqw; bottom: auto; top: -3cqw; rotate: -16deg; }
+/* 🗒️ sticky note */
+.note {
+  padding: 4.5cqw 3cqw 5cqw; background: #fff3a3; color: #3a2a10; text-align: center;
+  font-family: var(--hand); font-weight: 700; font-size: 8cqw; line-height: 1.05;
+  box-shadow: 0 1cqw 2.4cqw rgba(0, 0, 0, .45);
+}
+.note small { display: block; margin-top: 1cqw; font-size: 5cqw; opacity: .75; }
+.note.pink { background: #ffc9dc; }
+.note.blue { background: #cdeaff; }
+.note.green { background: #d3f5c6; }
+.note::before {
+  content: ''; position: absolute; top: -2cqw; left: 50%; width: 12cqw; height: 4cqw; background: var(--tape);
+  transform: translateX(-50%) rotate(var(--tr, 3deg)); box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+}
+/* 🎭 Drake meme */
+.drake { background: #fff; color: #111; border: 1cqw solid #fff; box-shadow: 0 2cqw 4cqw rgba(0, 0, 0, .5); }
+.drake-row { display: grid; grid-template-columns: 36% 1fr; }
+.drake-row + .drake-row { border-top: .8cqw solid #fff; }
+.drake-pic { position: relative; aspect-ratio: 1; }
+.drake-pic .ph-wrap { position: absolute; inset: 0; }
+.drake-badge { position: absolute; right: 1.5cqw; bottom: 1cqw; font-size: 9cqw; line-height: 1; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .6)); }
+.drake-text {
+  display: flex; align-items: center; margin: 0; padding: 2cqw 4cqw; text-align: left; background: #fff;
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 5.4cqw; line-height: 1.2; color: #111;
+}
+/* 📒 attendance register */
+.bunk {
+  position: relative; padding: 3cqw 5cqw 4cqw 13cqw; color: #1c2a52; text-align: left;
+  background: #fbf7ee repeating-linear-gradient(transparent 0 7.2cqw, #bcd3ee 7.2cqw 7.6cqw);
+  background-position: 0 3.2cqw;
+  box-shadow: 0 2cqw 4cqw rgba(0, 0, 0, .5);
+}
+.bunk::after { content: ''; position: absolute; top: 0; bottom: 0; left: 9cqw; width: .5cqw; background: #e57373; }
+.bunk h4 { margin: 0 0 2cqw; font-family: var(--hand); font-weight: 700; font-size: 8cqw; line-height: 1; text-decoration: underline wavy #e57373; }
+.bunk-row { font-family: var(--hand); font-weight: 700; font-size: 6.2cqw; line-height: 1.1; }
+.bunk-row + .bunk-row { margin-top: 2.4cqw; }
+.bunk-row b { color: #2e7d32; }
+.bunk-row.low b { color: #c62828; }
+.bunk .bar { height: 3cqw; margin-top: .8cqw; border-radius: 99px; background: rgba(28, 42, 82, .14); overflow: hidden; }
+.bunk .bar i { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, #ff7aa8, #e8c27a); transition: width 1.6s cubic-bezier(.2, .8, .2, 1) .6s; }
+.bunk-row.low .bar i { background: linear-gradient(90deg, #ef5350, #ff8a65); }
+.bunk.in .bar i { width: var(--pct); }

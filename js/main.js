@@ -285,6 +285,47 @@
     return s;
   };
 
+  // 🧷 Collage: har tukda thoda tedha aur thoda khiska hua
+  const scatter = (node, j) => {
+    node.style.setProperty('--p', j);
+    node.style.setProperty('--r', ((j % 2 ? 1 : -1) * rand(1.5, 5)).toFixed(1) + 'deg');
+    node.style.setProperty('--dx', rand(-3, 3).toFixed(1) + 'cqw');
+    node.style.setProperty('--tr', rand(-7, 7).toFixed(1) + 'deg');
+    if (!node.classList.contains('span')) node.style.setProperty('--w', rand(88, 100).toFixed(0) + '%');
+  };
+
+  // 🧷 Collage ke special tukde: Drake meme, sticky note, attendance register
+  function collagePiece(p) {
+    if (p.meme === 'drake') {
+      const f = el('figure', 'piece drake span');
+      f.setAttribute('role', 'img');
+      f.setAttribute('aria-label', (p.rows || []).map(r => r.text).join(' / '));
+      (p.rows || []).forEach(r => {
+        const pic = el('div', 'drake-pic');
+        const ph = photo(r.src, { alt: r.text });
+        if (r.pos) ph.firstChild.style.objectPosition = r.pos;
+        pic.append(ph, el('span', 'drake-badge', r.yes ? '👍' : '🙅'));
+        const row = el('div', 'drake-row' + (r.yes ? ' yes' : ''));
+        row.append(pic, el('p', 'drake-text', esc(r.text)));
+        f.appendChild(row);
+      });
+      return f;
+    }
+    if (p.bunk) {
+      const f = el('div', 'piece bunk span', `<h4>${esc(p.bunk.title || 'Attendance register 📒')}</h4>`);
+      (p.bunk.rows || []).forEach(r => {
+        const pct = Math.max(0, Math.min(100, +r.pct || 0));
+        f.appendChild(el('div', 'bunk-row' + (pct < 50 ? ' low' : ''), `
+          <span>${esc(r.label)} <b>${pct}%</b> ${esc(r.emoji || '')}</span>
+          <div class="bar"><i style="--pct: ${pct}%"></i></div>`));
+      });
+      return f;
+    }
+    const f = el('div', 'piece note ' + (p.tone || 'yellow'), esc(p.note));
+    if (p.sub) f.appendChild(el('small', '', esc(p.sub)));
+    return f;
+  }
+
   // 📅 Har saal ki ek slide
   (function timeline() {
     $('#year-strip').innerHTML = C.timeline.map(t => `<span>${esc(t.year)}</span>`).join('');
@@ -292,7 +333,7 @@
     const n = C.timeline.length, first = C.timeline[0].year, last = C.timeline[n - 1].year;
     C.timeline.forEach((t, k) => {
       const side = t.firstPhoto || t.cutout;   // side mein dikhne wali photo (poori ya cutout)
-      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side ? ' meme-year' : ''));
+      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side ? ' meme-year' : '') + (t.collage ? ' collage-year' : ''));
       // 🏍️ safar ki road: bike is saal tak chal ke rukti hai
       const journey = t.journey ? `
         <div class="journey anim" style="--to: ${(((k + 1) / n) * 100).toFixed(1)}%">
@@ -315,17 +356,39 @@
           <p class="muted anim">${esc(t.caption)}</p>
           ${journey}${meme}
         </div>`);
-      const grid = el('div', 'polaroids');
+      const grid = el('div', 'polaroids' + (t.collage ? ' collage' : ''));
       (t.photos || []).forEach((p, j) => {
+        if (t.collage && typeof p === 'object' && !p.src) {   // meme / sticky note / register
+          const piece = collagePiece(p);
+          scatter(piece, j);
+          grid.appendChild(piece);
+          return;
+        }
         const src = typeof p === 'string' ? p : p.src;
-        const f = el('figure', 'polaroid' + (p.fit === 'contain' ? ' contain' : '') + (p.cutout ? ' cut-item' : ''));
+        const f = el('figure', 'polaroid' + (p.fit === 'contain' ? ' contain' : '') + (p.cutout ? ' cut-item' : '') + (p.wide ? ' wide' : '') + (t.collage ? ' piece tape' + (p.span ? ' span' : '') : ''));
         f.style.setProperty('--r', ((j % 2 ? 1 : -1) * rand(1.5, 4)).toFixed(1) + 'deg');
         f.style.setProperty('--p', j);
-        f.appendChild(photo(src, { zoom: true, alt: `${C.name} ${t.year}` }));
+        if (t.collage) scatter(f, j);
+        const ph = photo(src, { zoom: true, alt: `${C.name} ${t.year}` });
+        if (p.pos) ph.firstChild.style.objectPosition = p.pos;   // photo ka kaunsa hissa dikhe (jaise "50% 15%")
+        f.appendChild(ph);
+        if (p.stick) f.appendChild(el('span', 'stk' + (j % 2 ? ' l' : ''), esc(p.stick)));   // emoji sticker
         if (p.cap) f.appendChild(el('figcaption', 'pol-cap', esc(p.cap)));
         grid.appendChild(f);
       });
       inner.appendChild(grid);
+      // 🧷 collage ke tukde scroll karke jab dikhein tab gir ke aate hain (bars bhi tab bharte hain)
+      if (t.collage) {
+        const io = new IntersectionObserver(entries => {
+          entries.filter(e => e.isIntersecting).forEach((e, n) => {
+            e.target.style.animationDelay = n * 140 + 'ms';
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          });
+        }, { root: s, threshold: 0.1 });
+        s.addEventListener('enter', () => $$('.piece', grid).forEach(n => { n.classList.remove('in'); io.observe(n); }));
+        s.addEventListener('leave', () => $$('.piece', grid).forEach(n => { io.unobserve(n); n.classList.remove('in'); }));
+      }
       // 😜 side mein photo (firstPhoto = poori photo polaroid mein, cutout = background hata hua): tap karo to squish + 🍫 udte hain
       if (side?.src) {
         const cut = el('div', 'year-cut anim' + (t.firstPhoto ? ' full' : ''), `

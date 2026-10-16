@@ -25,7 +25,7 @@ Bas usi naam se photo us folder mein daal do.
 ```
 assets/photos/
 ├── 2018/  1.jpg 2.jpg 3.jpg      ← har saal ki 3 photos (timeline)
-├── 2019/  1.jpg 2.jpg 3.jpg
+├── 2019/  1.jpg … 12.jpg         ← college wala saal (12 photos; config mein `wide: true` wali landscape photos poori chaudai mein dikhti hain)
 ├── ...    (2020 se 2026 tak same)
 ├── special/
 │   ├── bholi.jpg       ← "Dekhne mein kitni bholi bhali" wala gaana isi pe bajega
@@ -37,6 +37,11 @@ assets/photos/
 ```
 
 - Kisi saal mein zyada photos hain? Config mein us saal ki `photos:` list mein aur naam add kar do (`"assets/photos/2019/4.jpg"`).
+- 🧷 **Collage / scrapbook look:** kisi saal mein `collage: true` likho (2019 mein laga hai). Photos tedhi aur ek doosre pe chadhi hui, tape ke saath dikhti hain, aur `photos:` list mein ye extra tukde bhi daal sakte ho:
+  - `{ note: "Center Park 🌳", tone: "yellow" }` → sticky note (`tone`: yellow / pink / blue / green)
+  - `{ meme: "drake", rows: [{ src, text, yes }, …] }` → Drake meme, apni photos ke saath (`yes: true` = approve wala panel)
+  - `{ bunk: { title, rows: [{ label, pct, emoji }] } }` → attendance register, bars scroll pe bharte hain
+  - photo pe `stick: "🎓"` (emoji sticker) aur `span: true` (poori chaudai)
 - **iPhone ki .HEIC photos browser mein nahi chalti.** Mac pe JPG mein badlo aur size bhi chhota karo (ye ek command dono kaam karta hai):
   ```bash
   mkdir -p converted && sips -s format jpeg -Z 1600 *.HEIC --out converted/
@@ -56,6 +61,7 @@ assets/photos/
 | `voh-dekhne-mein.m4a` | Voh Dekhne Mein (Ali Zafar) | "Bholi bhali" photo | [link](https://youtube.com/shorts/e84IP6acLVk) |
 | `offcampus-reconnect.m4a` | When you both reconnect again | Videos section | [link](https://youtube.com/shorts/ex36_-5NitE) |
 | `seene-se-lag-jao.m4a` | Chal Wahan Jaate Hain (Arijit Singh) | 2018 wali slide | [link](https://youtube.com/shorts/CbCRFa6rGes) |
+| `milne-lage-dil.m4a` | Milne Lage Dil | 2019 wali slide (college) | [link](https://youtube.com/shorts/arMXbyQymBk) |
 | `kal-chaudhvin.m4a` | Kal Chaudhvin Ki Raat (Jagjit Singh) | Tab vs Ab | [link](https://youtube.com/shorts/wU1YwyH4DIs) |
 | `pal-pal-dil-ke-paas.m4a` | Pal Pal Dil Ke Paas | Swipe photos | [link](https://youtube.com/shorts/vGj0UiBlAyM) |
 | `tu-ho-toh.m4a` | Tu Ho Toh | "Tu ho toh" photo | [link](https://youtube.com/shorts/iw4A57Asp-4) |

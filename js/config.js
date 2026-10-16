@@ -25,6 +25,7 @@ window.CONFIG = {
     hero:     { file: "assets/music/hbd-meme.m4a",                title: "Aaaa Happy Birthday To You 🤣" },
     timeline: { file: "assets/music/chalte-chalte.m4a",           title: "Chalte Chalte Yun Hi Koi Mil Gaya Tha" },
     seene:    { file: "assets/music/seene-se-lag-jao.m4a",        title: "Chal Wahan Jaate Hain 💞 (Seene se tum aake lag jao na) — Arijit Singh" },
+    college:  { file: "assets/music/milne-lage-dil.m4a",          title: "Milne Lage Dil 💞" },
     bholi:    { file: "assets/music/voh-dekhne-mein.m4a",         title: "Voh Dekhne Mein — Ali Zafar" },
     videos:   { file: "assets/music/offcampus-reconnect.m4a",     title: "When you both reconnect again 💛" },
     thennow:  { file: "assets/music/kal-chaudhvin.m4a",           title: "Kal Chaudhvin Ki Raat — Jagjit Singh" },
@@ -56,7 +57,7 @@ window.CONFIG = {
        meme:    { no: "...", yes: "..." } → 🙅 / 😍 wala meme
        firstPhoto: { src: "...jpg", say: "...", label: "..." } → side mein poori photo (polaroid) + bolne wala bubble
        cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
-       photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke) } */
+       photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke), wide: true (landscape photo, poori chaudai mein), span: true / stick: "🎓" (collage mein poori chaudai / emoji sticker), pos: "50% 15%" (lambi photo ka kaunsa hissa dikhe — chehra kat raha ho to isse upar/neeche khiskao) } */
   timeline: [
     {
       year: 2018, title: "Jahan se sab shuru hua",
@@ -71,8 +72,53 @@ window.CONFIG = {
         { src: "assets/photos/2018/5.jpg", cap: "Papa ka meme of the year 😂", fit: "contain" },
       ],
     },
-    { year: 2019, title: "Dosti se kuch zyada",          caption: "Baatein lambi hone lagi, aur raatein chhoti.",                 photos: ["assets/photos/2019/1.jpg", "assets/photos/2019/2.jpg", "assets/photos/2019/3.jpg"] },
-    { year: 2020, title: "Door reh ke bhi paas",         caption: "Har din tumhari ek awaaz ka intezaar.",                       photos: ["assets/photos/2020/1.jpg", "assets/photos/2020/2.jpg", "assets/photos/2020/3.jpg"] },
+    {
+      year: 2019, title: "Dosti se kuch zyada",
+      caption: "Baatein lambi hone lagi, aur raatein chhoti. College ke din, roz milna, paise na hote hue bhi saath ghoomna — crazy din. Center Park, GVD ki coffee, Nehru Park, Chasta Cafe… what a year! 🎓☕",
+      song: "college",
+      collage: true,   // scrapbook look: tedhi/chadhi hui photos, tape, stickers, meme (tukde yahin se badlo/hatao)
+      photos: [
+        { src: "assets/photos/2019/1.jpg", span: true, stick: "🎓" },
+        { src: "assets/photos/2019/2.jpg", stick: "💖" },
+        "assets/photos/2019/3.jpg",
+        { note: "Center Park 🌳", tone: "yellow" },
+        { src: "assets/photos/2019/4.jpg", stick: "😎" },
+        "assets/photos/2019/5.jpg",
+        // 🎭 Drake meme (apni photos ke saath): yes: true = approve wala panel
+        { meme: "drake", rows: [
+          { src: "assets/photos/2019/2.jpg", pos: "50% 40%", text: "Paise aane ka wait karna 💸", yes: false },
+          { src: "assets/photos/2019/4.jpg", pos: "50% 35%", text: "Jeb khaali, phir bhi Center Park chalo 😎", yes: true },
+        ] },
+        "assets/photos/2019/6.jpg",
+        { note: "GVD ki coffee ☕", tone: "pink" },
+        { src: "assets/photos/2019/7.jpg", stick: "✨" },
+        "assets/photos/2019/8.jpg",
+        { note: "Nehru Park 🌿", tone: "green" },
+        { src: "assets/photos/2019/9.jpg", stick: "📚" },
+        // 📒 Attendance register: pct = bar kitni bhari (0-100)
+        { bunk: { title: "Attendance register 📒", rows: [
+          { label: "Lecture attendance", pct: 9, emoji: "😴" },
+          { label: "Jeb mein paise", pct: 4, emoji: "💸" },
+          { label: "Saath ghoomna", pct: 100, emoji: "😎💯" },
+        ] } },
+        "assets/photos/2019/10.jpg",
+        { src: "assets/photos/2019/11.jpg", stick: "🤪" },
+        { note: "Chasta Cafe ✨", tone: "blue" },
+        { src: "assets/photos/2019/12.jpg", span: true, stick: "💞" },
+      ],
+    },
+    {
+      year: 2020, title: "Door reh ke bhi paas",
+      caption: "Covid ka time… ghar pe game khelna, aur milna mask ke saath 😷🎮",
+      photos: [
+        { src: "assets/photos/2020/1.jpg", pos: "50% 30%" },
+        { src: "assets/photos/2020/2.jpg", fit: "contain" },
+        { src: "assets/photos/2020/3.jpg", pos: "50% 30%" },
+        { src: "assets/photos/2020/4.jpg", pos: "50% 25%" },
+        { src: "assets/photos/2020/5.jpg", pos: "50% 30%" },
+        { src: "assets/photos/2020/6.jpg", pos: "50% 20%" },
+      ],
+    },
     { year: 2021, title: "Saath mein badhte hue",        caption: "Tum badi hoti gayi, aur pyaar bhi.",                           photos: ["assets/photos/2021/1.jpg", "assets/photos/2021/2.jpg", "assets/photos/2021/3.jpg"] },
     { year: 2022, title: "Hasi, jhagde aur pyaar",       caption: "Roothna-manana bhi humara favourite game ban gaya.",          photos: ["assets/photos/2022/1.jpg", "assets/photos/2022/2.jpg", "assets/photos/2022/3.jpg"] },
     { year: 2023, title: "Har din tumhare naam",         caption: "Tumhari smile mera sabse bada sukoon.",                       photos: ["assets/photos/2023/1.jpg", "assets/photos/2023/2.jpg", "assets/photos/2023/3.jpg"] },
