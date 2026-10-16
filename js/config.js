@@ -27,6 +27,7 @@ window.CONFIG = {
     seene:    { file: "assets/music/seene-se-lag-jao.m4a",        title: "Chal Wahan Jaate Hain 💞 (Seene se tum aake lag jao na) — Arijit Singh" },
     roothna:  { file: "assets/music/pal.m4a",                     title: "Pal 💞 — Arijit Singh, Shreya Ghoshal" },
     college:  { file: "assets/music/milne-lage-dil.m4a",          title: "Milne Lage Dil 💞" },
+    y2025:    { file: "assets/music/saath-2025.m4a",             title: "Dil Kya Kare ❤️ — Kishore Kumar" },
     y2024:    { file: "assets/music/saath-2024.m4a",             title: "Romance is ok… but this feeling 💓" },
     y2023:    { file: "assets/music/saath-2023.m4a",             title: "Varoon Forvere 💘" },
     y2021:    { file: "assets/music/saath-2021.m4a",             title: "Charley Charley Baal 💗" },
@@ -263,6 +264,7 @@ window.CONFIG = {
     },
     {
       year: 2025, title: "Pakki wali jodi",
+      song: "y2025",
       caption: "Ab tum sirf meri aadat nahi, meri zaroorat ho.",
       battery: {
         title: "Aadat se Zaroorat 🔋",

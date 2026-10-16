@@ -67,6 +67,7 @@ assets/photos/
 | `saath-2021.m4a` | Charley Charley Baal | 2021 wali slide | [link](https://youtube.com/shorts/YoyoBsQX3jA) |
 | `saath-2023.m4a` | Varoon Forvere | 2023 wali slide | [link](https://youtube.com/shorts/U1uWFyDKcq4) |
 | `saath-2024.m4a` | Romance is ok… but this feeling | 2024 wali slide | [link](https://youtube.com/shorts/2C3LTPM0YFg) |
+| `saath-2025.m4a` | Dil Kya Kare (Kishore Kumar) | 2025 wali slide | [link](https://youtube.com/shorts/jbysfEqoat8) |
 | `kal-chaudhvin.m4a` | Kal Chaudhvin Ki Raat (Jagjit Singh) | Tab vs Ab | [link](https://youtube.com/shorts/wU1YwyH4DIs) |
 | `pal-pal-dil-ke-paas.m4a` | Pal Pal Dil Ke Paas | Swipe photos | [link](https://youtube.com/shorts/vGj0UiBlAyM) |
 | `tu-ho-toh.m4a` | Tu Ho Toh | "Tu ho toh" photo | [link](https://youtube.com/shorts/iw4A57Asp-4) |
