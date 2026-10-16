@@ -969,3 +969,74 @@ body.locked .stage { visibility: hidden; }
   .mana-btn span { font-size: 1.05rem; }
   .mana-card .bubble { font-size: 1rem; min-height: 2.4em; margin-bottom: 8px; }
 }
+
+/* 🌸 Smile Calendar (2023) */
+.cal-card {
+  grid-column: 1 / -1; padding: 14px 12px 12px; border-radius: 18px; text-align: center; position: relative;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02)); border: 1px solid var(--line);
+  transition: box-shadow .8s, border-color .8s;
+}
+.cal-card.done { border-color: var(--gold); box-shadow: 0 0 40px rgba(232, 194, 122, .35), inset 0 0 40px rgba(255, 122, 168, .12); }
+.cal-card .bubble { max-width: 100%; min-height: 2.6em; font-size: 1.1rem; margin: 0 auto 10px; }
+.cal-stage {
+  position: relative; height: min(40vh, 340px); border-radius: 14px; overflow: hidden;
+  display: flex; align-items: center; justify-content: flex-start; padding-left: 6%;
+  background: radial-gradient(circle at 35% 40%, rgba(255, 194, 212, .18), transparent 65%), rgba(0, 0, 0, .25);
+  border: 1px dashed rgba(232, 194, 122, .35);
+}
+.petal { position: absolute; top: -12%; font-size: 1.2rem; opacity: .75; pointer-events: none; animation: petalFall 7s linear infinite; }
+.petal.p1 { left: 8%; animation-delay: 0s; } .petal.p2 { left: 28%; animation-delay: -2.3s; font-size: .9rem; }
+.petal.p3 { left: 52%; animation-delay: -4s; } .petal.p4 { left: 74%; animation-delay: -1.2s; font-size: 1rem; } .petal.p5 { left: 90%; animation-delay: -5.4s; font-size: .9rem; }
+.cal-frame {
+  position: relative; z-index: 2; margin: 0; width: min(54%, 200px); padding: 7px 7px 6px; background: var(--paper); border-radius: 4px;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .55); transform: rotate(-3deg);
+}
+.cal-frame.swap { animation: calSwap .7s cubic-bezier(.2, .9, .3, 1.2); }
+.cal-photo { aspect-ratio: 4 / 5; overflow: hidden; background: #2a1830; position: relative; }
+.cal-photo .ph-wrap { width: 100%; height: 100%; }
+.cal-empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #8d6a7a; text-align: center; padding: 8px;
+  background: repeating-linear-gradient(45deg, #fbe9ef 0 10px, #f6dde6 10px 20px); }
+.cal-empty span { font-size: 2.4rem; animation: bob 2s ease-in-out infinite; }
+.cal-empty small { font-size: .72rem; line-height: 1.3; }
+.cal-cap { font-family: var(--hand); font-weight: 700; font-size: 1.05rem; line-height: 1.1; color: var(--ink); margin-top: 6px; min-height: 2.2em; display: flex; align-items: center; justify-content: center; text-align: center; }
+.cal-mascot {
+  position: absolute; z-index: 3; right: 3%; bottom: 0; height: 66%; border: 0; background: none; padding: 0; cursor: pointer; transform-origin: 50% 100%; animation: wobble 3.6s ease-in-out infinite;
+}
+.cal-mascot img { height: 100%; width: auto; display: block; pointer-events: none; -webkit-user-drag: none;
+  filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 8px 12px rgba(0, 0, 0, .5)); }
+.cal-mascot.squish { animation: squish .5s cubic-bezier(.3, 1.6, .5, 1), wobble 3.6s ease-in-out .5s infinite; }
+.cal-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }
+.cal-meter { flex: 1; text-align: left; min-width: 0; }
+.cal-count { display: block; font-size: .85rem; color: var(--gold2); margin-bottom: 4px; }
+.cal-meter i { display: block; height: 10px; border-radius: 10px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+.cal-meter b { display: block; height: 100%; width: 0; border-radius: 10px; background: linear-gradient(90deg, var(--gold), var(--rose)); transition: width .6s cubic-bezier(.3, 1.2, .4, 1); }
+.cal-next { padding: 10px 16px; font-size: .9rem; white-space: nowrap; }
+.cal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+.cal-tile {
+  position: relative; aspect-ratio: 1 / .9; border-radius: 12px; overflow: hidden; cursor: pointer; padding: 0;
+  border: 1px solid var(--line); background: linear-gradient(150deg, #4a1b45, #26112d); color: var(--gold2);
+  transition: transform .2s, border-color .2s, box-shadow .3s;
+}
+.cal-tile::before { content: '🌸'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 1.4rem; opacity: .35; }
+.cal-tile.open::before { display: none; }
+.cal-tile:hover { transform: translateY(-2px); }
+.cal-tile:active { transform: scale(.94); }
+.cal-th { position: absolute; inset: 0; }
+.cal-th .ph-wrap { width: 100%; height: 100%; }
+.cal-m {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 0 3px; font-family: var(--serif); font-weight: 600; font-size: .85rem; letter-spacing: .06em;
+  background: linear-gradient(transparent, rgba(12, 6, 16, .82)); text-shadow: 0 1px 3px #000; z-index: 2;
+}
+.cal-tile:not(.open) .cal-m { background: none; top: 0; display: grid; place-items: end center; padding-bottom: 6px; }
+.cal-tile.active { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold), 0 0 18px rgba(232, 194, 122, .55); transform: translateY(-2px) scale(1.04); z-index: 2; }
+.cal-card.done .cal-tile { border-color: rgba(232, 194, 122, .6); }
+@keyframes petalFall { from { transform: translateY(0) rotate(0deg); } to { transform: translateY(420px) rotate(240deg); } }
+@keyframes calSwap { 0% { opacity: 0; transform: rotate(-12deg) translateY(30px) scale(.9); } 100% { opacity: 1; transform: rotate(-3deg); } }
+@media (max-width: 480px) {
+  .cal-stage { height: min(36vh, 310px); }
+  .cal-frame { width: min(56%, 190px); }
+  .cal-cap { font-size: .95rem; }
+  .cal-grid { gap: 6px; }
+  .cal-m { font-size: .75rem; }
+  .cal-next { padding: 9px 12px; font-size: .82rem; }
+}

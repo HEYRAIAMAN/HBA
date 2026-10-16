@@ -333,7 +333,7 @@
     const n = C.timeline.length, first = C.timeline[0].year, last = C.timeline[n - 1].year;
     C.timeline.forEach((t, k) => {
       const side = t.firstPhoto || t.cutout;   // side mein dikhne wali photo (poori ya cutout)
-      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game || t.mana ? ' meme-year' : '') + (t.collage ? ' collage-year' : ''));
+      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game || t.mana || t.calendar ? ' meme-year' : '') + (t.collage ? ' collage-year' : ''));
       // 🏍️ safar ki road: bike is saal tak chal ke rukti hai
       const journey = t.journey ? `
         <div class="journey anim" style="--to: ${(((k + 1) / n) * 100).toFixed(1)}%">
@@ -382,6 +382,8 @@
       if (t.game) grid.prepend(gameCard(t.game));
       // 😤➜🥰 roothna-manana (config: timeline[].mana)
       if (t.mana) grid.prepend(manaCard(t.mana));
+      // 🌸 har mahine ki ek photo wala Smile Calendar (config: timeline[].calendar)
+      if (t.calendar) grid.prepend(calCard(t.calendar));
       inner.appendChild(grid);
       // 🧷 collage ke tukde scroll karke jab dikhein tab gir ke aate hain (bars bhi tab bharte hain)
       if (t.collage) {
@@ -647,6 +649,94 @@
       char.classList.remove('shake'); void char.offsetWidth; char.classList.add('shake');
     });
     say(m.say || 'Nishu rooth gayi hai 😤 Manao use!');
+    render();
+    return card;
+  }
+
+  // 🌸 "Smile Calendar": 12 mahine ke tiles, tap karo to us mahine ki photo khulti hai (config: timeline[].calendar)
+  function calCard(c) {
+    const months = c.months || [];
+    const total = months.length;
+    const card = el('div', 'cal-card anim', `
+      <div class="bubble"></div>
+      <p class="game-title">${esc(c.title || 'Smile Calendar 🙏')}</p>
+      <div class="cal-stage">
+        <span class="petal p1">🌸</span><span class="petal p2">✨</span><span class="petal p3">🌷</span><span class="petal p4">🌸</span><span class="petal p5">✨</span>
+        <figure class="cal-frame empty">
+          <div class="cal-photo"><div class="cal-empty"><span>🌸</span><small>kisi bhi mahine pe tap karo</small></div></div>
+          <figcaption class="cal-cap"></figcaption>
+        </figure>
+        ${c.mascot?.src ? `<button class="cal-mascot" aria-label="${esc(C.name)}, tap karo"><img src="${esc(c.mascot.src)}" alt="" draggable="false"></button>` : ''}
+      </div>
+      <div class="cal-bar">
+        <div class="cal-meter"><span class="cal-count"></span><i><b></b></i></div>
+        <button class="btn cal-next">Agla mahina ➜</button>
+      </div>
+      <div class="cal-grid">
+        ${months.map((m, i) => `<button class="cal-tile" data-i="${i}" aria-label="${esc(m.m)} ki photo kholo"><span class="cal-th"></span><span class="cal-m">${esc(m.m)}</span></button>`).join('')}
+      </div>
+      <p class="tiny muted game-hint">${esc(c.hint || 'saare 12 mahine kholo… har ek mein ek nayi smile hai 🙏')}</p>`);
+    const bubble = $('.bubble', card), frame = $('.cal-frame', card), photoBox = $('.cal-photo', card), cap = $('.cal-cap', card);
+    const count = $('.cal-count', card), bar = $('.cal-meter b', card), tiles = $$('.cal-tile', card), next = $('.cal-next', card);
+    const mascot = $('.cal-mascot', card);
+    $('img', mascot || card)?.addEventListener('error', () => mascot?.remove());
+    const say = text => { bubble.textContent = text; bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop'); };
+    const pick = list => list[(Math.random() * list.length) | 0];
+    const praise = c.praise?.length ? c.praise : ['Wah! 😍', 'Smile ne din bana diya ☀️'];
+    const opened = new Set();
+    let cur = -1;
+
+    const render = () => {
+      count.textContent = `${opened.size} / ${total} smiles mile 🙏`;
+      bar.style.width = (total ? (opened.size / total) * 100 : 0) + '%';
+    };
+    const show = i => {
+      const m = months[i];
+      if (!m) return;
+      cur = i;
+      const first = !opened.has(i);
+      opened.add(i);
+      const ph = photo(m.src, { zoom: true, alt: `${C.name} ${m.m}` });
+      if (m.pos && ph.firstChild) ph.firstChild.style.objectPosition = m.pos;
+      photoBox.replaceChildren(ph);
+      cap.textContent = `${m.m} · ${m.cap || ''}`;
+      frame.classList.remove('empty', 'swap'); void frame.offsetWidth; frame.classList.add('swap');
+      tiles.forEach((t, j) => t.classList.toggle('active', j === i));
+      const tile = tiles[i];
+      if (first) {
+        tile.classList.add('open');
+        const th = photo(m.src, { alt: '' });
+        if (m.pos && th.firstChild) th.firstChild.style.objectPosition = m.pos;
+        $('.cal-th', tile).replaceChildren(th);
+      }
+      render();
+      const [x, y] = center(frame);
+      sparkle(x, y, first ? 8 : 4, 90, 120, ['🌸', '✨', '🙏', '💖', '🌷']);
+      if (first) say(pick(praise));
+      if (opened.size === total && first) win();
+      // phone pe: photo upar hai, isliye dikha do
+      $('.cal-stage', card).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+    const win = () => {
+      card.classList.add('done');
+      say(c.win || 'Saare 12 mahine! Tumhari smile mera sabse bada blessing 🙏❤️');
+      celebrate();
+      setTimeout(celebrate, 900);
+    };
+    tiles.forEach(t => t.addEventListener('click', () => show(+t.dataset.i)));
+    next.addEventListener('click', () => {
+      let i = months.findIndex((_, j) => j > cur && !opened.has(j));
+      if (i < 0) i = months.findIndex((_, j) => !opened.has(j));
+      if (i < 0) i = (cur + 1) % total;
+      show(i);
+    });
+    mascot?.addEventListener('click', () => {
+      mascot.classList.remove('squish'); void mascot.offsetWidth; mascot.classList.add('squish');
+      say(pick(c.mascot.lines?.length ? c.mascot.lines : ['Hehe 😊']));
+      const [x, y] = center(mascot);
+      sparkle(x, y - 20, 6, 60, 90, ['🌸', '💖', '✨']);
+    });
+    say(c.say || 'Kisi bhi mahine pe tap karo ✨');
     render();
     return card;
   }

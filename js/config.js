@@ -60,6 +60,7 @@ window.CONFIG = {
        firstPhoto: { src: "...jpg", say: "...", label: "..." } → side mein poori photo (polaroid) + bolne wala bubble
        game:    { title, say, hint, viruses, cutouts:[{src,say}], win } → "Covid bhagao" mini game (2020 mein dekho)
        mana:    { title, say, hint, rooth, happy, win, actions:[{icon,label,gain,lines}], tease, taps } → "Roothna-manana" interactive (2022 mein dekho)
+       calendar:{ title, say, hint, win, praise, mascot:{src,lines}, months:[{m,src,cap,pos}] } → 12 mahine ka "Smile Calendar" (2023 mein dekho)
        grow:    { src, say, btn, meters, steps, hint } → tap karne pe badi hone wala interactive cutout (2021 mein dekho)
        cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
        photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke), wide: true (landscape photo, poori chaudai mein), span: true / stick: "🎓" (collage mein poori chaudai / emoji sticker), pos: "50% 15%" (lambi photo ka kaunsa hissa dikhe — chehra kat raha ho to isse upar/neeche khiskao) } */
@@ -197,7 +198,36 @@ window.CONFIG = {
         { src: "assets/photos/2022/12.jpg", pos: "50% 20%", cap: "Coffee peeche, nazar kisi aur pe 👀☕", stick: "☕" },
       ],
     },
-    { year: 2023, title: "Har din tumhare naam",         caption: "Tumhari smile mera sabse bada sukoon.",                       photos: ["assets/photos/2023/1.jpg", "assets/photos/2023/2.jpg", "assets/photos/2023/3.jpg"] },
+    {
+      year: 2023, title: "Har din tumhare naam",
+      caption: "Tumhari smile mera sabse bada blessing hai 🙏 Kya saal tha ye — har mahine ki ek photo ✨",
+      calendar: {
+        title: "Smile Calendar 2023 🙏",
+        say: "Kisi bhi mahine pe tap karo ✨",
+        hint: "saare 12 mahine kholo… har ek mein ek nayi smile hai 🙏",
+        win: "Saare 12 mahine! Tumhari smile mera sabse bada blessing 🙏❤️",
+        praise: ["Wah! Ye wali to meri favourite 😍", "Smile ne din bana diya ☀️", "Itni pyaari kaise lagti ho? 🥹", "Blessing mil gayi 🙏", "Ek aur smile, ek aur khushi 🌸"],
+        mascot: { src: "assets/photos/2023/mascot.png", lines: ["Main to bas photo dekhne aayi thi 😌", "Tum bhi ek smile do na 😊", "Aur kholo, aur kholo 📅", "Saal bhar ki smile yahin hai 🌸"] },
+        months: [
+          { m: "Jan", src: "assets/photos/2023/1.jpg", cap: "Mere haath, tumhara sar 😄" },
+          { m: "Feb", src: "assets/photos/2023/2.jpg", cap: "Swag on 😎 chashme ke peeche bhi cute", pos: "50% 40%" },
+          { m: "Mar", src: "assets/photos/2023/3.jpg", cap: "Raat ki roshni mein jagmag Nishu ✨", pos: "50% 70%" },
+          { m: "Apr", src: "assets/photos/2023/4.jpg", cap: "Puppy se bhi zyada cute 🐶", pos: "50% 6%" },
+          { m: "May", src: "assets/photos/2023/5.jpg", cap: "Dhoop, tilak aur tumhari smile 🌞", pos: "50% 30%" },
+          { m: "Jun", src: "assets/photos/2023/6.jpg", cap: "Do dil, ek selfie 💙", pos: "50% 25%" },
+          { m: "Jul", src: "assets/photos/2023/7.jpg", cap: "Kamar pe haath, attitude full 😌", pos: "50% 30%" },
+          { m: "Aug", src: "assets/photos/2023/8.jpg", cap: "Shy shy Nishu 🙈", pos: "50% 35%" },
+          { m: "Sep", src: "assets/photos/2023/9.jpg", cap: "Titliyan bhi jal gayi 🦋", pos: "50% 45%" },
+          { m: "Oct", src: "assets/photos/2023/10.jpg", cap: "Pahaadon mein bhi sabse alag 🏔️", pos: "50% 40%" },
+          { m: "Nov", src: "assets/photos/2023/11.jpg", cap: "Ek phool, aur woh bhi tumhare haath se 🌼", pos: "50% 50%" },
+          { m: "Dec", src: "assets/photos/2023/12.jpg", cap: "Hawa baalon se khel rahi, aur main tumse 😍", pos: "50% 35%" },
+        ],
+      },
+      photos: [
+        { src: "assets/photos/2023/13.jpg", cap: "Roshni, raunak aur tum ✨ (bonus smile)" },
+        { src: "assets/photos/2023/14.jpg", pos: "50% 30%", cap: "Sukoon wala pal 🫶 (bonus smile)" },
+      ],
+    },
     { year: 2024, title: "Aur bhi khoobsurat",           caption: "Har saal tum aur pyaari ho jaati ho, ye kaise karti ho?",     photos: ["assets/photos/2024/1.jpg", "assets/photos/2024/2.jpg", "assets/photos/2024/3.jpg"] },
     { year: 2025, title: "Pakki wali jodi",              caption: "Ab tum sirf meri aadat nahi, meri zaroorat ho.",              photos: ["assets/photos/2025/1.jpg", "assets/photos/2025/2.jpg", "assets/photos/2025/3.jpg"] },
     { year: 2026, title: "Aaj — tumhara din ✨",          caption: "8 saal baad bhi dil wahi kehta hai: sirf tum.",              photos: ["assets/photos/2026/1.jpg", "assets/photos/2026/2.jpg", "assets/photos/2026/3.jpg"] },
