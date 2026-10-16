@@ -333,7 +333,7 @@
     const n = C.timeline.length, first = C.timeline[0].year, last = C.timeline[n - 1].year;
     C.timeline.forEach((t, k) => {
       const side = t.firstPhoto || t.cutout;   // side mein dikhne wali photo (poori ya cutout)
-      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game ? ' meme-year' : '') + (t.collage ? ' collage-year' : ''));
+      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game || t.mana ? ' meme-year' : '') + (t.collage ? ' collage-year' : ''));
       // 🏍️ safar ki road: bike is saal tak chal ke rukti hai
       const journey = t.journey ? `
         <div class="journey anim" style="--to: ${(((k + 1) / n) * 100).toFixed(1)}%">
@@ -380,6 +380,8 @@
       if (t.grow?.src) grid.prepend(growCard(t.grow));
       // 🦠 covid bhagao mini game (config: timeline[].game)
       if (t.game) grid.prepend(gameCard(t.game));
+      // 😤➜🥰 roothna-manana (config: timeline[].mana)
+      if (t.mana) grid.prepend(manaCard(t.mana));
       inner.appendChild(grid);
       // 🧷 collage ke tukde scroll karke jab dikhein tab gir ke aate hain (bars bhi tab bharte hain)
       if (t.collage) {
@@ -573,6 +575,79 @@
     });
     reset.addEventListener('click', spawn);
     spawn();
+    return card;
+  }
+
+  // 😤➜🥰 "Roothna-Manana": chocolate / phool / sorry / hug se Nishu ko manao (config: timeline[].mana)
+  function manaCard(m) {
+    const levels = m.moods?.length ? m.moods : ['Gussa 😡', 'Naraaz 😒', 'Thodi maan gayi 🙂', 'Lagbhag maan gayi 😍'];
+    const faces = ['😡', '😒', '🙂', '😍'];
+    const acts = m.actions || [];
+    const card = el('div', 'mana-card anim', `
+      <div class="bubble"></div>
+      <p class="game-title">${esc(m.title || 'Roothi Nishu ko manao 😤')}</p>
+      <div class="mana-stage">
+        <div class="mana-badge">😡</div>
+        <div class="mana-char">
+          <img class="rooth" src="${esc(m.rooth)}" alt="" draggable="false">
+          ${m.happy ? `<img class="happy" src="${esc(m.happy)}" alt="" draggable="false">` : ''}
+        </div>
+      </div>
+      <div class="mana-meter"><span class="mana-level"></span><i><b></b></i></div>
+      <div class="mana-actions">
+        ${acts.map((a, i) => `<button class="mana-btn" data-i="${i}"><span>${esc(a.icon)}</span>${esc(a.label)}</button>`).join('')}
+        ${m.tease ? `<button class="mana-btn tease"><span>${esc(m.tease.icon || '😜')}</span>${esc(m.tease.label || 'Chhedo')}</button>` : ''}
+      </div>
+      <p class="tiny muted game-hint">${esc(m.hint || 'Nishu ke gusse ka meter 100% karo 👇')}</p>`);
+    const bubble = $('.bubble', card), stage = $('.mana-stage', card), char = $('.mana-char', card);
+    const badge = $('.mana-badge', card), level = $('.mana-level', card), bar = $('.mana-meter b', card);
+    $('.rooth', card).addEventListener('error', () => card.remove());
+    $('.happy', card)?.addEventListener('error', function () { this.remove(); });
+    const say = text => { bubble.textContent = text; bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop'); };
+    const pick = list => list[(Math.random() * list.length) | 0];
+    let mood = 0;
+
+    const render = () => {
+      const won = mood >= 100;
+      const idx = Math.min(levels.length - 1, Math.floor((mood / 100) * levels.length));
+      card.style.setProperty('--f', (mood / 100).toFixed(2));
+      card.classList.toggle('won', won);
+      card.classList.toggle('turned', mood < 25);
+      level.textContent = won ? (m.winLabel || 'Maan gayi 🥰') : levels[idx];
+      badge.textContent = won ? '🥰' : faces[Math.min(idx, faces.length - 1)];
+      bar.style.width = mood + '%';
+    };
+    const fx = (icons, n = 7) => { const [x, y] = center(stage); sparkle(x, y - 10, n, 80, 110, icons); };
+
+    $$('.mana-btn:not(.tease)', card).forEach(btn => btn.addEventListener('click', () => {
+      const a = acts[+btn.dataset.i];
+      if (mood >= 100) { say(m.after || 'Maan to gayi… ab aur kitna manaoge 🥰'); fx(['💖', '🥰'], 4); return; }
+      mood = Math.min(100, mood + a.gain + Math.round(rand(-3, 4)));
+      say(pick(a.lines || ['Hmm… 🙂']));
+      fx([a.icon, '✨', '💖']);
+      render();
+      if (mood >= 100) {
+        say(m.win || 'Maan gayi! 🥰 Ab ek tight hug do 🤗');
+        celebrate();
+        const happy = $('.happy', card);
+        if (happy) { happy.classList.remove('squish'); void happy.offsetWidth; happy.classList.add('squish'); }
+      }
+    }));
+    $('.tease', card)?.addEventListener('click', () => {
+      mood = Math.max(0, mood - (m.tease.lose || 25));
+      say(pick(m.tease.lines || ['Tune phir chheda?! 😤']));
+      fx(['😤', '💢', '🙄'], 5);
+      char.classList.remove('shake'); void char.offsetWidth; char.classList.add('shake');
+      render();
+    });
+    char.addEventListener('click', () => {
+      const lines = m.taps || {};
+      const pool = mood >= 100 ? lines.happy : mood >= 50 ? lines.mid : lines.angry;
+      say(pick(pool?.length ? pool : ['😤']));
+      char.classList.remove('shake'); void char.offsetWidth; char.classList.add('shake');
+    });
+    say(m.say || 'Nishu rooth gayi hai 😤 Manao use!');
+    render();
     return card;
   }
 

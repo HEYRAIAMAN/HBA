@@ -25,6 +25,7 @@ window.CONFIG = {
     hero:     { file: "assets/music/hbd-meme.m4a",                title: "Aaaa Happy Birthday To You 🤣" },
     timeline: { file: "assets/music/chalte-chalte.m4a",           title: "Chalte Chalte Yun Hi Koi Mil Gaya Tha" },
     seene:    { file: "assets/music/seene-se-lag-jao.m4a",        title: "Chal Wahan Jaate Hain 💞 (Seene se tum aake lag jao na) — Arijit Singh" },
+    roothna:  { file: "assets/music/pal.m4a",                     title: "Pal 💞 — Arijit Singh, Shreya Ghoshal" },
     college:  { file: "assets/music/milne-lage-dil.m4a",          title: "Milne Lage Dil 💞" },
     covid:    { file: "assets/music/tu-chahiye.m4a",              title: "Tu Chahiye 💞 — Atif Aslam" },
     bholi:    { file: "assets/music/voh-dekhne-mein.m4a",         title: "Voh Dekhne Mein — Ali Zafar" },
@@ -58,6 +59,7 @@ window.CONFIG = {
        meme:    { no: "...", yes: "..." } → 🙅 / 😍 wala meme
        firstPhoto: { src: "...jpg", say: "...", label: "..." } → side mein poori photo (polaroid) + bolne wala bubble
        game:    { title, say, hint, viruses, cutouts:[{src,say}], win } → "Covid bhagao" mini game (2020 mein dekho)
+       mana:    { title, say, hint, rooth, happy, win, actions:[{icon,label,gain,lines}], tease, taps } → "Roothna-manana" interactive (2022 mein dekho)
        grow:    { src, say, btn, meters, steps, hint } → tap karne pe badi hone wala interactive cutout (2021 mein dekho)
        cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
        photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke), wide: true (landscape photo, poori chaudai mein), span: true / stick: "🎓" (collage mein poori chaudai / emoji sticker), pos: "50% 15%" (lambi photo ka kaunsa hissa dikhe — chehra kat raha ho to isse upar/neeche khiskao) } */
@@ -154,7 +156,47 @@ window.CONFIG = {
         { src: "assets/photos/2021/6.jpg", cap: "Cute Nishu 🥰" },
       ],
     },
-    { year: 2022, title: "Hasi, jhagde aur pyaar",       caption: "Roothna-manana bhi humara favourite game ban gaya.",          photos: ["assets/photos/2022/1.jpg", "assets/photos/2022/2.jpg", "assets/photos/2022/3.jpg"] },
+    {
+      year: 2022, title: "Hasi, jhagde aur pyaar",
+      caption: "Roothna-manana bhi humara favourite game ban gaya.",
+      song: "roothna",
+      mana: {
+        title: "Roothi Nishu ko manao 😤➜🥰",
+        say: "Nishu rooth gayi hai 😤 Manao use!",
+        hint: "gusse ka meter 100% karo… par chhedna mat 😜",
+        rooth: "assets/photos/2022/rooth.png",
+        happy: "assets/photos/2022/hug-hoodie.png",
+        win: "Maan gayi! 🥰 Ab ek tight hug do 🤗",
+        winLabel: "Maan gayi 🥰",
+        after: "Maan to gayi… ab aur kitna manaoge 🥰",
+        actions: [
+          { icon: "🍫", label: "Chocolate", gain: 24, lines: ["Chocolate le li… par baat abhi band hai 😒🍫", "Hmm… ye wala achha hai 🍫", "Ek aur de do, phir sochti hoon 😋"] },
+          { icon: "🌹", label: "Phool", gain: 20, lines: ["Phool? Filmy mat bano 🙄🌹", "Achha… thodi si smile aa gayi 🙂", "Phool achha hai, par chocolate zyada 😝"] },
+          { icon: "🥺", label: "Sorry", gain: 14, lines: ["Sorry bolne se kya hoga? Phir bolo 🥺", "Aankhein chhoti karke bol rahe ho? Cute lag rahe ho 😒", "Theek hai theek hai… maaf kiya (thoda sa) 🙂"] },
+          { icon: "🤗", label: "Hug", gain: 30, lines: ["Hug? Door raho… achha thoda paas aao 🤏", "Hug se pighal gayi 🥹", "Ab to bilkul pighal gayi 🤗"] },
+        ],
+        tease: { icon: "😜", label: "Chhedo", lose: 25, lines: ["Tune phir chheda?! 😤", "Ab to baat hi nahi karni 🙅‍♀️", "Hmph! 😠 Mooh pher liya"] },
+        taps: {
+          angry: ["Haath mat lagao! 😤", "Mooh phera hai, dikh nahi raha? 🙄", "Baat nahi karni! 😠"],
+          mid: ["Hmm… ab bolo 😒", "Thoda sa gussa baaki hai 🙂"],
+          happy: ["Hehe 😘", "Ab kya? 🥰", "Itna kya dekh rahe ho 🙈"],
+        },
+      },
+      photos: [
+        { src: "assets/photos/2022/1.jpg", pos: "50% 25%", cap: "Kaam ke beech bhi ek smile 😏💻" },
+        { src: "assets/photos/2022/hug-door.png", cutout: true, cap: "Itne din baad mile to seedha hug 🤗" },
+        { src: "assets/photos/2022/3.jpg", pos: "50% 20%", cap: "Chashme wali cutie 🤓" },
+        { src: "assets/photos/2022/4.jpg", pos: "50% 25%", cap: "Raat, rooftop aur tum 🌃", stick: "🌙" },
+        { src: "assets/photos/2022/5.jpg", pos: "50% 25%", cap: "Aankhein badi karke gussa? 👀" },
+        { src: "assets/photos/2022/6.jpg", cap: "Roothi thi… cake ne mana liya 🍫", stick: "🍰" },
+        { src: "assets/photos/2022/7.jpg", pos: "50% 25%", cap: "Video call wali Nishu 📱 (neeche main bhi hoon 😄)", stick: "📱" },
+        { src: "assets/photos/2022/8.jpg", pos: "50% 25%", cap: "Sabse pyaari wali photo 💙", stick: "💙" },
+        { src: "assets/photos/2022/9.jpg", pos: "50% 30%", cap: "Selfie meri, nazar sab ki Nishu pe 😎" },
+        { src: "assets/photos/2022/red-couple.png", cutout: true, cap: "Lal kurte mein meri Nishu ❤️" },
+        { src: "assets/photos/2022/11.jpg", pos: "50% 30%", cap: "Gusse ka antidote: ek tight hug 🤗" },
+        { src: "assets/photos/2022/12.jpg", pos: "50% 20%", cap: "Coffee peeche, nazar kisi aur pe 👀☕", stick: "☕" },
+      ],
+    },
     { year: 2023, title: "Har din tumhare naam",         caption: "Tumhari smile mera sabse bada sukoon.",                       photos: ["assets/photos/2023/1.jpg", "assets/photos/2023/2.jpg", "assets/photos/2023/3.jpg"] },
     { year: 2024, title: "Aur bhi khoobsurat",           caption: "Har saal tum aur pyaari ho jaati ho, ye kaise karti ho?",     photos: ["assets/photos/2024/1.jpg", "assets/photos/2024/2.jpg", "assets/photos/2024/3.jpg"] },
     { year: 2025, title: "Pakki wali jodi",              caption: "Ab tum sirf meri aadat nahi, meri zaroorat ho.",              photos: ["assets/photos/2025/1.jpg", "assets/photos/2025/2.jpg", "assets/photos/2025/3.jpg"] },

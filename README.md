@@ -63,6 +63,7 @@ assets/photos/
 | `seene-se-lag-jao.m4a` | Chal Wahan Jaate Hain (Arijit Singh) | 2018 wali slide | [link](https://youtube.com/shorts/CbCRFa6rGes) |
 | `milne-lage-dil.m4a` | Milne Lage Dil | 2019 wali slide (college) | [link](https://youtube.com/shorts/arMXbyQymBk) |
 | `tu-chahiye.m4a` | Tu Chahiye (Atif Aslam) | 2020 wali slide (covid) | [link](https://youtube.com/shorts/iuT7uymjWHw) |
+| `pal.m4a` | Pal (Arijit Singh, Shreya Ghoshal) | 2022 wali slide | [link](https://youtube.com/shorts/4w18rVG2Zso) |
 | `kal-chaudhvin.m4a` | Kal Chaudhvin Ki Raat (Jagjit Singh) | Tab vs Ab | [link](https://youtube.com/shorts/wU1YwyH4DIs) |
 | `pal-pal-dil-ke-paas.m4a` | Pal Pal Dil Ke Paas | Swipe photos | [link](https://youtube.com/shorts/vGj0UiBlAyM) |
 | `tu-ho-toh.m4a` | Tu Ho Toh | "Tu ho toh" photo | [link](https://youtube.com/shorts/iw4A57Asp-4) |
