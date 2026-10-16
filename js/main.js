@@ -333,8 +333,9 @@
     const n = C.timeline.length, first = C.timeline[0].year, last = C.timeline[n - 1].year;
     C.timeline.forEach((t, k) => {
       const side = t.firstPhoto || t.cutout;   // side mein dikhne wali photo (poori ya cutout)
-      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game || t.mana || t.calendar || t.love || t.battery ? ' meme-year' : '') + (t.collage ? ' collage-year' : '') + (t.love ? ' love-year' : ''));
+      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game || t.mana || t.calendar || t.love || t.battery || t.jars ? ' meme-year' : '') + (t.collage ? ' collage-year' : '') + (t.love ? ' love-year' : '') + (t.jars ? ' gold-year' : ''));
       if (t.love) s.appendChild(lovePetals());   // peeche rising hearts
+      if (t.jars) s.appendChild(lovePetals(['✨', '⭐', '🌟', '💛', '🎈', '🎂']));   // peeche udte sitare
       // 🏍️ safar ki road: bike is saal tak chal ke rukti hai
       const journey = t.journey ? `
         <div class="journey anim" style="--to: ${(((k + 1) / n) * 100).toFixed(1)}%">
@@ -389,6 +390,8 @@
       if (t.love) grid.prepend(loveCard(t.love));
       // 🔋 aadat se zaroorat: Battery + Nishu charger (config: timeline[].battery)
       if (t.battery) grid.prepend(batteryCard(t.battery));
+      // 📒 8 saal ka hisaab: Seekha / Hasi / Baatein ke shishe (config: timeline[].jars)
+      if (t.jars) grid.prepend(jarsCard(t.jars, s));
       inner.appendChild(grid);
       // 🧷 collage ke tukde scroll karke jab dikhein tab gir ke aate hain (bars bhi tab bharte hain)
       if (t.collage) {
@@ -747,10 +750,9 @@
   }
 
   // 💖 peeche udte hue dil (love-year slide ke liye)
-  function lovePetals() {
+  function lovePetals(list = ['💖', '💕', '💗', '❤️', '💘', '🌸']) {
     const box = el('div', 'love-hearts');
     box.setAttribute('aria-hidden', 'true');
-    const list = ['💖', '💕', '💗', '❤️', '💘', '🌸'];
     for (let i = 0; i < 12; i++) {
       const h = el('span', '', list[i % list.length]);
       h.style.left = rand(2, 96).toFixed(1) + '%';
@@ -912,6 +914,107 @@
     charger.addEventListener('click', () => { charger.classList.remove('squish'); void charger.offsetWidth; charger.classList.add('squish'); charge(); });
     away.addEventListener('click', leave);
     say(b.say || 'Meri battery low hai 🪫 Nishu se charge karo!');
+    render();
+    return card;
+  }
+
+  // 📒 "8 Saal Ka Hisaab": Seekha / Hasi / Baatein ke 3 shishe, tap karke bharo (config: timeline[].jars)
+  function jarsCard(j, slide) {
+    const jars = j.jars || [];
+    const card = el('div', 'jar-card anim', `
+      <div class="bubble"></div>
+      <p class="game-title">${esc(j.title || '8 Saal Ka Hisaab 📒')}</p>
+      <div class="jar-stats">
+        <span><b class="jar-days">0</b><small>din saath</small></span>
+        <span><b>∞</b><small>hasi</small></span>
+        <span><b>∞</b><small>baatein</small></span>
+      </div>
+      <div class="jar-row">
+        ${jars.map((x, i) => `<button class="jar" data-i="${i}" style="--jc:${esc(x.color || '#e8c27a')}" aria-label="${esc(x.name)} ka shisha, tap karo">
+          <span class="jar-lid"></span>
+          <span class="jar-glass"><i class="jar-liquid"></i></span>
+          <span class="jar-name">${esc(x.name)}</span>
+          <span class="jar-n">0/${(x.items || []).length}</span>
+        </button>`).join('')}
+      </div>
+      <div class="cal-bar">
+        <div class="cal-meter"><span class="cal-count"></span><i><b></b></i></div>
+        <button class="btn cal-next jar-all">Sab kuch bharo ✨</button>
+      </div>
+      <p class="jar-final" hidden>${esc(j.finalText || 'Sab aapse hi hai ❤️')}</p>
+      <p class="tiny muted game-hint">${esc(j.hint || 'har shishe pe tap karo… dekho 8 saal mein kitna kuch bhar gaya 💛')}</p>`);
+    const bubble = $('.bubble', card), btns = $$('.jar', card), final = $('.jar-final', card), all = $('.jar-all', card);
+    const count = $('.cal-count', card), bar = $('.cal-meter b', card), daysEl = $('.jar-days', card);
+    const say = text => { bubble.textContent = text; bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop'); };
+    const n = jars.map(() => 0);
+    const total = jars.reduce((a, x) => a + (x.items || []).length, 0);
+    let done = false, counted = false;
+
+    // din saath: slide pe aate hi 0 se ginti
+    const countUp = () => {
+      if (counted) return; counted = true;
+      const target = j.days || 2922, t0 = performance.now();
+      const step = now => {
+        const k = Math.min(1, (now - t0) / 1800);
+        daysEl.textContent = Math.round(target * (1 - Math.pow(1 - k, 3))).toLocaleString('en-IN');
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    slide?.addEventListener('enter', () => setTimeout(countUp, 900));
+
+    const render = () => {
+      const filled = n.reduce((a, b) => a + b, 0);
+      count.textContent = `${filled} / ${total} yaadein bharin 💛`;
+      bar.style.width = (total ? (filled / total) * 100 : 0) + '%';
+      btns.forEach((b, i) => {
+        const len = (jars[i].items || []).length;
+        $('.jar-liquid', b).style.height = (len ? (n[i] / len) * 100 : 0) + '%';
+        $('.jar-n', b).textContent = `${n[i]}/${len}`;
+        b.classList.toggle('full', n[i] >= len && len > 0);
+      });
+    };
+    const add = i => {
+      const x = jars[i], len = (x.items || []).length;
+      if (n[i] >= len) { say(`${x.name} wala shisha to full hai 😄 dusra bharo!`); return false; }
+      const it = x.items[n[i]];
+      n[i]++;
+      // shishe mein gir-ta hua emoji
+      const glass = $('.jar-glass', btns[i]);
+      const drop = el('span', 'jar-drop', esc(it.e || x.emoji || '✨'));
+      glass.appendChild(drop);
+      setTimeout(() => drop.remove(), 900);
+      say(`${it.e || ''} ${it.t}`.trim());
+      render();
+      const [cx, cy] = center(btns[i]);
+      sparkle(cx, cy - 30, 5, 50, 80, [it.e || '✨', '✨', '💛']);
+      if (n[i] >= len) { burst(cx, cy, 20, 6); }
+      if (!done && n.every((v, k) => v >= (jars[k].items || []).length)) win();
+      return true;
+    };
+    const win = () => {
+      done = true;
+      final.hidden = false;
+      final.classList.remove('pop'); void final.offsetWidth; final.classList.add('pop');
+      say(j.win || '8 saal, 3 shishe, ek hi jawab: sab aapse hi hai ❤️');
+      celebrate(); setTimeout(celebrate, 800); setTimeout(celebrate, 1700);
+      all.textContent = 'Phir se khali karo 🔄';
+    };
+    const reset = () => {
+      n.fill(0); done = false; final.hidden = true; all.textContent = 'Sab kuch bharo ✨';
+      render(); say(j.say || 'Shishon pe tap karo 💛');
+    };
+    btns.forEach((b, i) => b.addEventListener('click', () => add(i)));
+    all.addEventListener('click', () => {
+      if (done) return reset();
+      all.disabled = true;
+      const iv = setInterval(() => {
+        const open = jars.map((x, i) => i).filter(i => n[i] < (jars[i].items || []).length);
+        if (!open.length) { clearInterval(iv); all.disabled = false; return; }
+        add(open[(Math.random() * open.length) | 0]);
+      }, 420);
+    });
+    say(j.say || 'Shishon pe tap karo 💛');
     render();
     return card;
   }

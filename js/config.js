@@ -63,6 +63,7 @@ window.CONFIG = {
        calendar:{ title, say, hint, win, praise, mascot:{src,lines}, months:[{m,src,cap,pos}] } → 12 mahine ka "Smile Calendar" (2023 mein dekho)
        love:    { title, say, hint, win, praise, couple:{src,lines}, levels:[{src,title,cap,pos}] } → dil ke shape wala "Love Level Up" (2024 mein dekho)
        battery: { title, device, start, say, charger, couple, needs:[{aadat,zaroorat}], charging, leaving, win } → "Aadat se Zaroorat" battery interactive (2025 mein dekho)
+       jars:    { title, say, hint, days, finalText, win, jars:[{name,color,emoji,items:[{e,t}]}] } → "8 Saal Ka Hisaab" shishe wala interactive (2026 mein dekho)
        grow:    { src, say, btn, meters, steps, hint } → tap karne pe badi hone wala interactive cutout (2021 mein dekho)
        cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
        photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke), wide: true (landscape photo, poori chaudai mein), span: true / stick: "🎓" (collage mein poori chaudai / emoji sticker), pos: "50% 15%" (lambi photo ka kaunsa hissa dikhe — chehra kat raha ho to isse upar/neeche khiskao) } */
@@ -297,7 +298,45 @@ window.CONFIG = {
         { src: "assets/photos/2025/14.jpg", cap: "Film wali look 🎞️ — heroine ban gayi ✨", pos: "50% 30%", stick: "✨" },
       ],
     },
-    { year: 2026, title: "Aaj — tumhara din ✨",          caption: "8 saal baad bhi dil wahi kehta hai: sirf tum.",              photos: ["assets/photos/2026/1.jpg", "assets/photos/2026/2.jpg", "assets/photos/2026/3.jpg"] },
+    {
+      year: 2026, title: "Aaj — tumhara din ✨",
+      caption: "8 saal mein kitna kuch seekha saath mein, kitni hasi, kitni baatein — sab aapse hi hai ❤️",
+      jars: {
+        title: "8 Saal Ka Hisaab 📒",
+        say: "Teen shishe hain… tap karke bharo 💛",
+        hint: "har shishe pe tap karo, ya 'Sab kuch bharo' dabao — dekho 8 saal mein kitna kuch bhar gaya 💛",
+        days: 2922,
+        finalText: "Sab aapse hi hai ❤️",
+        win: "8 saal, 3 shishe, ek hi jawab: sab aapse hi hai ❤️",
+        jars: [
+          { name: "Seekha 📚", color: "#e8c27a", emoji: "📚", items: [
+            { e: "⏳", t: "Sabr rakhna aapse seekha" },
+            { e: "👂", t: "Pehle sunna, phir bolna" },
+            { e: "🥺", t: "Maafi maangna aasaan nahi, par zaroori" },
+            { e: "🤝", t: "Pyaar mein 'main' nahi, 'hum' hota hai" },
+          ] },
+          { name: "Hasi 😂", color: "#ff7aa8", emoji: "😂", items: [
+            { e: "🤣", t: "Wo bina wajah ki hasi" },
+            { e: "😆", t: "Peeche se aake darana" },
+            { e: "🍕", t: "Khaane pe jhagda, phir hasi" },
+            { e: "😝", t: "Selfie mein zubaan nikalna" },
+          ] },
+          { name: "Baatein 💬", color: "#7fb8ff", emoji: "💬", items: [
+            { e: "🌙", t: "Raat ke 2 baje wali baatein" },
+            { e: "🗣️", t: "Meri bakwaas bhi dhyan se sunna" },
+            { e: "💭", t: "Wo chhote-chhote sapne" },
+            { e: "🤫", t: "Wo baatein jo sirf hum dono jaante hain" },
+          ] },
+        ],
+      },
+      cutout: { src: "assets/photos/2026/glasses.png", say: "I don't care? Par mujhe tumhari bahut care hai 😎❤️" },
+      photos: [
+        { src: "assets/photos/2026/1.jpg", wide: true, cap: "Selfie queen aur peeche main 😄 (zubaan andar kar lo 😜)", stick: "😜" },
+        { src: "assets/photos/2026/2.jpg", pos: "50% 20%", cap: "Chocolate ke saamne duniya bhool jaati ho 🍫", stick: "🍫" },
+        { src: "assets/photos/2026/3.jpg", wide: true, cap: "Wednesday ho ya Sunday — selfie to banti hai 🤳", stick: "🤳" },
+        { src: "assets/photos/2026/back.png", cutout: true, cap: "Phool jaisi, phool ke saath 🌼" },
+      ],
+    },
   ],
 
   /* ---------------- 🌟 SPECIAL PHOTOS (apne gaane ke saath) ---------------- */
