@@ -296,6 +296,44 @@ body.locked .stage { visibility: hidden; }
   padding: 6px 12px; border-radius: 999px; font-size: .8rem;
   border: 1px solid var(--line); color: var(--gold2); background: var(--card);
 }
+.nine { display: inline-block; font-size: .62em; color: var(--rose2); text-shadow: 0 0 22px rgba(255, 122, 168, .4); }
+
+/* 😜 funny sticker (background hata hua photo) */
+.sticker-wrap { display: flex; flex-direction: column; align-items: center; margin-top: 14px !important; }
+.sticker-wrap[hidden] { display: none; }
+.bubble {
+  position: relative; max-width: min(300px, 86vw); min-height: 2.6em;
+  padding: 9px 16px; margin-bottom: 14px; border-radius: 18px;
+  background: #fff; color: var(--ink);
+  font-family: var(--hand); font-weight: 700; font-size: 1.35rem; line-height: 1.15;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .4);
+  display: flex; align-items: center; justify-content: center; text-align: center;
+}
+.bubble::after {
+  content: ''; position: absolute; left: 50%; bottom: -10px; margin-left: -10px;
+  border: 10px solid transparent; border-bottom: 0; border-top-color: #fff;
+}
+.bubble.pop { animation: pop .45s cubic-bezier(.3, 1.6, .5, 1); }
+.sticker {
+  --w: min(22vh, 210px);
+  border: 0; background: none; padding: 0; cursor: pointer;
+  width: var(--w); aspect-ratio: 464 / 580; overflow: hidden;
+  transform-origin: 50% 100%;
+  animation: wobble 3.2s ease-in-out infinite;
+  -webkit-mask-image: linear-gradient(#000 62%, transparent 98%);
+  mask-image: linear-gradient(#000 62%, transparent 98%);
+}
+.sticker img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top; pointer-events: none; -webkit-user-drag: none;
+  filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 8px 12px rgba(0, 0, 0, .45));
+}
+/* bade laptop screen pe sticker title ke bagal mein, bada */
+@media (min-width: 1180px) and (min-height: 600px) {
+  .sticker-wrap { position: absolute; left: 100%; top: 0; bottom: 0; width: 280px; margin: 0 0 0 36px !important; justify-content: center; }
+  .sticker { --w: min(36vh, 270px); }
+}
+.sticker.squish { animation: squish .5s cubic-bezier(.3, 1.6, .5, 1), wobble 3.2s ease-in-out .5s infinite; }
+
 .year-slide .slide-inner { max-width: 460px; }
 .year-num {
   font-family: var(--serif); font-weight: 600; line-height: 1;
@@ -569,6 +607,9 @@ body.locked .stage { visibility: hidden; }
 #replay { margin-top: 22px !important; }
 
 /* ============ KEYFRAMES ============ */
+@keyframes wobble { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+@keyframes squish { 0% { transform: scale(1, 1); } 30% { transform: scale(1.18, .82); } 60% { transform: scale(.92, 1.1) rotate(-6deg); } 100% { transform: scale(1, 1); } }
+@keyframes pop { from { opacity: 0; transform: scale(.6) translateY(10px); } to { opacity: 1; transform: none; } }
 @keyframes riseIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
 @keyframes drop {
   from { opacity: 0; transform: translateY(-60px) rotate(calc(var(--r, 0deg) + 14deg)) scale(1.25); }

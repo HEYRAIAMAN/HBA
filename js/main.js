@@ -150,10 +150,10 @@
      ========================================================= */
   const EMOJI = ['✨', '🌸', '🦋', '💖', '🌷', '✨', '🦋'];
   let liveTrail = 0;
-  function sparkle(x, y, n = 1, spread = 14, lift = 70) {
+  function sparkle(x, y, n = 1, spread = 14, lift = 70, list = EMOJI) {
     for (let k = 0; k < n && liveTrail < 60; k++) {
       liveTrail++;
-      const s = el('span', 'trail', EMOJI[(Math.random() * EMOJI.length) | 0]);
+      const s = el('span', 'trail', list[(Math.random() * list.length) | 0]);
       s.style.setProperty('--fs', rand(13, 24).toFixed(0) + 'px');
       document.body.appendChild(s);
       const dx = rand(-spread, spread), dy = -rand(lift * .4, lift), r = rand(-50, 50);
@@ -309,6 +309,27 @@
       after.after(s);
       after = s;
     });
+  })();
+
+  // 😜 Funny sticker: tap karo to naya joke + 🌼 udte hain
+  (function sticker() {
+    const wrap = $('#sticker'), btn = $('#sticker-btn'), bubble = $('#bubble'), img = $('img', btn);
+    const lines = C.stickerLines?.length ? C.stickerLines : ['😜'];
+    let k = -1;
+    img.addEventListener('error', () => (wrap.hidden = true));   // photo nahi mili to sticker chhupa do
+    const say = () => {
+      k = (k + 1) % lines.length;
+      bubble.textContent = lines[k];
+      bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop');
+    };
+    btn.addEventListener('click', () => {
+      say();
+      btn.classList.remove('squish'); void btn.offsetWidth; btn.classList.add('squish');
+      const [x, y] = center(btn);
+      sparkle(x, y - 20, 9, 70, 110, ['🌼', '🌼', '✨', '😜', '💛']);
+      burst(x, y, 14, 6);
+    });
+    $('#s-timeline').addEventListener('enter', () => { if (k < 0) setTimeout(say, 1300); });
   })();
 
   // 🌟 Spotlights

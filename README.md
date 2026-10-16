@@ -124,7 +124,7 @@ Phir browser mein kholo: **http://localhost:8000**
 
 1. 🔐 Password lock (galat password pe funny message)
 2. 🎉 Happy Birthday + naam typing + confetti + balloons (+ countdown)
-3. 📅 8 Saal Ka Safar: har saal ki alag slide, photos upar se girti hain (photo pe tap karo to badi dikhegi)
+3. 📅 8 Saal Ka Safar, 9wa Shuru: pehli slide pe Nishu ka funny sticker (`assets/photos/special/nishu-sticker.png`). Tap karo to speech bubble mein naya joke aata hai, jokes `stickerLines` mein badal sakte ho. Phir har saal ki alag slide, photos upar se girti hain (photo pe tap karo to badi dikhegi)
 4. 🌟 "Dekhne mein kitni bholi bhali" special photo
 5. 🎬 Grow-up videos (har video ki alag slide)
 6. ⇆ Tab vs Ab slider

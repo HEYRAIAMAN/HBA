@@ -35,6 +35,17 @@ window.CONFIG = {
     letter:   { file: "assets/music/mere-khayalon-ki-malika.m4a", title: "Mere Khayalon Ki Malika — Abhijeet" },
   },
 
+  /* ---------------- 😜 FUNNY STICKER ("8 Saal Ka Safar" wali pehli slide pe) ----------------
+     Sticker pe tap karne se ye lines ek-ek karke aati hain. Apni marzi se badlo/badhao. */
+  stickerLines: [
+    "Oye! Mujhe tap karo 👆😜",
+    "Duck face wali Nishu 🦆",
+    "Ye chashma meri jaan hai 🌼😎",
+    "9wa saal bhi jhelna padega 😝",
+    "Main cute hoon, pata hai 😌",
+    "Aage badho na, kya dekh rahe ho! 🙈",
+  ],
+
   /* ---------------- 📅 8 SAAL KA SAFAR ----------------
      Har saal ki photos: assets/photos/2018/1.jpg, 2.jpg, 3.jpg ...
      Photos zyada/kam ho to list mein add/remove kar do. */
