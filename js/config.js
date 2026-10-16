@@ -54,22 +54,21 @@ window.CONFIG = {
        song:    us saal ka alag gaana (upar "songs" ka naam)
        journey: true  → 🏍️ "safar shuru" wali road
        meme:    { no: "...", yes: "..." } → 🙅 / 😍 wala meme
+       firstPhoto: { src: "...jpg", say: "...", label: "..." } → side mein poori photo (polaroid) + bolne wala bubble
        cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
-       photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe) } */
+       photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke) } */
   timeline: [
     {
       year: 2018, title: "Jahan se sab shuru hua",
       caption: "Pata hi nahi tha ki Golu bhaiya se kab Goluuuu ban gaya… jaha bhagwan se mangi hui achi ladki ki dua aur aap mil gaye",
       song: "seene",
       journey: true,
-      meme: { no: "Golu bhaiya", yes: "Goluuuu ❤️" },
-      cutout: { src: "assets/photos/2018/cutout.png", say: "Ek Celebrations ka dabba… aur safar shuru 🍫🏍️" },
+      firstPhoto: { src: "assets/photos/2018/first.jpg", say: "Ek Celebrations ka dabba… aur safar shuru 🍫🏍️", label: "Humari pehli photo 📸" },
       photos: [
-        { src: "assets/photos/2018/1.jpg", cap: "Amer Fort bhi sharma gaya 🏰🙈" },
-        { src: "assets/photos/2018/2.jpg", cap: "Wallpaper bhi tum, time bhi tum ⌚" },
+        { src: "assets/photos/2018/watch.png", cutout: true },
         { src: "assets/photos/2018/3.jpg", cap: "Madam ka pout 😗 vs Golu ka swag 😎" },
-        { src: "assets/photos/2018/4.jpg", cap: "King of Good Times 🍺 (asli wali tum ho)" },
-        { src: "assets/photos/2018/5.jpg", cap: "Papa: \"aaj bahut thand h\" 😆 · phone pe kaun tha? 🤭", fit: "contain" },
+        { src: "assets/photos/2018/4.jpg" },
+        { src: "assets/photos/2018/5.jpg", fit: "contain" },
       ],
     },
     { year: 2019, title: "Dosti se kuch zyada",          caption: "Baatein lambi hone lagi, aur raatein chhoti.",                 photos: ["assets/photos/2019/1.jpg", "assets/photos/2019/2.jpg", "assets/photos/2019/3.jpg"] },

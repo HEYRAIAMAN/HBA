@@ -738,3 +738,30 @@ body.locked .stage { visibility: hidden; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .balloons { display: none; }
 }
+
+/* 📸 side mein poori photo (polaroid) — "humari pehli photo" */
+.year-cut.full .year-cut-btn {
+  aspect-ratio: auto; width: min(46vw, 200px); padding: 6px 6px 8px; background: var(--paper); border-radius: 4px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .5);
+  -webkit-mask-image: none; mask-image: none;
+}
+.year-cut.full .year-cut-btn img { height: auto; aspect-ratio: 1179 / 1520; object-fit: cover; filter: none; border-radius: 2px; }
+.year-cut.full .pol-cap { display: block; margin-top: 6px; }
+
+/* 🕰️ background hata hua cutout, photo grid ke andar (bina polaroid frame ke) */
+.polaroid.cut-item { background: none; box-shadow: none; padding: 0; display: flex; align-items: center; justify-content: center; }
+.polaroid.cut-item .ph-wrap { background: none; aspect-ratio: auto; overflow: visible; width: 100%; }
+.polaroid.cut-item .ph-wrap img {
+  height: auto; max-height: 100%; object-fit: contain; filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 10px 16px rgba(0, 0, 0, .5));
+}
+@media (min-width: 1280px) {
+  .meme-year .year-cut.full .year-cut-btn { width: min(14vw, 25vh); }
+}
+
+/* polaroids apni height pe rahein (lambe watch cutout ke saath kheench na jayein) */
+.polaroids { align-items: start; }
+.polaroid.cut-item { justify-self: center; align-self: center; }
+.polaroid.cut-item .ph-wrap img { width: auto; max-width: 100%; max-height: min(42vh, 340px); margin: 0 auto; display: block; }
+@media (min-width: 1280px) {
+  .meme-year .year-cut.full { bottom: 14px; }
+}

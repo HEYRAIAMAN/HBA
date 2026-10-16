@@ -291,7 +291,8 @@
     let after = $('#s-timeline');
     const n = C.timeline.length, first = C.timeline[0].year, last = C.timeline[n - 1].year;
     C.timeline.forEach((t, k) => {
-      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme ? ' meme-year' : ''));
+      const side = t.firstPhoto || t.cutout;   // side mein dikhne wali photo (poori ya cutout)
+      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side ? ' meme-year' : ''));
       // 🏍️ safar ki road: bike is saal tak chal ke rukti hai
       const journey = t.journey ? `
         <div class="journey anim" style="--to: ${(((k + 1) / n) * 100).toFixed(1)}%">
@@ -317,7 +318,7 @@
       const grid = el('div', 'polaroids');
       (t.photos || []).forEach((p, j) => {
         const src = typeof p === 'string' ? p : p.src;
-        const f = el('figure', 'polaroid' + (p.fit === 'contain' ? ' contain' : ''));
+        const f = el('figure', 'polaroid' + (p.fit === 'contain' ? ' contain' : '') + (p.cutout ? ' cut-item' : ''));
         f.style.setProperty('--r', ((j % 2 ? 1 : -1) * rand(1.5, 4)).toFixed(1) + 'deg');
         f.style.setProperty('--p', j);
         f.appendChild(photo(src, { zoom: true, alt: `${C.name} ${t.year}` }));
@@ -325,12 +326,13 @@
         grid.appendChild(f);
       });
       inner.appendChild(grid);
-      // 😜 side mein cutout: tap karo to squish + 🍫 udte hain
-      if (t.cutout?.src) {
-        const cut = el('div', 'year-cut anim', `
-          ${t.cutout.say ? `<div class="bubble">${esc(t.cutout.say)}</div>` : ''}
-          <button class="year-cut-btn" aria-label="${esc(C.name)} ${esc(t.year)} cutout, tap karo">
-            <img src="${esc(t.cutout.src)}" alt="" draggable="false">
+      // 😜 side mein photo (firstPhoto = poori photo polaroid mein, cutout = background hata hua): tap karo to squish + 🍫 udte hain
+      if (side?.src) {
+        const cut = el('div', 'year-cut anim' + (t.firstPhoto ? ' full' : ''), `
+          ${side.say ? `<div class="bubble">${esc(side.say)}</div>` : ''}
+          <button class="year-cut-btn" aria-label="${esc(C.name)} ${esc(t.year)}, tap karo">
+            <img src="${esc(side.src)}" alt="" draggable="false">
+            ${t.firstPhoto && side.label ? `<span class="pol-cap">${esc(side.label)}</span>` : ''}
           </button>`);
         const btn = $('button', cut);
         $('img', cut).addEventListener('error', () => cut.remove());
