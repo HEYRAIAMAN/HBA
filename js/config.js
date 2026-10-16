@@ -22,17 +22,17 @@ window.CONFIG = {
      Har section ka apna gaana hai. Scroll karte hi gaana badal jata hai.
      mp3 files "assets/music/" folder mein inhi naamon se daalo. */
   songs: {
-    hero:     { file: "assets/music/tera-phool-sa.mp3",           title: "Tera Phool Sa Hai Ang" },
-    timeline: { file: "assets/music/chalte-chalte.mp3",           title: "Chalte Chalte Yun Hi Koi Mil Gaya Tha" },
-    bholi:    { file: "assets/music/voh-dekhne-mein.mp3",         title: "Voh Dekhne Mein — Ali Zafar" },
-    videos:   { file: "assets/music/offcampus-reconnect.mp3",     title: "When you both reconnect again 💛" },
-    thennow:  { file: "assets/music/kal-chaudhvin.mp3",           title: "Kal Chaudhvin Ki Raat — Jagjit Singh" },
-    swipe:    { file: "assets/music/pal-pal-dil-ke-paas.mp3",     title: "Pal Pal Dil Ke Paas — Kishore Kumar" },
-    tuhotoh:  { file: "assets/music/tu-ho-toh.mp3",               title: "Tu Ho Toh 🤌" },
-    reasons:  { file: "assets/music/suno-na.mp3",                 title: "Suno Na Suno Na — Chalte Chalte" },
-    quiz:     { file: "assets/music/offcampus-black-yellow.mp3",  title: "Always black & yellow 💛" },
-    cake:     { file: "assets/music/chaka-chak.mp3",              title: "Chaka Chak — Atrangi Re" },
-    letter:   { file: "assets/music/mere-khayalon-ki-malika.mp3", title: "Mere Khayalon Ki Malika — Abhijeet" },
+    hero:     { file: "assets/music/tera-phool-sa.m4a",           title: "Tera Phool Sa Hai Ang" },
+    timeline: { file: "assets/music/chalte-chalte.m4a",           title: "Chalte Chalte Yun Hi Koi Mil Gaya Tha" },
+    bholi:    { file: "assets/music/voh-dekhne-mein.m4a",         title: "Voh Dekhne Mein — Ali Zafar" },
+    videos:   { file: "assets/music/offcampus-reconnect.m4a",     title: "When you both reconnect again 💛" },
+    thennow:  { file: "assets/music/kal-chaudhvin.m4a",           title: "Kal Chaudhvin Ki Raat — Jagjit Singh" },
+    swipe:    { file: "assets/music/pal-pal-dil-ke-paas.m4a",     title: "Pal Pal Dil Ke Paas — Kishore Kumar" },
+    tuhotoh:  { file: "assets/music/tu-ho-toh.m4a",               title: "Tu Ho Toh 🤌" },
+    reasons:  { file: "assets/music/suno-na.m4a",                 title: "Suno Na Suno Na — Chalte Chalte" },
+    quiz:     { file: "assets/music/offcampus-black-yellow.m4a",  title: "Always black & yellow 💛" },
+    cake:     { file: "assets/music/chaka-chak.m4a",              title: "Chaka Chak — Atrangi Re" },
+    letter:   { file: "assets/music/mere-khayalon-ki-malika.m4a", title: "Mere Khayalon Ki Malika — Abhijeet" },
   },
 
   /* ---------------- 📅 8 SAAL KA SAFAR ----------------

@@ -46,29 +46,29 @@ assets/photos/
 
 ## 3️⃣ Gaane daalo 🎵
 
-`assets/music/` mein inhi naamon se **mp3** daalo:
+✅ **Saare gaane already `assets/music/` mein daal diye gaye hain (`.m4a` format, jo har phone pe chalta hai).** Badalna ho to same naam se nayi file daal do:
 
 | File ka naam | Gaana | Kahan bajega | Link |
 |---|---|---|---|
-| `tera-phool-sa.mp3` | Tera Phool Sa Hai Ang | Shuru (Happy Birthday) | [link](https://youtube.com/shorts/Fw53ohTv5Vc) |
-| `chalte-chalte.mp3` | Chalte Chalte Yun Hi Koi Mil Gaya Tha | 8 Saal Ka Safar | [link](https://youtube.com/shorts/iE9IQNyd_Aw) |
-| `voh-dekhne-mein.mp3` | Voh Dekhne Mein (Ali Zafar) | "Bholi bhali" photo | [link](https://youtube.com/shorts/e84IP6acLVk) |
-| `offcampus-reconnect.mp3` | When you both reconnect again | Videos section | [link](https://youtube.com/shorts/ex36_-5NitE) |
-| `kal-chaudhvin.mp3` | Kal Chaudhvin Ki Raat (Jagjit Singh) | Tab vs Ab | [link](https://youtube.com/shorts/wU1YwyH4DIs) |
-| `pal-pal-dil-ke-paas.mp3` | Pal Pal Dil Ke Paas | Swipe photos | [link](https://youtube.com/shorts/vGj0UiBlAyM) |
-| `tu-ho-toh.mp3` | Tu Ho Toh | "Tu ho toh" photo | [link](https://youtube.com/shorts/iw4A57Asp-4) |
-| `suno-na.mp3` | Suno Na Suno Na | Reasons cards | [link](https://youtube.com/shorts/Z03sygE__s0) |
-| `offcampus-black-yellow.mp3` | Black & yellow edit | Quiz | [link](https://youtube.com/shorts/8PWyLCzfPdE) |
-| `chaka-chak.mp3` | Chaka Chak | Cake 🎂 | [link](https://youtube.com/shorts/QRwl33U64LQ) |
-| `mere-khayalon-ki-malika.mp3` | Mere Khayalon Ki Malika (1 min) | Last letter ✉️ | [link](https://youtube.com/shorts/C49S0uyoA1o) |
+| `tera-phool-sa.m4a` | Tera Phool Sa Hai Ang | Shuru (Happy Birthday) | [link](https://youtube.com/shorts/Fw53ohTv5Vc) |
+| `chalte-chalte.m4a` | Chalte Chalte Yun Hi Koi Mil Gaya Tha | 8 Saal Ka Safar | [link](https://youtube.com/shorts/iE9IQNyd_Aw) |
+| `voh-dekhne-mein.m4a` | Voh Dekhne Mein (Ali Zafar) | "Bholi bhali" photo | [link](https://youtube.com/shorts/e84IP6acLVk) |
+| `offcampus-reconnect.m4a` | When you both reconnect again | Videos section | [link](https://youtube.com/shorts/ex36_-5NitE) |
+| `kal-chaudhvin.m4a` | Kal Chaudhvin Ki Raat (Jagjit Singh) | Tab vs Ab | [link](https://youtube.com/shorts/wU1YwyH4DIs) |
+| `pal-pal-dil-ke-paas.m4a` | Pal Pal Dil Ke Paas | Swipe photos | [link](https://youtube.com/shorts/vGj0UiBlAyM) |
+| `tu-ho-toh.m4a` | Tu Ho Toh | "Tu ho toh" photo | [link](https://youtube.com/shorts/iw4A57Asp-4) |
+| `suno-na.m4a` | Suno Na Suno Na | Reasons cards | [link](https://youtube.com/shorts/Z03sygE__s0) |
+| `offcampus-black-yellow.m4a` | Black & yellow edit | Quiz | [link](https://youtube.com/shorts/8PWyLCzfPdE) |
+| `chaka-chak.m4a` | Chaka Chak | Cake 🎂 | [link](https://youtube.com/shorts/QRwl33U64LQ) |
+| `mere-khayalon-ki-malika.m4a` | Mere Khayalon Ki Malika (1 min) | Last letter ✉️ | [link](https://youtube.com/shorts/C49S0uyoA1o) |
 
-**Kaise kaam karta hai:** scroll karte hi jo section screen ke beech mein hota hai, uska gaana aaram se fade hoke shuru hota hai. Chhote 10–15 sec wale gaane loop mein chalte rehte hain. Upar right mein 🎵 button se music band/chalu hota hai. Koi video play karo to gaana khud ruk jata hai.
+**Kaise kaam karta hai:** website slides mein chalti hai. Neeche **"Aage ➜"** dabao (ya laptop pe → arrow key) to agli slide aati hai, aur har slide ka gaana aaram se fade hoke shuru hota hai. Chhote 10–15 sec wale gaane loop mein chalte rehte hain. Upar right mein 🎵 button se music band/chalu hota hai. Koi video play karo to gaana khud ruk jata hai.
 
 **Shorts se mp3 kaise nikalein** (Mac Terminal mein):
 ```bash
 brew install yt-dlp ffmpeg
 cd ~/Desktop/HBA/assets/music
-yt-dlp -x --audio-format mp3 -o "chalte-chalte.%(ext)s" "https://youtube.com/shorts/iE9IQNyd_Aw"
+yt-dlp -f "bestaudio[ext=m4a]" -o "chalte-chalte.%(ext)s" "https://youtube.com/shorts/iE9IQNyd_Aw"
 # baaki gaano ke liye bhi same: -o "<file ka naam>.%(ext)s" "<link>"
 ```
 (Agar poora gaana chahiye, Shorts ki jagah poore gaane ka YouTube link use karo. Bas file ka naam same rakhna.)
@@ -119,16 +119,18 @@ Phir browser mein kholo: **http://localhost:8000**
 
 ---
 
-## Website ka flow
+## Website ka flow (har point ek slide hai, "Aage ➜" se aage badho)
+💚 Laptop pe cursor ek hara dil hai jiske peeche ✨🌸🦋 udte hain. Phone pe jahan tap karo wahan ye nikalte hain.
+
 1. 🔐 Password lock (galat password pe funny message)
 2. 🎉 Happy Birthday + naam typing + confetti + balloons (+ countdown)
-3. 📅 8 Saal Ka Safar: 2018 se 2026 tak ki timeline (photo pe tap karo to badi dikhegi)
+3. 📅 8 Saal Ka Safar: har saal ki alag slide, photos upar se girti hain (photo pe tap karo to badi dikhegi)
 4. 🌟 "Dekhne mein kitni bholi bhali" special photo
-5. 🎬 Grow-up videos
+5. 🎬 Grow-up videos (har video ki alag slide)
 6. ⇆ Tab vs Ab slider
 7. 📸 Swipe photo cards
 8. 🌟 "Tu ho toh" special photo
-9. 💌 12 Reasons flip cards
+9. 💌 12 Reasons: card pe tap karo to khulta hai, phir tap karo to agla
 10. 🎮 Quiz
 11. 🎂 Cake: phoonk ke ya tap karke candles bujhao
 12. ✉️ Lifafa khulta hai, letter type hota hai, phir "I Love You" ❤️

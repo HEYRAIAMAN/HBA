@@ -13,9 +13,7 @@
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const rand = (a, b) => a + Math.random() * (b - a);
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  $$('[data-name]').forEach(n => (n.textContent = C.name));
-  document.title = `Happy Birthday ${C.name} ❤️`;
+  const center = node => { const r = node.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
 
   /* ---------- Photo with placeholder (agar file nahi mili) ---------- */
   function photo(src, { zoom = false, alt = C.name } = {}) {
@@ -27,7 +25,6 @@
     if (!src) { missing(); return wrap; }
     const img = new Image();
     img.alt = alt;
-    img.loading = 'lazy';
     img.decoding = 'async';
     img.draggable = false;
     img.onerror = missing;
@@ -47,8 +44,9 @@
   lightbox.addEventListener('click', () => (lightbox.hidden = true));
 
   /* =========================================================
-     🎵 MUSIC — 2 audio players, section badalne pe crossfade
+     🎵 MUSIC — 2 audio players, slide badalne pe crossfade
      ========================================================= */
+  let videoPlaying = () => false;
   const Music = (() => {
     const players = [new Audio(), new Audio()];
     players.forEach(a => { a.loop = true; a.preload = 'auto'; a.setAttribute('playsinline', ''); });
@@ -80,15 +78,14 @@
     }
 
     function updateBtn() {
-      const playing = !players[cur].paused && !muted && !held;
-      btn.classList.toggle('playing', playing);
+      btn.classList.toggle('playing', !players[cur].paused && !muted && !held);
       btn.classList.toggle('off', muted);
     }
 
     function apply() {
       const song = wanted && C.songs[wanted];
       const A = players[cur];
-      if (document.hidden) {        // phone lock / dusra app — turant pause (background mein animation nahi chalti)
+      if (document.hidden) {        // phone lock / dusra app — turant pause
         players.forEach(p => p.pause());
         updateBtn();
         return;
@@ -117,10 +114,9 @@
       if (!old.paused) fade(old, 0, 1000, () => old.pause());
     }
 
-    // iOS/Android pe gaana sirf user ke tap ke baad chal sakta hai — dono players ko tap pe "unlock" karte hain
+    // phone pe gaana sirf user ke tap ke baad chal sakta hai — tap pe player "unlock" karte hain
     function unlock() {
-      const silent = silentWav();
-      players[cur].src = silent;
+      players[cur].src = silentWav();
       players[cur].play().catch(() => {});
       unlocked = true;
       btn.hidden = false;
@@ -133,7 +129,7 @@
 
     return {
       unlock,
-      setSection(key) { if (key && key !== wanted) { wanted = key; if (!Video.anyPlaying()) held = false; apply(); } },
+      setSection(key) { if (key && key !== wanted) { wanted = key; if (!videoPlaying()) held = false; apply(); } },
       hold(on) { held = on; apply(); },
     };
   })();
@@ -148,6 +144,54 @@
     for (let i = 0; i < n; i++) v.setUint8(44 + i, 128);
     return URL.createObjectURL(new Blob([b], { type: 'audio/wav' }));
   }
+
+  /* =========================================================
+     💚 CURSOR + ✨🌸🦋 trail
+     ========================================================= */
+  const EMOJI = ['✨', '🌸', '🦋', '💖', '🌷', '✨', '🦋'];
+  let liveTrail = 0;
+  function sparkle(x, y, n = 1, spread = 14, lift = 70) {
+    for (let k = 0; k < n && liveTrail < 60; k++) {
+      liveTrail++;
+      const s = el('span', 'trail', EMOJI[(Math.random() * EMOJI.length) | 0]);
+      s.style.setProperty('--fs', rand(13, 24).toFixed(0) + 'px');
+      document.body.appendChild(s);
+      const dx = rand(-spread, spread), dy = -rand(lift * .4, lift), r = rand(-50, 50);
+      const at = (px, py, sc, rot) => `translate(${px}px, ${py}px) translate(-50%, -50%) scale(${sc}) rotate(${rot}deg)`;
+      const a = s.animate([
+        { transform: at(x, y, .3, 0), opacity: 0 },
+        { transform: at(x + dx * .3, y + dy * .2, 1, r / 3), opacity: 1, offset: .15 },
+        { transform: at(x + dx, y + dy, .6, r), opacity: 0 },
+      ], { duration: rand(1100, 1800), easing: 'cubic-bezier(.2,.7,.3,1)' });
+      a.onfinish = a.oncancel = () => { s.remove(); liveTrail--; };
+    }
+  }
+  (function cursor() {
+    const dot = $('#cursor');
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!fine) {   // phone: jahan tap karo wahan ✨🌸🦋
+      addEventListener('pointerdown', e => sparkle(e.clientX, e.clientY, 5, 40, 80), { passive: true });
+      return;
+    }
+    document.documentElement.classList.add('has-cursor');
+    const HOVER = 'button, a, input, [role=button], .swipe-card, .compare, .zoomable img, .candle';
+    let lx = 0, ly = 0, lt = 0;
+    addEventListener('pointermove', e => {
+      if (e.pointerType !== 'mouse') return;
+      dot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+      dot.classList.add('show');
+      const now = performance.now();
+      if (!reduced && Math.hypot(e.clientX - lx, e.clientY - ly) > 26 && now - lt > 40) {
+        sparkle(e.clientX, e.clientY);
+        lx = e.clientX; ly = e.clientY; lt = now;
+      }
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => dot.classList.remove('show'));
+    document.addEventListener('mouseenter', () => dot.classList.add('show'));
+    addEventListener('pointerdown', e => { dot.classList.add('down'); sparkle(e.clientX, e.clientY, 7, 50, 90); });
+    addEventListener('pointerup', () => dot.classList.remove('down'));
+    document.addEventListener('pointerover', e => dot.classList.toggle('hover', !!e.target.closest?.(HOVER)));
+  })();
 
   /* =========================================================
      💖 Background hearts + 🎊 confetti
@@ -229,14 +273,156 @@
   drawHearts();
 
   /* =========================================================
+     🧱 Config se slides banao
+     ========================================================= */
+  $$('[data-name]').forEach(n => (n.textContent = C.name));
+  document.title = `Happy Birthday ${C.name} ❤️`;
+  $('#hero-sub').textContent = C.heroLine || '';
+  $('#pw-hint').textContent = C.passwordHint || '';
+  const newSlide = (song, cls = '') => {
+    const s = el('section', ('slide ' + cls).trim());
+    s.dataset.song = song;
+    return s;
+  };
+
+  // 📅 Har saal ki ek slide
+  (function timeline() {
+    $('#year-strip').innerHTML = C.timeline.map(t => `<span>${esc(t.year)}</span>`).join('');
+    let after = $('#s-timeline');
+    C.timeline.forEach((t, k) => {
+      const s = newSlide('timeline', 'year-slide');
+      const inner = el('div', 'slide-inner center', `
+        <p class="eyebrow anim">Saal ${k + 1} / ${C.timeline.length}</p>
+        <div class="year-num anim">${esc(t.year)}</div>
+        <h3 class="year-title anim">${esc(t.title)}</h3>
+        <p class="muted anim">${esc(t.caption)}</p>`);
+      const grid = el('div', 'polaroids');
+      (t.photos || []).forEach((p, j) => {
+        const f = el('figure', 'polaroid');
+        f.style.setProperty('--r', ((j % 2 ? 1 : -1) * rand(1.5, 4)).toFixed(1) + 'deg');
+        f.style.setProperty('--p', j);
+        f.appendChild(photo(p, { zoom: true, alt: `${C.name} ${t.year}` }));
+        grid.appendChild(f);
+      });
+      inner.appendChild(grid);
+      s.appendChild(inner);
+      after.after(s);
+      after = s;
+    });
+  })();
+
+  // 🌟 Spotlights
+  [['#spot-bholi', 'bholi'], ['#spot-tuhotoh', 'tuhotoh']].forEach(([sel, key]) => {
+    const s = C.spotlights?.[key];
+    const sec = $(sel);
+    if (!s) { sec.remove(); return; }
+    sec.dataset.song = s.song;
+    const inner = el('div', 'slide-inner center');
+    const songTitle = C.songs[s.song]?.title;
+    if (songTitle) inner.appendChild(el('span', 'song-tag anim', '🎵 ' + esc(songTitle)));
+    const frame = el('div', 'spot-frame anim');
+    frame.appendChild(photo(s.photo, { zoom: true }));
+    inner.appendChild(frame);
+    inner.appendChild(el('p', 'script spot-line anim', esc(s.line)));
+    inner.appendChild(el('p', 'spot-sub anim', esc(s.sub)));
+    sec.appendChild(inner);
+  });
+
+  // 🎬 Har video ki ek slide — video chale to background music ruk jaye
+  (function videos() {
+    const vids = [];
+    videoPlaying = () => vids.some(v => !v.paused && !v.ended);
+    const slot = $('#video-slot');
+    C.videos.forEach((v, k) => {
+      const s = newSlide('videos');
+      const inner = el('div', 'slide-inner center', `
+        <p class="eyebrow anim">Chapter 2 · Video ${k + 1} / ${C.videos.length}</p>
+        <h2 class="script anim">Meri Nishu, Badi Hote Hue</h2>`);
+      const card = el('figure', 'vid-card anim');
+      if (v.youtube) {
+        const f = el('iframe', v.vertical ? 'vertical' : '');
+        f.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.youtube)}?rel=0&playsinline=1&modestbranding=1&enablejsapi=1`;
+        f.title = v.caption || 'Video';
+        f.loading = 'lazy';
+        f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+        f.allowFullscreen = true;
+        card.appendChild(f);
+        s.addEventListener('leave', () => f.contentWindow?.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'));
+      } else {
+        const video = el('video');
+        video.controls = true;
+        video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.preload = 'metadata';
+        if (v.poster) video.poster = v.poster;
+        const fail = () => video.replaceWith(el('div', 'ph-wrap missing', `<div class="ph"><span>🎬</span><small>${esc(v.src || 'video')}</small></div>`));
+        card.appendChild(video);
+        if (!v.src) fail();
+        else {
+          video.addEventListener('error', fail);
+          video.src = v.src;
+          video.addEventListener('play', () => { vids.forEach(o => { if (o !== video) o.pause(); }); Music.hold(true); });
+          const release = () => { if (!videoPlaying()) Music.hold(false); };
+          video.addEventListener('pause', release);
+          video.addEventListener('ended', release);
+          vids.push(video);
+          s.addEventListener('leave', () => video.pause());
+        }
+      }
+      if (v.caption) card.appendChild(el('figcaption', '', esc(v.caption)));
+      inner.appendChild(card);
+      s.appendChild(inner);
+      slot.before(s);
+    });
+    // YouTube video pe tap kiya (iframe focus) to music rok do
+    addEventListener('blur', () => {
+      setTimeout(() => { if (document.activeElement?.tagName === 'IFRAME') Music.hold(true); }, 0);
+    });
+  })();
+
+  /* =========================================================
+     ⏭ CLICK NAVIGATION — "Aage" dabao, agli slide
+     ========================================================= */
+  const Nav = (() => {
+    const slides = $$('#stage > .slide');
+    slides.forEach(s => $$('.anim', s).forEach((n, i) => n.style.setProperty('--i', i)));
+    const bar = $('#navbar'), prev = $('#prev'), next = $('#next'), counter = $('#counter');
+    const progress = $('#progress i');
+    let idx = -1;
+
+    function goTo(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      if (i === idx) return;
+      const old = slides[idx];
+      if (old) { old.classList.remove('active'); old.dispatchEvent(new Event('leave')); }
+      slides.forEach((s, j) => s.classList.toggle('past', j < i));
+      const cur = slides[i];
+      cur.scrollTop = 0;
+      cur.classList.add('active');
+      idx = i;
+      counter.textContent = `${i + 1} / ${slides.length}`;
+      progress.style.width = ((i + 1) / slides.length) * 100 + '%';
+      prev.disabled = i === 0;
+      bar.classList.toggle('last', i === slides.length - 1);
+      Music.setSection(cur.dataset.song);
+      cur.dispatchEvent(new Event('enter'));
+    }
+    next.addEventListener('click', () => goTo(idx + 1));
+    prev.addEventListener('click', () => goTo(idx - 1));
+    addEventListener('keydown', e => {
+      if (bar.hidden || e.target.matches('input, textarea')) return;
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); goTo(idx + 1); }
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(idx - 1); }
+    });
+    return { goTo, show: () => (bar.hidden = false) };
+  })();
+
+  /* =========================================================
      🔐 LOCK
      ========================================================= */
-  const lock = $('#lock');
-  $('#pw-hint').textContent = C.passwordHint || '';
   const norm = s => String(s).trim().toLowerCase().replace(/\s+/g, ' ');
   const wrongLines = ['Galat hai madam 😜 phir se try karo', 'Nahi nahi… sochke daalo 🤔', 'Arey! Itna bhi nahi pata? 🥺', 'Hint padho na 😌'];
   let tries = 0;
-
   $('#lock-form').addEventListener('submit', e => {
     e.preventDefault();
     const input = $('#pw');
@@ -248,14 +434,14 @@
       return;
     }
     input.blur();
-    Music.setSection('hero');
+    Nav.goTo(0);
     Music.unlock();               // tap ke andar hi music unlock hona chahiye
     $('#padlock').classList.add('open');
     $('#pw-err').textContent = '';
     setTimeout(() => {
-      lock.classList.add('gone');
+      $('#lock').classList.add('gone');
       document.body.classList.remove('locked');
-      window.scrollTo(0, 0);
+      Nav.show();
       startHero();
     }, 650);
   });
@@ -264,7 +450,7 @@
      🎉 HERO
      ========================================================= */
   function startHero() {
-    const hero = $('#hero');
+    const hero = $('#s-hero');
     hero.classList.add('go');
     celebrate();
     const target = $('#typed');
@@ -276,7 +462,6 @@
       else { hero.classList.add('done'); burst(innerWidth / 2, innerHeight * .45, 70, 8); }
     }, 900);
   }
-  $('#hero-sub').textContent = C.heroLine || '';
 
   (function balloons() {
     const box = $('#balloons');
@@ -319,103 +504,6 @@
   })();
 
   /* =========================================================
-     📅 TIMELINE
-     ========================================================= */
-  (function timeline() {
-    const list = $('#timeline-list');
-    C.timeline.forEach(t => {
-      const item = el('article', 'tl-item reveal');
-      item.appendChild(el('div', 'tl-dot'));
-      item.appendChild(el('div', 'tl-year', esc(t.year)));
-      const card = el('div', 'tl-card');
-      card.appendChild(el('h3', '', esc(t.title)));
-      card.appendChild(el('p', 'muted', esc(t.caption)));
-      const grid = el('div', 'polaroids');
-      (t.photos || []).forEach((p, j) => {
-        const f = el('figure', 'polaroid');
-        f.style.setProperty('--r', ((j % 2 ? 1 : -1) * rand(1.5, 4)).toFixed(1) + 'deg');
-        f.appendChild(photo(p, { zoom: true, alt: `${C.name} ${t.year}` }));
-        grid.appendChild(f);
-      });
-      card.appendChild(grid);
-      item.appendChild(card);
-      list.appendChild(item);
-    });
-  })();
-
-  /* =========================================================
-     🌟 SPOTLIGHTS
-     ========================================================= */
-  [['#spot-bholi', 'bholi'], ['#spot-tuhotoh', 'tuhotoh']].forEach(([sel, key]) => {
-    const s = C.spotlights?.[key];
-    const sec = $(sel);
-    if (!s) { sec.remove(); return; }
-    sec.dataset.song = s.song;
-    const inner = el('div', 'reveal');
-    const songTitle = C.songs[s.song]?.title;
-    if (songTitle) inner.appendChild(el('span', 'song-tag', '🎵 ' + esc(songTitle)));
-    const frame = el('div', 'spot-frame');
-    frame.appendChild(photo(s.photo, { zoom: true }));
-    inner.appendChild(frame);
-    inner.appendChild(el('p', 'script spot-line', esc(s.line)));
-    inner.appendChild(el('p', 'spot-sub', esc(s.sub)));
-    sec.appendChild(inner);
-  });
-
-  /* =========================================================
-     🎬 VIDEOS — video chale to background music ruk jaye
-     ========================================================= */
-  const Video = (() => {
-    const vids = [];
-    const anyPlaying = () => vids.some(v => !v.paused && !v.ended);
-    const list = $('#video-list');
-    C.videos.forEach(v => {
-      const card = el('figure', 'vid-card reveal');
-      if (v.youtube) {
-        const f = el('iframe', v.vertical ? 'vertical' : '');
-        f.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.youtube)}?rel=0&playsinline=1&modestbranding=1`;
-        f.title = v.caption || 'Video';
-        f.loading = 'lazy';
-        f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen';
-        f.allowFullscreen = true;
-        card.appendChild(f);
-      } else {
-        const video = el('video');
-        video.controls = true;
-        video.playsInline = true;
-        video.setAttribute('playsinline', '');
-        video.preload = 'metadata';
-        if (v.poster) video.poster = v.poster;
-        const fail = () => {
-          const ph = el('div', 'ph-wrap missing', `<div class="ph"><span>🎬</span><small>${esc(v.src || 'video')}</small></div>`);
-          video.replaceWith(ph);
-        };
-        if (!v.src) { card.appendChild(video); fail(); }
-        else {
-          video.addEventListener('error', fail);
-          video.src = v.src;
-          video.addEventListener('play', () => {
-            vids.forEach(o => { if (o !== video) o.pause(); });
-            Music.hold(true);
-          });
-          const release = () => { if (!anyPlaying()) Music.hold(false); };
-          video.addEventListener('pause', release);
-          video.addEventListener('ended', release);
-          vids.push(video);
-          card.appendChild(video);
-        }
-      }
-      if (v.caption) card.appendChild(el('figcaption', '', esc(v.caption)));
-      list.appendChild(card);
-    });
-    // YouTube video pe tap kiya (iframe focus) to music rok do
-    addEventListener('blur', () => {
-      setTimeout(() => { if (document.activeElement?.tagName === 'IFRAME') Music.hold(true); }, 0);
-    });
-    return { anyPlaying };
-  })();
-
-  /* =========================================================
      ⇆ THEN vs NOW
      ========================================================= */
   (function compare() {
@@ -428,19 +516,19 @@
     let dragging = false;
     const set = x => {
       const r = box.getBoundingClientRect();
-      const pct = Math.max(0, Math.min(100, ((x - r.left) / r.width) * 100));
-      box.style.setProperty('--pos', pct + '%');
+      box.style.setProperty('--pos', Math.max(0, Math.min(100, ((x - r.left) / r.width) * 100)) + '%');
     };
     box.addEventListener('pointerdown', e => { dragging = true; box.classList.remove('hint'); set(e.clientX); });
     addEventListener('pointermove', e => { if (dragging) set(e.clientX); });
     ['pointerup', 'pointercancel'].forEach(t => addEventListener(t, () => (dragging = false)));
-    new IntersectionObserver(([en], obs) => {
-      if (en.isIntersecting) { box.classList.add('hint'); obs.disconnect(); }
-    }, { threshold: .6 }).observe(box);
+    $('#s-thennow').addEventListener('enter', () => {
+      box.classList.remove('hint');
+      setTimeout(() => box.classList.add('hint'), 1200);
+    });
   })();
 
   /* =========================================================
-     📸 SWIPE DECK
+     📸 SWIPE DECK — swipe ya tap
      ========================================================= */
   (function deck() {
     const deck = $('#deck');
@@ -462,10 +550,8 @@
       card.classList.remove('dragging');
       card.style.transform = `translate(${dir * innerWidth}px, -40px) rotate(${dir * 30}deg)`;
       card.style.opacity = 0;
-      if (dir > 0) {
-        const r = deck.getBoundingClientRect();
-        burst(r.left + r.width / 2, r.top + r.height / 2, 24, 6);
-      }
+      const [x, y] = center(deck);
+      burst(x, y, 24, 6);
       setTimeout(() => { deck.appendChild(card); layout(); }, 350);
     };
 
@@ -473,7 +559,7 @@
     deck.addEventListener('pointerdown', e => {
       top = deck.firstElementChild;
       if (!top || !top.contains(e.target)) return;
-      start = { x: e.clientX, y: e.clientY };
+      start = { x: e.clientX };
       dx = 0;
       top.classList.add('dragging');
     });
@@ -482,48 +568,58 @@
       dx = e.clientX - start.x;
       top.style.transform = `translateX(${dx}px) rotate(${dx / 14}deg)`;
     });
-    const end = () => {
+    const end = e => {
       if (!start) return;
       start = null;
       if (Math.abs(dx) > 80) flyOut(top, Math.sign(dx));
+      else if (Math.abs(dx) < 6 && e.type === 'pointerup') flyOut(top, 1);   // tap = agli photo
       else { top.classList.remove('dragging'); layout(); }
     };
     addEventListener('pointerup', end);
     addEventListener('pointercancel', end);
-    $('#next-card').addEventListener('click', () => { const t = deck.firstElementChild; if (t) flyOut(t, 1); });
     layout();
   })();
 
   /* =========================================================
-     💌 REASONS
+     💌 REASONS — tap: card khulta hai, phir tap: agla card
      ========================================================= */
   (function reasons() {
-    const list = $('#reason-list');
-    const count = $('#reason-count');
-    const total = C.reasons.length;
-    let opened = 0;
-    const upd = () => (count.textContent = opened < total ? `${opened} / ${total} khule 💌` : 'Aur ye list kabhi khatam nahi hogi ❤️');
-    C.reasons.forEach((r, i) => {
-      const b = el('button', 'flip reveal');
-      b.setAttribute('aria-label', `Reason ${i + 1}`);
-      b.innerHTML = `<div class="flip-inner">
-          <div class="face front"><b>#${i + 1}</b><span>💌</span><small>Tap karo</small></div>
-          <div class="face back">${esc(r)}</div>
-        </div>`;
-      b.addEventListener('click', () => {
-        const first = !b.dataset.seen;
-        b.classList.toggle('flipped');
-        if (first) {
-          b.dataset.seen = 1;
-          opened++;
-          upd();
-          const rc = b.getBoundingClientRect();
-          burst(rc.left + rc.width / 2, rc.top + rc.height / 2, opened === total ? 120 : 18, opened === total ? 12 : 5);
-          if (opened === total) setTimeout(celebrate, 300);
-        }
-      });
-      list.appendChild(b);
+    const R = C.reasons;
+    const card = $('#reason-card'), num = $('#reason-num'), txt = $('#reason-text'), count = $('#reason-count');
+    let i = 0, flipped = false, busy = false, seen = 0;
+    const setCard = k => { num.textContent = '#' + (k + 1); txt.textContent = R[k]; };
+    const upd = () => {
+      count.textContent = seen >= R.length
+        ? 'Saare khul gaye… par ye list kabhi khatam nahi hogi ❤️'
+        : `${seen} / ${R.length} khule · ${flipped ? 'agle ke liye phir tap karo' : 'card pe tap karo'}`;
+    };
+    card.addEventListener('click', () => {
+      if (busy) return;
+      if (!flipped) {
+        flipped = true;
+        card.classList.add('flipped');
+        seen = Math.max(seen, i + 1);
+        upd();
+        const [x, y] = center(card);
+        burst(x, y, seen === R.length ? 120 : 22, seen === R.length ? 12 : 6);
+        if (seen === R.length && i === R.length - 1) setTimeout(celebrate, 400);
+        return;
+      }
+      busy = true;
+      card.classList.add('out');
+      setTimeout(() => {
+        i = (i + 1) % R.length;
+        flipped = false;
+        card.classList.add('instant', 'in');
+        card.classList.remove('flipped', 'out');
+        setCard(i);
+        void card.offsetWidth;
+        card.classList.remove('instant', 'in');
+        busy = false;
+        upd();
+      }, 450);
     });
+    setCard(0);
     upd();
   })();
 
@@ -549,6 +645,7 @@
       const opts = $('.q-opts', box);
       q.options.forEach((o, i) => {
         const b = el('button', 'opt', esc(o));
+        b.style.setProperty('--o', i);
         b.addEventListener('click', () => answer(i, b));
         opts.appendChild(b);
       });
@@ -562,8 +659,8 @@
         score++;
         b.classList.add('correct');
         msg.textContent = q.right || 'Sahi jawab! 😍';
-        const r = b.getBoundingClientRect();
-        burst(r.left + r.width / 2, r.top + r.height / 2, 40, 7);
+        const [x, y] = center(b);
+        burst(x, y, 40, 7);
       } else {
         b.classList.add('wrong');
         all[q.answer]?.classList.add('correct');
@@ -651,8 +748,7 @@
         an.getByteTimeDomainData(data);
         let sum = 0;
         for (const v of data) { const x = (v - 128) / 128; sum += x * x; }
-        const rms = Math.sqrt(sum / data.length);
-        loud = rms > 0.16 ? loud + 1 : 0;
+        loud = Math.sqrt(sum / data.length) > 0.16 ? loud + 1 : 0;
         if (loud > 5 && t - last > 140) {
           last = t;
           const lit = $$('.candle:not(.out)', wrap);
@@ -661,6 +757,7 @@
         requestAnimationFrame(listen);
       })(0);
     });
+    $('#s-cake').addEventListener('leave', stopMic);
     build();
   })();
 
@@ -668,30 +765,29 @@
      ✉️ LETTER
      ========================================================= */
   (function letter() {
+    const slide = $('#s-letter');
     const env = $('#envelope');
     const area = $('#envelope-area');
     const paper = $('#letter-paper');
     const textEl = $('#letter-text');
     const sign = $('#sign');
-    const finale = $('#finale');
     const full = C.letter || '';
     let opened = false, typing = false, i = 0, timer;
 
     sign.textContent = `Hamesha tumhara,\n${C.from || ''} ❤️`;
-    sign.style.whiteSpace = 'pre-line';
 
     function open() {
       if (opened) return;
       opened = true;
       env.classList.add('open');
-      const r = env.getBoundingClientRect();
-      burst(r.left + r.width / 2, r.top + r.height / 2, 50, 7);
+      const [x, y] = center(env);
+      burst(x, y, 50, 7);
       setTimeout(() => {
         area.classList.add('away');
         setTimeout(() => {
-          area.hidden = true;
+          area.parentElement.hidden = true;
           paper.hidden = false;
-          paper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          slide.scrollTop += paper.getBoundingClientRect().top - slide.getBoundingClientRect().top - 60;
           typeLetter();
         }, 600);
       }, 1500);
@@ -702,6 +798,8 @@
       (function step() {
         i++;
         textEl.textContent = full.slice(0, i);
+        // likhte waqt neeche follow karo (agar user ne khud upar scroll nahi kiya)
+        if (slide.scrollHeight - slide.scrollTop - slide.clientHeight < 220) slide.scrollTop = slide.scrollHeight;
         if (i < full.length) {
           const ch = full[i - 1];
           timer = setTimeout(step, ch === '\n' ? 300 : /[.,!?…]/.test(ch) ? 180 : 38);
@@ -716,26 +814,17 @@
       $('#skip-hint').hidden = true;
       setTimeout(() => sign.classList.add('show'), 400);
       setTimeout(() => {
-        finale.hidden = false;
-        celebrate();
-      }, 1600);
+        slide.scrollTo({ top: slide.scrollHeight, behavior: 'smooth' });
+        const [x, y] = center($('#next'));
+        sparkle(x, y, 10, 60, 120);
+      }, 1400);
     }
     env.addEventListener('click', open);
     env.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
     paper.addEventListener('click', () => { if (typing) finish(); });
-    $('#replay').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   })();
 
-  /* =========================================================
-     👀 Scroll pe reveal + section ka gaana
-     ========================================================= */
-  const revealer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealer.unobserve(e.target); } });
-  }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
-  $$('.reveal').forEach(n => revealer.observe(n));
-
-  const songWatcher = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) Music.setSection(e.target.dataset.song); });
-  }, { rootMargin: '-48% 0px -48% 0px' });
-  $$('[data-song]').forEach(n => songWatcher.observe(n));
+  /* ❤️ FINALE */
+  $('#s-finale').addEventListener('enter', () => setTimeout(celebrate, 500));
+  $('#replay').addEventListener('click', () => Nav.goTo(0));
 })();

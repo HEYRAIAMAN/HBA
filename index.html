@@ -14,6 +14,13 @@
   <canvas id="hearts-bg" aria-hidden="true"></canvas>
   <canvas id="confetti" aria-hidden="true"></canvas>
 
+  <!-- 💚 Custom cursor (sirf laptop/mouse pe) -->
+  <div id="cursor" class="cursor" aria-hidden="true">
+    <span class="beat">
+      <svg viewBox="0 0 24 24" width="34" height="34"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </span>
+  </div>
+
   <!-- 🔐 LOCK SCREEN -->
   <div id="lock" class="lock">
     <div class="lock-card">
@@ -33,153 +40,163 @@
     </div>
   </div>
 
+  <div class="progress" id="progress" aria-hidden="true"><i></i></div>
   <button id="mute" class="mute" aria-label="Music band / chalu karo" hidden>
     <span class="disc">🎵</span>
   </button>
   <div id="now-playing" class="now-playing" aria-live="polite"></div>
-
   <div id="lightbox" class="lightbox" hidden><img alt=""></div>
 
-  <main id="app">
+  <main id="stage" class="stage">
     <!-- 🎉 HERO -->
-    <section id="hero" class="hero" data-song="hero">
+    <section class="slide hero" id="s-hero" data-song="hero">
       <div class="balloons" id="balloons" aria-hidden="true"></div>
-      <h2 class="script hb">Happy Birthday</h2>
-      <h1 class="name"><span id="typed"></span><span class="caret">|</span></h1>
-      <p class="hero-sub" id="hero-sub"></p>
-      <div class="countdown" id="countdown" hidden></div>
-      <div class="scroll-cue">neeche scroll karo<span>⌄</span></div>
+      <div class="slide-inner">
+        <h2 class="script hb">Happy Birthday</h2>
+        <h1 class="name"><span id="typed"></span><span class="caret">|</span></h1>
+        <p class="hero-sub" id="hero-sub"></p>
+        <div class="countdown" id="countdown" hidden></div>
+      </div>
     </section>
 
-    <!-- 📅 TIMELINE -->
-    <section id="timeline" class="section" data-song="timeline">
-      <header class="sec-head reveal">
-        <p class="eyebrow">Chapter 1</p>
-        <h2 class="script">8 Saal Ka Safar</h2>
-        <p class="muted">Chalte chalte, yun hi koi mil gaya tha…</p>
-      </header>
-      <div class="timeline" id="timeline-list"></div>
+    <!-- 📅 TIMELINE INTRO (har saal ki slide JS se iske baad banti hai) -->
+    <section class="slide" id="s-timeline" data-song="timeline">
+      <div class="slide-inner center">
+        <p class="eyebrow anim">Chapter 1</p>
+        <h2 class="script big anim">8 Saal Ka Safar</h2>
+        <p class="muted anim">Chalte chalte, yun hi koi mil gaya tha…</p>
+        <div class="year-strip anim" id="year-strip"></div>
+      </div>
     </section>
 
     <!-- 🌟 SPOTLIGHT 1 -->
-    <section class="spotlight" id="spot-bholi"></section>
+    <section class="slide spotlight" id="spot-bholi"></section>
 
-    <!-- 🎬 VIDEOS -->
-    <section id="videos" class="section" data-song="videos">
-      <header class="sec-head reveal">
-        <p class="eyebrow">Chapter 2</p>
-        <h2 class="script">Meri Nishu, Badi Hote Hue</h2>
-        <p class="muted">Video chalao to gaana apne aap ruk jayega 🎬</p>
-      </header>
-      <div class="videos" id="video-list"></div>
-    </section>
+    <!-- 🎬 VIDEOS (har video ki apni slide JS se) -->
+    <template id="video-slot"></template>
 
     <!-- ⇆ THEN vs NOW -->
-    <section id="thennow" class="section" data-song="thennow">
-      <header class="sec-head reveal">
-        <p class="eyebrow">Chapter 3</p>
-        <h2 class="script">Tab vs Ab</h2>
-        <p class="muted">Beech wali line ko ungli se left-right karo</p>
-      </header>
-      <div class="compare reveal" id="compare">
-        <div class="cmp-layer cmp-now"></div>
-        <div class="cmp-layer cmp-then"></div>
-        <div class="cmp-handle"><span>⇆</span></div>
-        <span class="cmp-label l" id="then-label"></span>
-        <span class="cmp-label r" id="now-label"></span>
+    <section class="slide" id="s-thennow" data-song="thennow">
+      <div class="slide-inner center">
+        <p class="eyebrow anim">Chapter 3</p>
+        <h2 class="script anim">Tab vs Ab</h2>
+        <p class="muted anim">Beech wali line ko ungli se left-right karo</p>
+        <div class="compare anim" id="compare">
+          <div class="cmp-layer cmp-now"></div>
+          <div class="cmp-layer cmp-then"></div>
+          <div class="cmp-handle"><span>⇆</span></div>
+          <span class="cmp-label l" id="then-label"></span>
+          <span class="cmp-label r" id="now-label"></span>
+        </div>
       </div>
     </section>
 
     <!-- 📸 SWIPE -->
-    <section id="swipe" class="section" data-song="swipe">
-      <header class="sec-head reveal">
-        <p class="eyebrow">Chapter 4</p>
-        <h2 class="script">Pal Pal Dil Ke Paas</h2>
-        <p class="muted">Photo ko left ya right swipe karo 👉</p>
-      </header>
-      <div class="deck" id="deck"></div>
-      <div class="center"><button class="btn ghost" id="next-card">Agli photo ➜</button></div>
+    <section class="slide" id="s-swipe" data-song="swipe">
+      <div class="slide-inner center">
+        <p class="eyebrow anim">Chapter 4</p>
+        <h2 class="script anim">Pal Pal Dil Ke Paas</h2>
+        <p class="muted anim">Photo ko swipe karo ya tap karo 👉</p>
+        <div class="deck anim" id="deck"></div>
+      </div>
     </section>
 
     <!-- 🌟 SPOTLIGHT 2 -->
-    <section class="spotlight" id="spot-tuhotoh"></section>
+    <section class="slide spotlight" id="spot-tuhotoh"></section>
 
     <!-- 💌 REASONS -->
-    <section id="reasons" class="section" data-song="reasons">
-      <header class="sec-head reveal">
-        <p class="eyebrow">Chapter 5</p>
-        <h2 class="script">Suno Na…</h2>
-        <p class="muted">Kuch wajahein, kyun tum itni special ho. Har card tap karo 💌</p>
-      </header>
-      <div class="reasons" id="reason-list"></div>
-      <p class="center muted" id="reason-count"></p>
+    <section class="slide" id="s-reasons" data-song="reasons">
+      <div class="slide-inner center">
+        <p class="eyebrow anim">Chapter 5</p>
+        <h2 class="script anim">Suno Na…</h2>
+        <p class="muted anim">Kuch wajahein, kyun tum itni special ho 💌</p>
+        <div class="reason-stage anim">
+          <button class="reason-card" id="reason-card" aria-live="polite">
+            <div class="flip-inner">
+              <div class="face front"><b id="reason-num">#1</b><span>💌</span><small>Tap karke kholo</small></div>
+              <div class="face back" id="reason-text"></div>
+            </div>
+          </button>
+        </div>
+        <p class="muted tiny" id="reason-count"></p>
+      </div>
     </section>
 
     <!-- 🎮 QUIZ -->
-    <section id="quiz" class="section" data-song="quiz">
-      <header class="sec-head reveal">
-        <p class="eyebrow">Chapter 6</p>
-        <h2 class="script">Chhota Sa Quiz</h2>
-        <p class="muted">Dekhte hain tumhe kitna yaad hai 😏</p>
-      </header>
-      <div class="quiz-card reveal" id="quiz-card"></div>
+    <section class="slide" id="s-quiz" data-song="quiz">
+      <div class="slide-inner center">
+        <p class="eyebrow anim">Chapter 6</p>
+        <h2 class="script anim">Chhota Sa Quiz</h2>
+        <p class="muted anim">Dekhte hain tumhe kitna yaad hai 😏</p>
+        <div class="quiz-card anim" id="quiz-card"></div>
+      </div>
     </section>
 
     <!-- 🎂 CAKE -->
-    <section id="cake" class="section" data-song="cake">
-      <header class="sec-head reveal">
-        <p class="eyebrow">Chapter 7</p>
-        <h2 class="script">Cake Time!</h2>
-        <p class="muted">Aankhein band karo, wish maango, aur candles bujhao 🕯️</p>
-      </header>
-      <div class="cake-wrap reveal">
-        <div class="cake">
-          <div class="candles" id="candles"></div>
-          <div class="tier top"></div>
-          <div class="tier bottom"><span class="cake-name" data-name></span></div>
-          <div class="plate"></div>
+    <section class="slide" id="s-cake" data-song="cake">
+      <div class="slide-inner center">
+        <p class="eyebrow anim">Chapter 7</p>
+        <h2 class="script anim">Cake Time!</h2>
+        <p class="muted anim">Aankhein band karo, wish maango, aur candles bujhao 🕯️</p>
+        <div class="cake-wrap anim">
+          <div class="cake">
+            <div class="candles" id="candles"></div>
+            <div class="tier top"></div>
+            <div class="tier bottom"><span class="cake-name" data-name></span></div>
+            <div class="plate"></div>
+          </div>
+          <div class="cake-actions">
+            <button class="btn" id="mic-btn">🎤 Phoonk ke bujhao</button>
+            <p class="muted tiny">ya har candle pe tap karo</p>
+          </div>
+          <p class="cake-msg" id="cake-msg" aria-live="polite"></p>
         </div>
-        <div class="cake-actions">
-          <button class="btn" id="mic-btn">🎤 Phoonk ke bujhao</button>
-          <p class="muted tiny">ya har candle pe tap karo</p>
-        </div>
-        <p class="cake-msg" id="cake-msg" aria-live="polite"></p>
       </div>
     </section>
 
     <!-- ✉️ LETTER -->
-    <section id="letter" class="section" data-song="letter">
-      <header class="sec-head reveal">
-        <p class="eyebrow">Last Chapter</p>
-        <h2 class="script">Tumhare Liye Ek Khat</h2>
-      </header>
-      <div class="envelope-area" id="envelope-area">
-        <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Khat kholo">
-          <div class="env-back"></div>
-          <div class="env-peek"><span>For <b data-name></b> ❤️</span></div>
-          <div class="env-front"></div>
-          <div class="env-flap"></div>
-          <div class="seal">❤</div>
-        </div>
-        <p class="muted center">Lifafe pe tap karo 💌</p>
-      </div>
-      <article class="letter" id="letter-paper" hidden>
-        <div class="paper">
-          <div class="letter-text" id="letter-text"></div>
-          <p class="sign" id="sign"></p>
-        </div>
-        <p class="muted center tiny" id="skip-hint">(tap karo to poora khat ek saath dikh jayega)</p>
-      </article>
-      <div class="finale" id="finale" hidden>
-        <div class="big-heart">❤️</div>
-        <h2 class="script">I Love You, <span data-name></span></h2>
-        <p class="muted">Aaj, kal, aur hamesha.</p>
-        <button class="btn ghost" id="replay">Phir se dekho ↺</button>
+    <section class="slide" id="s-letter" data-song="letter">
+      <div class="slide-inner center">
+        <p class="eyebrow anim">Last Chapter</p>
+        <h2 class="script anim">Tumhare Liye Ek Khat</h2>
+        <div class="anim"><div class="envelope-area" id="envelope-area">
+          <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Khat kholo">
+            <div class="env-back"></div>
+            <div class="env-peek"><span>For <b data-name></b> ❤️</span></div>
+            <div class="env-front"></div>
+            <div class="env-flap"></div>
+            <div class="seal">❤</div>
+          </div>
+          <p class="muted">Lifafe pe tap karo 💌</p>
+        </div></div>
+        <article class="letter" id="letter-paper" hidden>
+          <div class="paper">
+            <div class="letter-text" id="letter-text"></div>
+            <p class="sign" id="sign"></p>
+          </div>
+          <p class="muted tiny" id="skip-hint">(khat pe tap karo to poora ek saath dikh jayega)</p>
+        </article>
       </div>
     </section>
 
-    <footer class="foot">Made with ❤️ sirf <span data-name></span> ke liye</footer>
+    <!-- ❤️ FINALE -->
+    <section class="slide" id="s-finale" data-song="letter">
+      <div class="slide-inner center">
+        <div class="big-heart anim">❤️</div>
+        <h2 class="script big anim">I Love You, <span data-name></span></h2>
+        <p class="muted anim">Aaj, kal, aur hamesha.</p>
+        <p class="foot anim">Made with ❤️ sirf <span data-name></span> ke liye</p>
+        <button class="btn ghost anim" id="replay">Shuru se dekho ↺</button>
+      </div>
+    </section>
   </main>
+
+  <!-- ⏭ CLICK NAVIGATION -->
+  <nav class="navbar" id="navbar" hidden>
+    <button class="nav-prev" id="prev" aria-label="Peeche">←</button>
+    <span class="counter" id="counter"></span>
+    <button class="btn nav-next" id="next">Aage ➜</button>
+  </nav>
 
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
