@@ -27,6 +27,7 @@ window.CONFIG = {
     seene:    { file: "assets/music/seene-se-lag-jao.m4a",        title: "Chal Wahan Jaate Hain 💞 (Seene se tum aake lag jao na) — Arijit Singh" },
     roothna:  { file: "assets/music/pal.m4a",                     title: "Pal 💞 — Arijit Singh, Shreya Ghoshal" },
     college:  { file: "assets/music/milne-lage-dil.m4a",          title: "Milne Lage Dil 💞" },
+    y2021:    { file: "assets/music/saath-2021.m4a",             title: "Charley Charley Baal 💗" },
     covid:    { file: "assets/music/tu-chahiye.m4a",              title: "Tu Chahiye 💞 — Atif Aslam" },
     bholi:    { file: "assets/music/voh-dekhne-mein.m4a",         title: "Voh Dekhne Mein — Ali Zafar" },
     videos:   { file: "assets/music/offcampus-reconnect.m4a",     title: "When you both reconnect again 💛" },
@@ -140,6 +141,7 @@ window.CONFIG = {
     },
     {
       year: 2021, title: "Saath mein badhte hue",
+      song: "y2021",
       caption: "Tum badi hoti gayi, moti bhi… aur pyaar bhi. Kitni pyaari ho, bata pana mushkil hai 😍",
       meme: { no: "Dubli Nishu", yes: "Moti Nishu ❤️" },
       grow: {
