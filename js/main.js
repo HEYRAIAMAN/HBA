@@ -333,7 +333,7 @@
     const n = C.timeline.length, first = C.timeline[0].year, last = C.timeline[n - 1].year;
     C.timeline.forEach((t, k) => {
       const side = t.firstPhoto || t.cutout;   // side mein dikhne wali photo (poori ya cutout)
-      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side ? ' meme-year' : '') + (t.collage ? ' collage-year' : ''));
+      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game ? ' meme-year' : '') + (t.collage ? ' collage-year' : ''));
       // 🏍️ safar ki road: bike is saal tak chal ke rukti hai
       const journey = t.journey ? `
         <div class="journey anim" style="--to: ${(((k + 1) / n) * 100).toFixed(1)}%">
@@ -378,6 +378,8 @@
       });
       // 🍔 interactive: tap karo to cutout badi hoti jati hai, meters bharte hain
       if (t.grow?.src) grid.prepend(growCard(t.grow));
+      // 🦠 covid bhagao mini game (config: timeline[].game)
+      if (t.game) grid.prepend(gameCard(t.game));
       inner.appendChild(grid);
       // 🧷 collage ke tukde scroll karke jab dikhein tab gir ke aate hain (bars bhi tab bharte hain)
       if (t.collage) {
@@ -483,6 +485,94 @@
     });
     img.addEventListener('click', () => btn.click());
     render();
+    return card;
+  }
+
+  // 🦠 "Covid bhagao" mini game: virus pe tap karo, vaccine lagao, sanitizer chhidko (config: timeline[].game)
+  function gameCard(g) {
+    const total = g.viruses || 8;
+    const card = el('div', 'game-card anim', `
+      <div class="bubble"></div>
+      <p class="game-title">${esc(g.title || 'Covid bhagao! 🦠')}</p>
+      <div class="game-stage">
+        <button class="tool vax" aria-label="Vaccine lagao">💉</button>
+        <button class="tool san" aria-label="Sanitizer">🧴</button>
+        <div class="game-cuts">
+          ${(g.cutouts || []).map((c, i) => `<button class="game-cut c${i}" aria-label="Nishu cutout, tap karo"><img src="${esc(c.src)}" alt="" draggable="false"></button>`).join('')}
+        </div>
+      </div>
+      <div class="game-foot">
+        <span class="game-count"></span>
+        <button class="btn ghost game-reset" hidden>Phir se khelo 🔄</button>
+      </div>
+      <p class="tiny muted game-hint">${esc(g.hint || 'virus pe tap karo… ya seedha vaccine 💉 lagao')}</p>`);
+    const stage = $('.game-stage', card), bubble = $('.bubble', card), count = $('.game-count', card), reset = $('.game-reset', card);
+    const say = text => { bubble.textContent = text; bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop'); };
+    let left = 0;
+
+    const render = () => { count.textContent = `Virus bhagaye: ${total - left} / ${total}`; };
+    const pop = (v, big) => {
+      if (!v.isConnected || v.classList.contains('gone')) return;
+      v.classList.add('gone');
+      left--;
+      render();
+      const [x, y] = center(v);
+      sparkle(x, y, 4, 40, 60, ['💥', '✨', '😷', '💉']);
+      if (big) burst(x, y, 10, 5);
+      setTimeout(() => v.remove(), 380);
+      if (left <= 0) win();
+    };
+    const spawn = () => {
+      $$('.virus', stage).forEach(v => v.remove());
+      left = total;
+      for (let i = 0; i < total; i++) {
+        const v = el('button', 'virus', '🦠');
+        v.setAttribute('aria-label', 'Virus, tap karke bhagao');
+        v.style.left = rand(4, 86).toFixed(1) + '%';
+        v.style.top = rand(6, 48).toFixed(1) + '%';
+        v.style.setProperty('--d', rand(2.2, 4.2).toFixed(2) + 's');
+        v.style.setProperty('--delay', (-rand(0, 3)).toFixed(2) + 's');
+        v.style.setProperty('--s', rand(1.7, 2.6).toFixed(2) + 'rem');
+        v.addEventListener('click', () => { pop(v, true); if (left > 0) say(pick(g.hits || ['Pakda gaya! 🦠💥', 'Ek aur gaya 😎', 'Bhaag corona bhaag! 🏃'])); });
+        stage.appendChild(v);
+      }
+      reset.hidden = true;
+      render();
+      say(g.say || 'Virus pe tap karo! 🦠');
+    };
+    const win = () => {
+      say(g.win || 'Covid khatam! 🎉 Ab mask utaro, milna hai 🥰');
+      reset.hidden = false;
+      celebrate();
+      $$('.game-cut', card).forEach(c => { c.classList.remove('squish'); void c.offsetWidth; c.classList.add('squish'); });
+    };
+    const pick = list => list[(Math.random() * list.length) | 0];
+    const alive = () => $$('.virus:not(.gone)', stage);
+
+    $('.vax', card).addEventListener('click', e => {
+      const list = alive();
+      if (!list.length) return say('Vaccine to lag chuki 💉 ab to bas pyaar bacha hai ❤️');
+      say(g.vaxSay || 'Vaccine lag gayi! Sab virus bhaag gaye 💉🎉');
+      list.forEach((v, i) => setTimeout(() => pop(v, false), i * 90));
+    });
+    $('.san', card).addEventListener('click', () => {
+      const list = alive().sort(() => Math.random() - .5).slice(0, 3);
+      if (!list.length) return say('Sab saaf hai! Ab haath dhone ki zaroorat nahi 🧼');
+      say('Psssh! Sanitizer ne 3 virus maare 🧴💨');
+      list.forEach(v => pop(v, false));
+    });
+    $$('.game-cut', card).forEach((c, i) => {
+      $('img', c).addEventListener('error', () => c.remove());
+      c.addEventListener('click', () => {
+        c.classList.remove('squish'); void c.offsetWidth; c.classList.add('squish');
+        const [x, y] = center(c);
+        sparkle(x, y - 20, 6, 60, 90, ['😷', '❤️', '✨', '🎮']);
+        const lines = g.cutouts[i]?.say;
+        if (lines) say(lines);
+      });
+    });
+    reset.addEventListener('click', spawn);
+    spawn();
     return card;
   }
 

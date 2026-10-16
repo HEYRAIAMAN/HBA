@@ -57,6 +57,7 @@ window.CONFIG = {
        journey: true  → 🏍️ "safar shuru" wali road
        meme:    { no: "...", yes: "..." } → 🙅 / 😍 wala meme
        firstPhoto: { src: "...jpg", say: "...", label: "..." } → side mein poori photo (polaroid) + bolne wala bubble
+       game:    { title, say, hint, viruses, cutouts:[{src,say}], win } → "Covid bhagao" mini game (2020 mein dekho)
        grow:    { src, say, btn, meters, steps, hint } → tap karne pe badi hone wala interactive cutout (2021 mein dekho)
        cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
        photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke), wide: true (landscape photo, poori chaudai mein), span: true / stick: "🎓" (collage mein poori chaudai / emoji sticker), pos: "50% 15%" (lambi photo ka kaunsa hissa dikhe — chehra kat raha ho to isse upar/neeche khiskao) } */
@@ -113,12 +114,21 @@ window.CONFIG = {
       year: 2020, title: "Door reh ke bhi paas",
       caption: "Covid ka time… ghar pe game khelna, aur milna mask ke saath 😷🎮",
       song: "covid",
+      game: {
+        title: "Covid bhagao! 🦠💉",
+        say: "Virus pe tap karo! 🦠",
+        hint: "virus pe tap karo… ya seedha vaccine 💉 lagao, sanitizer 🧴 se 3 virus bhi maar sakte ho",
+        viruses: 8,
+        cutouts: [
+          { src: "assets/photos/2020/mask-girl.png", say: "Mask mein bhi itni cute? 😷" },
+          { src: "assets/photos/2020/mask-couple.png", say: "Mask ke saath hi sahi, milna to tha 😷❤️" },
+        ],
+        win: "Covid khatam! 🎉 Ab mask utaro, milna hai 🥰",
+      },
       photos: [
         { src: "assets/photos/2020/1.jpg", pos: "50% 30%" },
         { src: "assets/photos/2020/2.jpg", fit: "contain" },
-        { src: "assets/photos/2020/3.jpg", pos: "50% 30%" },
         { src: "assets/photos/2020/4.jpg", pos: "50% 25%" },
-        { src: "assets/photos/2020/5.jpg", pos: "50% 30%" },
         { src: "assets/photos/2020/6.jpg", pos: "50% 20%" },
       ],
     },
@@ -137,8 +147,8 @@ window.CONFIG = {
       photos: [
         { src: "assets/photos/2021/hug.png", cutout: true },
         "assets/photos/2021/1.jpg",
-        "assets/photos/2021/2.jpg",
-        { src: "assets/photos/2021/3.jpg", cap: "Hero-Heroine 🎬" },
+        { src: "assets/photos/2021/2.jpg", cap: "Hero-Heroine 🎬" },
+        "assets/photos/2021/3.jpg",
         { src: "assets/photos/2021/4.jpg", cap: "Parchhai bhi saath hai 🌗" },
         { src: "assets/photos/2021/5.jpg", cap: "Moti hoti Nishu 🍩" },
         { src: "assets/photos/2021/6.jpg", cap: "Cute Nishu 🥰" },

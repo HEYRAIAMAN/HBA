@@ -878,3 +878,39 @@ body.locked .stage { visibility: hidden; }
   .grow-stage { height: min(27vh, 230px); }
   .grow-btn { padding: 10px 10px; font-size: .88rem; }
 }
+
+/* 🦠 "Covid bhagao" mini game (2020) */
+.game-card {
+  grid-column: 1 / -1; padding: 14px 12px 12px; border-radius: 18px; text-align: center;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02)); border: 1px solid var(--line);
+}
+.game-card .bubble { max-width: 100%; min-height: 2.6em; font-size: 1.1rem; margin: 0 auto 10px; }
+.game-title { font-family: var(--serif); font-weight: 600; color: var(--rose2); font-size: 1.15rem; margin-bottom: 6px; }
+.game-stage {
+  position: relative; height: min(34vh, 300px); border-radius: 14px; overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, rgba(120, 255, 170, .10), transparent 65%), rgba(0, 0, 0, .25);
+  border: 1px dashed rgba(232, 194, 122, .35);
+}
+.virus, .tool {
+  position: absolute; border: 0; background: none; padding: 4px; line-height: 1; cursor: pointer; z-index: 2;
+  filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 6px 8px rgba(0, 0, 0, .45));
+}
+.virus { font-size: var(--s, 2rem); animation: virusFloat var(--d, 3s) ease-in-out var(--delay, 0s) infinite; transition: transform .35s, opacity .35s; }
+.virus.gone { animation: none; transform: scale(2.2) rotate(40deg); opacity: 0; pointer-events: none; }
+.tool { font-size: 2rem; top: 6px; animation: nudgeTool 2.6s ease-in-out infinite; }
+.tool.vax { right: 8px; }
+.tool.san { right: 56px; animation-delay: .6s; }
+.tool:active { transform: scale(.85); }
+.game-cuts { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-evenly; align-items: flex-end; pointer-events: none; z-index: 1; }
+.game-cut { border: 0; background: none; padding: 0; cursor: pointer; pointer-events: auto; height: min(19vh, 150px); transform-origin: 50% 100%; animation: wobble 3.6s ease-in-out infinite; }
+.game-cut.c1 { animation-delay: -1.4s; }
+.game-cut img { height: 100%; width: auto; display: block; -webkit-user-drag: none; pointer-events: none;
+  filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 6px 10px rgba(0, 0, 0, .5)); }
+.game-cut.squish { animation: squish .5s cubic-bezier(.3, 1.6, .5, 1), wobble 3.6s ease-in-out .5s infinite; }
+.game-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; }
+.game-count { font-size: .85rem; color: var(--gold2); }
+.game-reset { padding: 8px 14px; font-size: .85rem; }
+.game-reset[hidden] { display: none; }
+.game-hint { margin-top: 6px; }
+@keyframes virusFloat { 0%, 100% { transform: translate(0, 0) rotate(-6deg); } 33% { transform: translate(10px, -12px) rotate(8deg); } 66% { transform: translate(-8px, 8px) rotate(-3deg); } }
+@keyframes nudgeTool { 0%, 80%, 100% { transform: scale(1) rotate(0); } 90% { transform: scale(1.18) rotate(-8deg); } }
