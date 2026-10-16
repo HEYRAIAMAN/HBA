@@ -22,7 +22,7 @@ window.CONFIG = {
      Har section ka apna gaana hai. Scroll karte hi gaana badal jata hai.
      mp3 files "assets/music/" folder mein inhi naamon se daalo. */
   songs: {
-    hero:     { file: "assets/music/hbd-song.m4a",                title: "Happy Birthday To You 🎂" },
+    hero:     { file: "assets/music/hbd-meme.m4a",                title: "Aaaa Happy Birthday To You 🤣" },
     timeline: { file: "assets/music/chalte-chalte.m4a",           title: "Chalte Chalte Yun Hi Koi Mil Gaya Tha" },
     bholi:    { file: "assets/music/voh-dekhne-mein.m4a",         title: "Voh Dekhne Mein — Ali Zafar" },
     videos:   { file: "assets/music/offcampus-reconnect.m4a",     title: "When you both reconnect again 💛" },
