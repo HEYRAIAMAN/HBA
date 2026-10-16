@@ -289,22 +289,59 @@
   (function timeline() {
     $('#year-strip').innerHTML = C.timeline.map(t => `<span>${esc(t.year)}</span>`).join('');
     let after = $('#s-timeline');
+    const n = C.timeline.length, first = C.timeline[0].year, last = C.timeline[n - 1].year;
     C.timeline.forEach((t, k) => {
-      const s = newSlide('timeline', 'year-slide');
+      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme ? ' meme-year' : ''));
+      // 🏍️ safar ki road: bike is saal tak chal ke rukti hai
+      const journey = t.journey ? `
+        <div class="journey anim" style="--to: ${(((k + 1) / n) * 100).toFixed(1)}%">
+          <span>📍 ${esc(first)}</span>
+          <div class="road"><span class="bike" aria-hidden="true">🏍️💨</span></div>
+          <span>🏁 ${esc(last)}</span>
+        </div>
+        <p class="journey-label anim">Safar shuru… <b>${k + 1}/${n}</b></p>` : '';
+      // 🙅 / 😍 wala meme
+      const meme = t.meme ? `
+        <div class="meme anim" role="img" aria-label="${esc(t.meme.no)} nahi, ${esc(t.meme.yes)}">
+          <span class="meme-face">🙅‍♂️</span><span class="meme-text"><s>${esc(t.meme.no)}</s></span>
+          <span class="meme-face yes">😍</span><span class="meme-text yes">${esc(t.meme.yes)}</span>
+        </div>` : '';
       const inner = el('div', 'slide-inner center', `
-        <p class="eyebrow anim">Saal ${k + 1} / ${C.timeline.length}</p>
-        <div class="year-num anim">${esc(t.year)}</div>
-        <h3 class="year-title anim">${esc(t.title)}</h3>
-        <p class="muted anim">${esc(t.caption)}</p>`);
+        <div class="year-text">
+          <p class="eyebrow anim">Saal ${k + 1} / ${n}</p>
+          <div class="year-num anim">${esc(t.year)}</div>
+          <h3 class="year-title anim">${esc(t.title)}</h3>
+          <p class="muted anim">${esc(t.caption)}</p>
+          ${journey}${meme}
+        </div>`);
       const grid = el('div', 'polaroids');
       (t.photos || []).forEach((p, j) => {
-        const f = el('figure', 'polaroid');
+        const src = typeof p === 'string' ? p : p.src;
+        const f = el('figure', 'polaroid' + (p.fit === 'contain' ? ' contain' : ''));
         f.style.setProperty('--r', ((j % 2 ? 1 : -1) * rand(1.5, 4)).toFixed(1) + 'deg');
         f.style.setProperty('--p', j);
-        f.appendChild(photo(p, { zoom: true, alt: `${C.name} ${t.year}` }));
+        f.appendChild(photo(src, { zoom: true, alt: `${C.name} ${t.year}` }));
+        if (p.cap) f.appendChild(el('figcaption', 'pol-cap', esc(p.cap)));
         grid.appendChild(f);
       });
       inner.appendChild(grid);
+      // 😜 side mein cutout: tap karo to squish + 🍫 udte hain
+      if (t.cutout?.src) {
+        const cut = el('div', 'year-cut anim', `
+          ${t.cutout.say ? `<div class="bubble">${esc(t.cutout.say)}</div>` : ''}
+          <button class="year-cut-btn" aria-label="${esc(C.name)} ${esc(t.year)} cutout, tap karo">
+            <img src="${esc(t.cutout.src)}" alt="" draggable="false">
+          </button>`);
+        const btn = $('button', cut);
+        $('img', cut).addEventListener('error', () => cut.remove());
+        btn.addEventListener('click', () => {
+          btn.classList.remove('squish'); void btn.offsetWidth; btn.classList.add('squish');
+          const [x, y] = center(btn);
+          sparkle(x, y - 40, 9, 70, 110, ['🍫', '🏍️', '💖', '✨', '😜']);
+          burst(x, y, 14, 6);
+        });
+        inner.appendChild(cut);
+      }
       s.appendChild(inner);
       after.after(s);
       after = s;
@@ -331,6 +368,17 @@
     });
     $('#s-timeline').addEventListener('enter', () => { if (k < 0) setTimeout(say, 1300); });
   })();
+
+  // 🎂 Pehli slide ke cutouts: tap karo to squish + 🎂 udte hain
+  $$('.cut').forEach(btn => {
+    $('img', btn).addEventListener('error', () => btn.remove());   // photo nahi mili to cutout hata do
+    btn.addEventListener('click', () => {
+      btn.classList.remove('squish'); void btn.offsetWidth; btn.classList.add('squish');
+      const [x, y] = center(btn);
+      sparkle(x, y - 40, 9, 70, 110, ['🎂', '🍰', '😂', '✨', '💖']);
+      burst(x, y, 14, 6);
+    });
+  });
 
   // 🌟 Spotlights
   [['#spot-bholi', 'bholi'], ['#spot-tuhotoh', 'tuhotoh']].forEach(([sel, key]) => {

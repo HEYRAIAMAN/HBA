@@ -24,6 +24,7 @@ window.CONFIG = {
   songs: {
     hero:     { file: "assets/music/hbd-meme.m4a",                title: "Aaaa Happy Birthday To You 🤣" },
     timeline: { file: "assets/music/chalte-chalte.m4a",           title: "Chalte Chalte Yun Hi Koi Mil Gaya Tha" },
+    seene:    { file: "assets/music/seene-se-lag-jao.m4a",        title: "Chal Wahan Jaate Hain 💞 (Seene se tum aake lag jao na) — Arijit Singh" },
     bholi:    { file: "assets/music/voh-dekhne-mein.m4a",         title: "Voh Dekhne Mein — Ali Zafar" },
     videos:   { file: "assets/music/offcampus-reconnect.m4a",     title: "When you both reconnect again 💛" },
     thennow:  { file: "assets/music/kal-chaudhvin.m4a",           title: "Kal Chaudhvin Ki Raat — Jagjit Singh" },
@@ -48,9 +49,29 @@ window.CONFIG = {
 
   /* ---------------- 📅 8 SAAL KA SAFAR ----------------
      Har saal ki photos: assets/photos/2018/1.jpg, 2.jpg, 3.jpg ...
-     Photos zyada/kam ho to list mein add/remove kar do. */
+     Photos zyada/kam ho to list mein add/remove kar do.
+     Kisi bhi saal mein ye extra cheezein daal sakte ho (2018 mein sab hain, wahi dekh lo):
+       song:    us saal ka alag gaana (upar "songs" ka naam)
+       journey: true  → 🏍️ "safar shuru" wali road
+       meme:    { no: "...", yes: "..." } → 🙅 / 😍 wala meme
+       cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
+       photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe) } */
   timeline: [
-    { year: 2018, title: "Jahan se sab shuru hua",       caption: "Pata hi nahi tha ki ek din tum meri poori duniya ban jaogi.", photos: ["assets/photos/2018/1.jpg", "assets/photos/2018/2.jpg", "assets/photos/2018/3.jpg"] },
+    {
+      year: 2018, title: "Jahan se sab shuru hua",
+      caption: "Pata hi nahi tha ki Golu bhaiya se kab Goluuuu ban gaya… jaha bhagwan se mangi hui achi ladki ki dua aur aap mil gaye",
+      song: "seene",
+      journey: true,
+      meme: { no: "Golu bhaiya", yes: "Goluuuu ❤️" },
+      cutout: { src: "assets/photos/2018/cutout.png", say: "Ek Celebrations ka dabba… aur safar shuru 🍫🏍️" },
+      photos: [
+        { src: "assets/photos/2018/1.jpg", cap: "Amer Fort bhi sharma gaya 🏰🙈" },
+        { src: "assets/photos/2018/2.jpg", cap: "Wallpaper bhi tum, time bhi tum ⌚" },
+        { src: "assets/photos/2018/3.jpg", cap: "Madam ka pout 😗 vs Golu ka swag 😎" },
+        { src: "assets/photos/2018/4.jpg", cap: "King of Good Times 🍺 (asli wali tum ho)" },
+        { src: "assets/photos/2018/5.jpg", cap: "Papa: \"aaj bahut thand h\" 😆 · phone pe kaun tha? 🤭", fit: "contain" },
+      ],
+    },
     { year: 2019, title: "Dosti se kuch zyada",          caption: "Baatein lambi hone lagi, aur raatein chhoti.",                 photos: ["assets/photos/2019/1.jpg", "assets/photos/2019/2.jpg", "assets/photos/2019/3.jpg"] },
     { year: 2020, title: "Door reh ke bhi paas",         caption: "Har din tumhari ek awaaz ka intezaar.",                       photos: ["assets/photos/2020/1.jpg", "assets/photos/2020/2.jpg", "assets/photos/2020/3.jpg"] },
     { year: 2021, title: "Saath mein badhte hue",        caption: "Tum badi hoti gayi, aur pyaar bhi.",                           photos: ["assets/photos/2021/1.jpg", "assets/photos/2021/2.jpg", "assets/photos/2021/3.jpg"] },

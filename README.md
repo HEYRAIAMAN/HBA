@@ -31,7 +31,8 @@ assets/photos/
 │   ├── bholi.jpg       ← "Dekhne mein kitni bholi bhali" wala gaana isi pe bajega
 │   ├── tu-ho-toh.jpg   ← "Tu ho toh" wala gaana isi pe bajega
 │   ├── then.jpg        ← bachpan wali photo (Tab vs Ab)
-│   └── now.jpg         ← abhi wali photo
+│   ├── now.jpg         ← abhi wali photo
+│   └── cutout-1.png … cutout-4.png  ← pehli slide (Happy Birthday) ke cake wale cutouts (background hata hua PNG)
 └── swipe/  1.jpg … 8.jpg         ← swipe karne wali cards
 ```
 
@@ -54,6 +55,7 @@ assets/photos/
 | `chalte-chalte.m4a` | Chalte Chalte Yun Hi Koi Mil Gaya Tha | 8 Saal Ka Safar | [link](https://youtube.com/shorts/iE9IQNyd_Aw) |
 | `voh-dekhne-mein.m4a` | Voh Dekhne Mein (Ali Zafar) | "Bholi bhali" photo | [link](https://youtube.com/shorts/e84IP6acLVk) |
 | `offcampus-reconnect.m4a` | When you both reconnect again | Videos section | [link](https://youtube.com/shorts/ex36_-5NitE) |
+| `seene-se-lag-jao.m4a` | Chal Wahan Jaate Hain (Arijit Singh) | 2018 wali slide | [link](https://youtube.com/shorts/CbCRFa6rGes) |
 | `kal-chaudhvin.m4a` | Kal Chaudhvin Ki Raat (Jagjit Singh) | Tab vs Ab | [link](https://youtube.com/shorts/wU1YwyH4DIs) |
 | `pal-pal-dil-ke-paas.m4a` | Pal Pal Dil Ke Paas | Swipe photos | [link](https://youtube.com/shorts/vGj0UiBlAyM) |
 | `tu-ho-toh.m4a` | Tu Ho Toh | "Tu ho toh" photo | [link](https://youtube.com/shorts/iw4A57Asp-4) |
