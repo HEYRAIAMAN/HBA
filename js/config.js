@@ -27,6 +27,7 @@ window.CONFIG = {
     seene:    { file: "assets/music/seene-se-lag-jao.m4a",        title: "Chal Wahan Jaate Hain 💞 (Seene se tum aake lag jao na) — Arijit Singh" },
     roothna:  { file: "assets/music/pal.m4a",                     title: "Pal 💞 — Arijit Singh, Shreya Ghoshal" },
     college:  { file: "assets/music/milne-lage-dil.m4a",          title: "Milne Lage Dil 💞" },
+    y2026:    { file: "assets/music/saath-2026.m4a",             title: "Sahiba ❤️ — Aditya Rikhari" },
     y2025:    { file: "assets/music/saath-2025.m4a",             title: "Dil Kya Kare ❤️ — Kishore Kumar" },
     y2024:    { file: "assets/music/saath-2024.m4a",             title: "Romance is ok… but this feeling 💓" },
     y2023:    { file: "assets/music/saath-2023.m4a",             title: "Varoon Forvere 💘" },
@@ -308,6 +309,7 @@ window.CONFIG = {
     },
     {
       year: 2026, title: "Aaj — tumhara din ✨",
+      song: "y2026",
       caption: "8 saal mein kitna kuch seekha saath mein, kitni hasi, kitni baatein — sab aapse hi hai ❤️",
       jars: {
         title: "8 Saal Ka Hisaab 📒",
