@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c0610">
+  <title>Happy Birthday Nishu ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="locked">
+  <canvas id="hearts-bg" aria-hidden="true"></canvas>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <!-- 🔐 LOCK SCREEN -->
+  <div id="lock" class="lock">
+    <div class="lock-card">
+      <div class="padlock" id="padlock" aria-hidden="true">
+        <div class="shackle"></div>
+        <div class="lock-body">❤</div>
+      </div>
+      <h1 class="script lock-title">Sirf <span data-name></span> ke liye</h1>
+      <p class="muted">Ek chhota sa surprise hai… pehle password daalo 🔐</p>
+      <form id="lock-form" autocomplete="off">
+        <input id="pw" type="password" placeholder="Password" aria-label="Password" autocapitalize="none" autocorrect="off" spellcheck="false">
+        <button type="submit" class="btn">Kholo ❤️</button>
+      </form>
+      <p id="pw-hint" class="hint"></p>
+      <p id="pw-err" class="err" aria-live="polite"></p>
+      <p class="tiny muted">🔊 Awaaz on rakhna</p>
+    </div>
+  </div>
+
+  <button id="mute" class="mute" aria-label="Music band / chalu karo" hidden>
+    <span class="disc">🎵</span>
+  </button>
+  <div id="now-playing" class="now-playing" aria-live="polite"></div>
+
+  <div id="lightbox" class="lightbox" hidden><img alt=""></div>
+
+  <main id="app">
+    <!-- 🎉 HERO -->
+    <section id="hero" class="hero" data-song="hero">
+      <div class="balloons" id="balloons" aria-hidden="true"></div>
+      <h2 class="script hb">Happy Birthday</h2>
+      <h1 class="name"><span id="typed"></span><span class="caret">|</span></h1>
+      <p class="hero-sub" id="hero-sub"></p>
+      <div class="countdown" id="countdown" hidden></div>
+      <div class="scroll-cue">neeche scroll karo<span>⌄</span></div>
+    </section>
+
+    <!-- 📅 TIMELINE -->
+    <section id="timeline" class="section" data-song="timeline">
+      <header class="sec-head reveal">
+        <p class="eyebrow">Chapter 1</p>
+        <h2 class="script">8 Saal Ka Safar</h2>
+        <p class="muted">Chalte chalte, yun hi koi mil gaya tha…</p>
+      </header>
+      <div class="timeline" id="timeline-list"></div>
+    </section>
+
+    <!-- 🌟 SPOTLIGHT 1 -->
+    <section class="spotlight" id="spot-bholi"></section>
+
+    <!-- 🎬 VIDEOS -->
+    <section id="videos" class="section" data-song="videos">
+      <header class="sec-head reveal">
+        <p class="eyebrow">Chapter 2</p>
+        <h2 class="script">Meri Nishu, Badi Hote Hue</h2>
+        <p class="muted">Video chalao to gaana apne aap ruk jayega 🎬</p>
+      </header>
+      <div class="videos" id="video-list"></div>
+    </section>
+
+    <!-- ⇆ THEN vs NOW -->
+    <section id="thennow" class="section" data-song="thennow">
+      <header class="sec-head reveal">
+        <p class="eyebrow">Chapter 3</p>
+        <h2 class="script">Tab vs Ab</h2>
+        <p class="muted">Beech wali line ko ungli se left-right karo</p>
+      </header>
+      <div class="compare reveal" id="compare">
+        <div class="cmp-layer cmp-now"></div>
+        <div class="cmp-layer cmp-then"></div>
+        <div class="cmp-handle"><span>⇆</span></div>
+        <span class="cmp-label l" id="then-label"></span>
+        <span class="cmp-label r" id="now-label"></span>
+      </div>
+    </section>
+
+    <!-- 📸 SWIPE -->
+    <section id="swipe" class="section" data-song="swipe">
+      <header class="sec-head reveal">
+        <p class="eyebrow">Chapter 4</p>
+        <h2 class="script">Pal Pal Dil Ke Paas</h2>
+        <p class="muted">Photo ko left ya right swipe karo 👉</p>
+      </header>
+      <div class="deck" id="deck"></div>
+      <div class="center"><button class="btn ghost" id="next-card">Agli photo ➜</button></div>
+    </section>
+
+    <!-- 🌟 SPOTLIGHT 2 -->
+    <section class="spotlight" id="spot-tuhotoh"></section>
+
+    <!-- 💌 REASONS -->
+    <section id="reasons" class="section" data-song="reasons">
+      <header class="sec-head reveal">
+        <p class="eyebrow">Chapter 5</p>
+        <h2 class="script">Suno Na…</h2>
+        <p class="muted">Kuch wajahein, kyun tum itni special ho. Har card tap karo 💌</p>
+      </header>
+      <div class="reasons" id="reason-list"></div>
+      <p class="center muted" id="reason-count"></p>
+    </section>
+
+    <!-- 🎮 QUIZ -->
+    <section id="quiz" class="section" data-song="quiz">
+      <header class="sec-head reveal">
+        <p class="eyebrow">Chapter 6</p>
+        <h2 class="script">Chhota Sa Quiz</h2>
+        <p class="muted">Dekhte hain tumhe kitna yaad hai 😏</p>
+      </header>
+      <div class="quiz-card reveal" id="quiz-card"></div>
+    </section>
+
+    <!-- 🎂 CAKE -->
+    <section id="cake" class="section" data-song="cake">
+      <header class="sec-head reveal">
+        <p class="eyebrow">Chapter 7</p>
+        <h2 class="script">Cake Time!</h2>
+        <p class="muted">Aankhein band karo, wish maango, aur candles bujhao 🕯️</p>
+      </header>
+      <div class="cake-wrap reveal">
+        <div class="cake">
+          <div class="candles" id="candles"></div>
+          <div class="tier top"></div>
+          <div class="tier bottom"><span class="cake-name" data-name></span></div>
+          <div class="plate"></div>
+        </div>
+        <div class="cake-actions">
+          <button class="btn" id="mic-btn">🎤 Phoonk ke bujhao</button>
+          <p class="muted tiny">ya har candle pe tap karo</p>
+        </div>
+        <p class="cake-msg" id="cake-msg" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- ✉️ LETTER -->
+    <section id="letter" class="section" data-song="letter">
+      <header class="sec-head reveal">
+        <p class="eyebrow">Last Chapter</p>
+        <h2 class="script">Tumhare Liye Ek Khat</h2>
+      </header>
+      <div class="envelope-area" id="envelope-area">
+        <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Khat kholo">
+          <div class="env-back"></div>
+          <div class="env-peek"><span>For <b data-name></b> ❤️</span></div>
+          <div class="env-front"></div>
+          <div class="env-flap"></div>
+          <div class="seal">❤</div>
+        </div>
+        <p class="muted center">Lifafe pe tap karo 💌</p>
+      </div>
+      <article class="letter" id="letter-paper" hidden>
+        <div class="paper">
+          <div class="letter-text" id="letter-text"></div>
+          <p class="sign" id="sign"></p>
+        </div>
+        <p class="muted center tiny" id="skip-hint">(tap karo to poora khat ek saath dikh jayega)</p>
+      </article>
+      <div class="finale" id="finale" hidden>
+        <div class="big-heart">❤️</div>
+        <h2 class="script">I Love You, <span data-name></span></h2>
+        <p class="muted">Aaj, kal, aur hamesha.</p>
+        <button class="btn ghost" id="replay">Phir se dekho ↺</button>
+      </div>
+    </section>
+
+    <footer class="foot">Made with ❤️ sirf <span data-name></span> ke liye</footer>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
