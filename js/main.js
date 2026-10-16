@@ -333,7 +333,7 @@
     const n = C.timeline.length, first = C.timeline[0].year, last = C.timeline[n - 1].year;
     C.timeline.forEach((t, k) => {
       const side = t.firstPhoto || t.cutout;   // side mein dikhne wali photo (poori ya cutout)
-      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game || t.mana || t.calendar || t.love ? ' meme-year' : '') + (t.collage ? ' collage-year' : '') + (t.love ? ' love-year' : ''));
+      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game || t.mana || t.calendar || t.love || t.battery ? ' meme-year' : '') + (t.collage ? ' collage-year' : '') + (t.love ? ' love-year' : ''));
       if (t.love) s.appendChild(lovePetals());   // peeche rising hearts
       // 🏍️ safar ki road: bike is saal tak chal ke rukti hai
       const journey = t.journey ? `
@@ -387,6 +387,8 @@
       if (t.calendar) grid.prepend(calCard(t.calendar));
       // 💖 love theme: Love Level Up (config: timeline[].love)
       if (t.love) grid.prepend(loveCard(t.love));
+      // 🔋 aadat se zaroorat: Battery + Nishu charger (config: timeline[].battery)
+      if (t.battery) grid.prepend(batteryCard(t.battery));
       inner.appendChild(grid);
       // 🧷 collage ke tukde scroll karke jab dikhein tab gir ke aate hain (bars bhi tab bharte hain)
       if (t.collage) {
@@ -839,6 +841,78 @@
     });
     say(c.say || 'Dil pe tap karo 💖');
     render(false);
+    return card;
+  }
+
+  // 🔋 "Aadat se Zaroorat": Aman ki battery low, Nishu = charger (config: timeline[].battery)
+  function batteryCard(b) {
+    const needs = b.needs || [];
+    const card = el('div', 'bat-card anim', `
+      <div class="bubble"></div>
+      <p class="game-title">${esc(b.title || 'Aman ki battery 🔋')}</p>
+      <div class="bat-stage">
+        <div class="bat-phone">
+          <div class="bat-top"><span>${esc(b.device || 'Aman 📱')}</span><span class="bat-warn">⚠️</span></div>
+          <div class="bat-body"><div class="bat-fill"></div><div class="bat-pct">0%</div><div class="bat-bolt">⚡</div></div>
+          <p class="bat-status"></p>
+        </div>
+        <div class="bat-cable"><span>🔌</span></div>
+        <button class="bat-charger" aria-label="${esc(C.name)} charger, tap karo"><img src="${esc(b.charger)}" alt="" draggable="false"></button>
+        ${b.couple ? `<img class="bat-couple" src="${esc(b.couple)}" alt="" draggable="false">` : ''}
+      </div>
+      <div class="bat-needs">${needs.map(n => `<span class="bat-chip"><i>Aadat</i><b>${esc(n.aadat)}</b><em>${esc(n.zaroorat)}</em></span>`).join('')}</div>
+      <div class="bat-actions">
+        <button class="btn bat-go">🔌 Charge karo</button>
+        <button class="btn ghost bat-away">🚶 Door jao</button>
+      </div>
+      <p class="tiny muted game-hint">${esc(b.hint || 'Nishu (charger) pe tap karo… ya Door jao se battery gira ke dekho 😜')}</p>`);
+    const bubble = $('.bubble', card), stage = $('.bat-stage', card), fill = $('.bat-fill', card), pctEl = $('.bat-pct', card);
+    const status = $('.bat-status', card), warn = $('.bat-warn', card), chips = $$('.bat-chip', card);
+    const goBtn = $('.bat-go', card), away = $('.bat-away', card), charger = $('.bat-charger', card);
+    $('img', charger).addEventListener('error', () => charger.remove());
+    $('.bat-couple', card)?.addEventListener('error', function () { this.remove(); });
+    const say = text => { bubble.textContent = text; bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop'); };
+    const pick = list => list[(Math.random() * list.length) | 0];
+    let pct = b.start ?? 9, won = false, shown = null;
+
+    const level = v => v < 20 ? 'low' : v < 55 ? 'mid' : 'high';
+    const render = () => {
+      pct = Math.max(1, Math.min(100, pct));
+      fill.style.height = pct + '%';
+      pctEl.textContent = pct + '%';
+      card.dataset.lv = level(pct);
+      card.classList.toggle('full', pct >= 100);
+      status.textContent = pct >= 100 ? (b.fullStatus || 'Full charge ✅ Ab sab theek hai') : pct < 20 ? (b.lowStatus || 'Low battery… Nishu miss kar rahi hai 🪫') : (b.midStatus || 'Charging… 🔌');
+      warn.textContent = pct < 20 ? '⚠️' : pct >= 100 ? '💚' : '⚡';
+      const done = Math.floor((pct / 100) * needs.length + (pct >= 100 ? 1 : 0));
+      chips.forEach((c, i) => c.classList.toggle('on', i < Math.min(done, needs.length)));
+      $('.bat-couple', card)?.classList.toggle('show', pct >= 100);
+    };
+    const fx = icons => { const [x, y] = center(charger.isConnected ? charger : stage); sparkle(x, y - 30, 6, 70, 100, icons); };
+
+    const charge = () => {
+      if (pct >= 100) { say(b.afterFull || 'Battery full hai… par tumhara saath kabhi full nahi hota 🥰'); fx(['💖', '🥰']); return; }
+      pct = Math.min(100, pct + (b.step || 22) + Math.round(rand(-4, 6)));
+      stage.classList.remove('zap'); void stage.offsetWidth; stage.classList.add('zap');
+      render();
+      if (pct >= 100) {
+        won = true;
+        say(b.win || 'Full charge! 🎉 Tum meri aadat nahi, meri zaroorat ho ❤️');
+        celebrate(); setTimeout(celebrate, 900);
+      } else say(pick(b.charging || ['Charging… 🔌', 'Thodi si jaan aayi ⚡']));
+      fx(['⚡', '💖', '✨']);
+    };
+    const leave = () => {
+      pct = Math.max(1, pct - (b.drain || 38));
+      render();
+      say(pick(b.leaving || ['Door jaate hi battery gir gayi 😭', 'Bina tumhare mera signal nahi 📵']));
+      fx(['🪫', '😭', '💔']);
+    };
+    goBtn.addEventListener('click', charge);
+    charger.addEventListener('click', () => { charger.classList.remove('squish'); void charger.offsetWidth; charger.classList.add('squish'); charge(); });
+    away.addEventListener('click', leave);
+    say(b.say || 'Meri battery low hai 🪫 Nishu se charge karo!');
+    render();
     return card;
   }
 

@@ -1087,3 +1087,56 @@ body.locked .stage { visibility: hidden; }
   .love-dot { font-size: 1.15rem; padding: 1px 2px; }
 }
 :root { --heart: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29.6'><path d='M23.6,0c-3.4,0-6.3,1.9-7.6,4.7C14.7,1.9,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z'/></svg>"); }
+
+/* 🔋 Aadat se Zaroorat: battery + charger (2025) */
+.bat-card {
+  grid-column: 1 / -1; padding: 14px 12px 12px; border-radius: 18px; text-align: center; transition: box-shadow .8s, border-color .8s;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02)); border: 1px solid var(--line);
+}
+.bat-card.full { border-color: #7fdc9a; box-shadow: 0 0 40px rgba(110, 220, 150, .3), inset 0 0 40px rgba(110, 220, 150, .08); }
+.bat-card .bubble { max-width: 100%; min-height: 2.6em; font-size: 1.1rem; margin: 0 auto 10px; }
+.bat-stage {
+  --bc: #ff4f6b; position: relative; height: min(40vh, 330px); border-radius: 14px; overflow: hidden; display: flex; align-items: center; gap: 4%; padding: 10px 4% 0;
+  background: radial-gradient(circle at 25% 45%, rgba(255, 255, 255, .06), transparent 65%), rgba(0, 0, 0, .25); border: 1px dashed rgba(232, 194, 122, .35);
+}
+.bat-card[data-lv="mid"] .bat-stage { --bc: #ffc24a; }
+.bat-card[data-lv="high"] .bat-stage { --bc: #7fdc9a; }
+.bat-phone { position: relative; z-index: 2; flex: 0 0 auto; width: min(34%, 130px); padding: 8px 8px 10px; border-radius: 18px; background: #111; border: 2px solid #555; box-shadow: 0 10px 24px rgba(0, 0, 0, .5); }
+.bat-top { display: flex; justify-content: space-between; font-size: .68rem; color: #bbb; margin-bottom: 6px; }
+.bat-body { position: relative; height: min(21vh, 170px); border-radius: 12px; overflow: hidden; background: #1c1c1c; border: 2px solid var(--bc); transition: border-color .5s; }
+.bat-fill { position: absolute; left: 0; right: 0; bottom: 0; height: 9%; background: linear-gradient(0deg, var(--bc), color-mix(in srgb, var(--bc) 60%, #fff)); transition: height .9s cubic-bezier(.3, 1.2, .4, 1), background .5s; }
+.bat-card[data-lv="low"] .bat-body { animation: batWarn 1.2s ease-in-out infinite; }
+.bat-pct { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 1.7rem; color: #fff; text-shadow: 0 2px 6px rgba(0, 0, 0, .8); z-index: 2; }
+.bat-bolt { position: absolute; top: 6px; right: 8px; z-index: 2; font-size: 1.2rem; opacity: 0; }
+.bat-stage.zap .bat-bolt { animation: boltFlash .9s ease-out; }
+.bat-status { margin-top: 6px; font-size: .66rem; line-height: 1.2; color: #ddd; min-height: 2.4em; }
+.bat-cable { position: relative; z-index: 1; flex: 1 1 auto; height: 0; border-top: 3px dashed rgba(255, 255, 255, .3); margin-top: 18%; align-self: center; }
+.bat-cable span { position: absolute; left: 0; top: -14px; font-size: 1.1rem; }
+.bat-stage.zap .bat-cable { border-top-color: var(--bc); animation: cableGlow .9s ease-out; }
+.bat-charger { position: absolute; z-index: 3; right: 3%; bottom: 0; height: 88%; border: 0; background: none; padding: 0; cursor: pointer; transform-origin: 50% 100%; animation: wobble 3.6s ease-in-out infinite; }
+.bat-charger img { height: 100%; width: auto; display: block; pointer-events: none; -webkit-user-drag: none; filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 8px 12px rgba(0, 0, 0, .5)); }
+.bat-charger.squish { animation: squish .5s cubic-bezier(.3, 1.6, .5, 1), wobble 3.6s ease-in-out .5s infinite; }
+.bat-couple { position: absolute; z-index: 4; left: 58%; bottom: 0; height: 66%; width: auto; transform: translateX(-50%) translateY(30%) scale(.8); opacity: 0; pointer-events: none; transition: opacity .7s, transform .9s cubic-bezier(.2, 1.4, .4, 1); filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 8px 12px rgba(0, 0, 0, .5)); }
+.bat-couple.show { opacity: 1; transform: translateX(-50%); }
+.bat-needs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; text-align: left; }
+.bat-chip { position: relative; display: block; padding: 7px 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255, 255, 255, .05); overflow: hidden; min-height: 3.6em; transition: background .5s, border-color .5s; }
+.bat-chip i { font-style: normal; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); display: block; }
+.bat-chip b { font-weight: 400; font-size: .8rem; line-height: 1.2; display: block; transition: opacity .35s, transform .35s; }
+.bat-chip em { position: absolute; left: 10px; right: 10px; bottom: 7px; font-style: normal; font-size: .78rem; line-height: 1.2; color: #fff; opacity: 0; transform: translateY(8px); transition: opacity .45s .15s, transform .45s .15s; }
+.bat-chip.on { background: rgba(127, 220, 154, .16); border-color: #7fdc9a; }
+.bat-chip.on i { color: #7fdc9a; }
+.bat-chip.on i::after { content: ' → ZAROORAT'; }
+.bat-chip.on b { opacity: 0; transform: translateY(-8px); height: 0; }
+.bat-chip.on em { position: static; opacity: 1; transform: none; margin-top: 2px; display: block; }
+.bat-actions { display: flex; gap: 10px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+.bat-actions .btn { padding: 10px 18px; font-size: .9rem; }
+@keyframes batWarn { 0%, 100% { box-shadow: 0 0 0 rgba(255, 79, 107, 0); } 50% { box-shadow: 0 0 18px rgba(255, 79, 107, .8); } }
+@keyframes boltFlash { 0% { opacity: 0; transform: scale(.4); } 25% { opacity: 1; transform: scale(1.5); } 100% { opacity: 0; transform: scale(1); } }
+@keyframes cableGlow { 0% { filter: drop-shadow(0 0 0 var(--bc)); } 30% { filter: drop-shadow(0 0 10px var(--bc)); } 100% { filter: none; } }
+@media (max-width: 480px) {
+  .bat-stage { height: min(38vh, 320px); gap: 2%; }
+  .bat-phone { width: 38%; }
+  .bat-pct { font-size: 1.4rem; }
+  .bat-charger { height: 82%; }
+  .bat-couple { left: 62%; height: 58%; }
+}

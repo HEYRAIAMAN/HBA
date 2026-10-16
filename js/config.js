@@ -62,6 +62,7 @@ window.CONFIG = {
        mana:    { title, say, hint, rooth, happy, win, actions:[{icon,label,gain,lines}], tease, taps } → "Roothna-manana" interactive (2022 mein dekho)
        calendar:{ title, say, hint, win, praise, mascot:{src,lines}, months:[{m,src,cap,pos}] } → 12 mahine ka "Smile Calendar" (2023 mein dekho)
        love:    { title, say, hint, win, praise, couple:{src,lines}, levels:[{src,title,cap,pos}] } → dil ke shape wala "Love Level Up" (2024 mein dekho)
+       battery: { title, device, start, say, charger, couple, needs:[{aadat,zaroorat}], charging, leaving, win } → "Aadat se Zaroorat" battery interactive (2025 mein dekho)
        grow:    { src, say, btn, meters, steps, hint } → tap karne pe badi hone wala interactive cutout (2021 mein dekho)
        cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
        photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke), wide: true (landscape photo, poori chaudai mein), span: true / stick: "🎓" (collage mein poori chaudai / emoji sticker), pos: "50% 15%" (lambi photo ka kaunsa hissa dikhe — chehra kat raha ho to isse upar/neeche khiskao) } */
@@ -253,7 +254,49 @@ window.CONFIG = {
       },
       photos: [],
     },
-    { year: 2025, title: "Pakki wali jodi",              caption: "Ab tum sirf meri aadat nahi, meri zaroorat ho.",              photos: ["assets/photos/2025/1.jpg", "assets/photos/2025/2.jpg", "assets/photos/2025/3.jpg"] },
+    {
+      year: 2025, title: "Pakki wali jodi",
+      caption: "Ab tum sirf meri aadat nahi, meri zaroorat ho.",
+      battery: {
+        title: "Aadat se Zaroorat 🔋",
+        device: "Aman 📱",
+        start: 9,
+        say: "Meri battery low hai 🪫 Nishu (charger) pe tap karo!",
+        hint: "Nishu pe tap karke charge karo… ya Door jao dabake dekho kya hota hai 😜",
+        charger: "assets/photos/2025/charger.png",
+        couple: "assets/photos/2025/couple.png",
+        lowStatus: "Low battery… Nishu miss kar rahi hai 🪫",
+        midStatus: "Charging… 🔌",
+        fullStatus: "Full charge ✅ Ab sab theek hai",
+        step: 22, drain: 38,
+        charging: ["Charging… 🔌", "Thodi si jaan aayi ⚡", "Tumhara saath = fast charging 😍", "Aur thoda… 🔋", "Dil ki battery bhi bhar rahi hai 💖"],
+        leaving: ["Door jaate hi battery gir gayi 😭", "Bina tumhare mera signal nahi 📵", "Charger kahan gayi? 🥺"],
+        win: "Full charge! 🎉 Tum meri aadat nahi, meri zaroorat ho ❤️",
+        afterFull: "Battery full hai… par tumhara saath kabhi full nahi hota 🥰",
+        needs: [
+          { aadat: "Subah ka good morning", zaroorat: "Din nahi chalta bina iske ☀️" },
+          { aadat: "Khana khaya? ka message", zaroorat: "Isse pet nahi, dil bharta hai 🍽️" },
+          { aadat: "Raat ki call", zaroorat: "Neend nahi aati iske bina 🌙" },
+          { aadat: "Tumhari smile", zaroorat: "Meri poori battery 🔋" },
+        ],
+      },
+      photos: [
+        { src: "assets/photos/2025/1.jpg", cap: "Phoolon ke darwaze pe meri rani 👑 (pagdi bhi suit karti hai)", pos: "50% 30%" },
+        { src: "assets/photos/2025/2.jpg", cap: "Baithi hui bhi royal 😌" },
+        { src: "assets/photos/2025/3.jpg", cap: "Doggo se bhi zyada pyaar? Jalan ho rahi hai 🐶😤", pos: "50% 30%", stick: "🐶" },
+        { src: "assets/photos/2025/4.jpg", cap: "Chashme pe 'I don't care'… par mujhe tumhari bahut care hai 😎❤️", pos: "50% 22%" },
+        { src: "assets/photos/2025/5.jpg", cap: "Ye bhi tumhara fan hai 🐒 (nazar mat lagana)" },
+        { src: "assets/photos/2025/6.jpg", cap: "Is hug mein poori duniya bhool gaya 🫂", pos: "50% 55%", stick: "🫂" },
+        { src: "assets/photos/2025/7.jpg", cap: "Gulabi saree, gulabi dil 💗", pos: "50% 25%", stick: "💗" },
+        { src: "assets/photos/2025/8.jpg", cap: "Peeche sab kutte hi kutte, par cutest tum 🐶😜", pos: "50% 20%" },
+        { src: "assets/photos/2025/9.jpg", cap: "Mood off nahi, bas selfie mood 😒😏", pos: "50% 35%" },
+        { src: "assets/photos/2025/10.jpg", cap: "Pout ka copyright sirf Nishu ke naam 😗", pos: "50% 30%", stick: "😗" },
+        { src: "assets/photos/2025/11.jpg", cap: "Chand bhi dekhta reh gaya 🌙", pos: "50% 55%", stick: "🌙" },
+        { src: "assets/photos/2025/12.jpg", cap: "Meri jodi, meri duniya 💑", pos: "50% 40%", stick: "💑" },
+        { src: "assets/photos/2025/13.jpg", cap: "Peeche se bhi pehchaan lunga 🚶‍♀️", pos: "50% 40%" },
+        { src: "assets/photos/2025/14.jpg", cap: "Film wali look 🎞️ — heroine ban gayi ✨", pos: "50% 30%", stick: "✨" },
+      ],
+    },
     { year: 2026, title: "Aaj — tumhara din ✨",          caption: "8 saal baad bhi dil wahi kehta hai: sirf tum.",              photos: ["assets/photos/2026/1.jpg", "assets/photos/2026/2.jpg", "assets/photos/2026/3.jpg"] },
   ],
 
