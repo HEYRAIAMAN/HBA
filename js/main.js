@@ -333,7 +333,8 @@
     const n = C.timeline.length, first = C.timeline[0].year, last = C.timeline[n - 1].year;
     C.timeline.forEach((t, k) => {
       const side = t.firstPhoto || t.cutout;   // side mein dikhne wali photo (poori ya cutout)
-      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game || t.mana || t.calendar ? ' meme-year' : '') + (t.collage ? ' collage-year' : ''));
+      const s = newSlide(t.song || 'timeline', 'year-slide' + (t.meme || side || t.grow || t.game || t.mana || t.calendar || t.love ? ' meme-year' : '') + (t.collage ? ' collage-year' : '') + (t.love ? ' love-year' : ''));
+      if (t.love) s.appendChild(lovePetals());   // peeche rising hearts
       // 🏍️ safar ki road: bike is saal tak chal ke rukti hai
       const journey = t.journey ? `
         <div class="journey anim" style="--to: ${(((k + 1) / n) * 100).toFixed(1)}%">
@@ -384,6 +385,8 @@
       if (t.mana) grid.prepend(manaCard(t.mana));
       // 🌸 har mahine ki ek photo wala Smile Calendar (config: timeline[].calendar)
       if (t.calendar) grid.prepend(calCard(t.calendar));
+      // 💖 love theme: Love Level Up (config: timeline[].love)
+      if (t.love) grid.prepend(loveCard(t.love));
       inner.appendChild(grid);
       // 🧷 collage ke tukde scroll karke jab dikhein tab gir ke aate hain (bars bhi tab bharte hain)
       if (t.collage) {
@@ -738,6 +741,104 @@
     });
     say(c.say || 'Kisi bhi mahine pe tap karo ✨');
     render();
+    return card;
+  }
+
+  // 💖 peeche udte hue dil (love-year slide ke liye)
+  function lovePetals() {
+    const box = el('div', 'love-hearts');
+    box.setAttribute('aria-hidden', 'true');
+    const list = ['💖', '💕', '💗', '❤️', '💘', '🌸'];
+    for (let i = 0; i < 12; i++) {
+      const h = el('span', '', list[i % list.length]);
+      h.style.left = rand(2, 96).toFixed(1) + '%';
+      h.style.setProperty('--fs', rand(1, 2.2).toFixed(2) + 'rem');
+      h.style.setProperty('--d', rand(8, 15).toFixed(1) + 's');
+      h.style.setProperty('--delay', (-rand(0, 14)).toFixed(1) + 's');
+      h.style.setProperty('--x', rand(-30, 30).toFixed(0) + 'px');
+      box.appendChild(h);
+    }
+    return box;
+  }
+
+  // 💖 "Love Level Up": dil ke shape ki photo, har level pe Nishu aur pyaari (config: timeline[].love)
+  function loveCard(c) {
+    const levels = c.levels || [];
+    const N = levels.length;
+    const card = el('div', 'love-card anim', `
+      <div class="bubble"></div>
+      <p class="game-title">${esc(c.title || 'Love Level Up ❤️')}</p>
+      <div class="love-lv"><b class="love-lvnum"></b><span class="love-lvtitle"></span></div>
+      <div class="love-stage">
+        <button class="love-heart" aria-label="Dil pe tap karo, level up">
+          <span class="heart-back"></span>
+          <span class="heart-photo"></span>
+          <span class="heart-shine"></span>
+        </button>
+        <p class="love-cap"></p>
+        <button class="love-zoom" aria-label="Poori photo dekho">🔍 poori photo</button>
+        ${c.couple?.src ? `<button class="love-couple" aria-label="Jodi, tap karo"><img src="${esc(c.couple.src)}" alt="" draggable="false"></button>` : ''}
+      </div>
+      <div class="cal-bar">
+        <div class="cal-meter"><span class="cal-count"></span><i><b></b></i></div>
+        <button class="btn cal-next love-up">Level Up ⬆️</button>
+      </div>
+      <div class="love-dots">${levels.map((_, i) => `<button class="love-dot" data-i="${i}" aria-label="Level ${i + 1}">♡</button>`).join('')}</div>
+      <p class="tiny muted game-hint">${esc(c.hint || 'dil pe tap karo… har level pe Nishu aur pyaari lagti hai 💖')}</p>`);
+    const bubble = $('.bubble', card), stage = $('.love-stage', card), heart = $('.love-heart', card), box = $('.heart-photo', card);
+    const lvNum = $('.love-lvnum', card), lvTitle = $('.love-lvtitle', card), capEl = $('.love-cap', card);
+    const count = $('.cal-count', card), bar = $('.cal-meter b', card), up = $('.love-up', card), dots = $$('.love-dot', card);
+    const couple = $('.love-couple', card), zoom = $('.love-zoom', card);
+    $('img', couple || card)?.addEventListener('error', () => couple?.remove());
+    const say = text => { bubble.textContent = text; bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop'); };
+    const pick = list => list[(Math.random() * list.length) | 0];
+    const praise = c.praise?.length ? c.praise : ['Aur pyaari 😍'];
+    let lv = 0, maxed = false, reached = 0;
+
+    const render = swap => {
+      const L = levels[lv];
+      if (!L) return;
+      const ph = photo(L.src, { alt: `${C.name} level ${lv + 1}` });
+      if (L.pos && ph.firstChild) ph.firstChild.style.objectPosition = L.pos;
+      box.replaceChildren(ph);
+      lvNum.textContent = `LV ${lv + 1}`;
+      lvTitle.textContent = L.title || '';
+      capEl.textContent = L.cap || '';
+      const pct = Math.round(((lv + 1) / N) * 100);
+      count.textContent = lv + 1 >= N ? 'Pyaar level: ∞ ♾️' : `Pyaar level: ${pct}% 💖`;
+      bar.style.width = pct + '%';
+      dots.forEach((d, i) => { d.textContent = i <= reached ? '♥' : '♡'; d.classList.toggle('on', i <= reached); d.classList.toggle('cur', i === lv); });
+      card.classList.toggle('maxed', lv + 1 >= N);
+      up.textContent = lv + 1 >= N ? 'Phir se Level 1 ↺' : 'Level Up ⬆️';
+      if (swap) { heart.classList.remove('pop'); void heart.offsetWidth; heart.classList.add('pop'); }
+    };
+    const fx = (n = 8) => { const [x, y] = center(heart); sparkle(x, y, n, 100, 130, ['❤️', '💖', '💕', '💗', '😍']); };
+    const go = i => { lv = Math.max(0, Math.min(N - 1, i)); reached = Math.max(reached, lv); render(true); fx(); };
+    const levelUp = () => {
+      if (lv + 1 >= N) {            // max ho chuka: wapas level 1
+        lv = 0; maxed = false; render(true); fx(5);
+        say(c.say || 'Chalo phir se! Dil pe tap karo 💖');
+        return;
+      }
+      go(lv + 1);
+      if (lv + 1 >= N) {
+        maxed = true;
+        say(c.win || 'MAX LEVEL! 🎉 Par pyaar ka level kabhi max nahi hota ♾️❤️');
+        celebrate(); setTimeout(celebrate, 900);
+      } else say(pick(praise));
+    };
+    heart.addEventListener('click', levelUp);
+    up.addEventListener('click', levelUp);
+    dots.forEach(d => d.addEventListener('click', () => { const i = +d.dataset.i; if (i <= reached) { go(i); say(levels[i].title || ''); } else say('Pehle pichhle level kholo 😉'); }));
+    zoom.addEventListener('click', () => { const L = levels[lv]; if (!L) return; $('img', lightbox).src = L.src; lightbox.hidden = false; });
+    couple?.addEventListener('click', () => {
+      couple.classList.remove('squish'); void couple.offsetWidth; couple.classList.add('squish');
+      say(pick(c.couple.lines?.length ? c.couple.lines : ['❤️']));
+      const [x, y] = center(couple);
+      sparkle(x, y - 20, 7, 60, 100, ['💖', '💕', '❤️']);
+    });
+    say(c.say || 'Dil pe tap karo 💖');
+    render(false);
     return card;
   }
 

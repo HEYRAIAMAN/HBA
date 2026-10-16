@@ -61,6 +61,7 @@ window.CONFIG = {
        game:    { title, say, hint, viruses, cutouts:[{src,say}], win } → "Covid bhagao" mini game (2020 mein dekho)
        mana:    { title, say, hint, rooth, happy, win, actions:[{icon,label,gain,lines}], tease, taps } → "Roothna-manana" interactive (2022 mein dekho)
        calendar:{ title, say, hint, win, praise, mascot:{src,lines}, months:[{m,src,cap,pos}] } → 12 mahine ka "Smile Calendar" (2023 mein dekho)
+       love:    { title, say, hint, win, praise, couple:{src,lines}, levels:[{src,title,cap,pos}] } → dil ke shape wala "Love Level Up" (2024 mein dekho)
        grow:    { src, say, btn, meters, steps, hint } → tap karne pe badi hone wala interactive cutout (2021 mein dekho)
        cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
        photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke), wide: true (landscape photo, poori chaudai mein), span: true / stick: "🎓" (collage mein poori chaudai / emoji sticker), pos: "50% 15%" (lambi photo ka kaunsa hissa dikhe — chehra kat raha ho to isse upar/neeche khiskao) } */
@@ -228,7 +229,30 @@ window.CONFIG = {
         { src: "assets/photos/2023/14.jpg", pos: "50% 30%", cap: "Sukoon wala pal 🫶 (bonus smile)" },
       ],
     },
-    { year: 2024, title: "Aur bhi khoobsurat",           caption: "Har saal tum aur pyaari ho jaati ho, ye kaise karti ho?",     photos: ["assets/photos/2024/1.jpg", "assets/photos/2024/2.jpg", "assets/photos/2024/3.jpg"] },
+    {
+      year: 2024, title: "Aur bhi khoobsurat",
+      caption: "Is saal tum ek level aur upar chali gayi… Har saal tum aur pyaari ho jaati ho, ye kaise kar leti ho? 💖",
+      love: {
+        title: "Love Level Up ❤️",
+        say: "Dil pe tap karo — har level pe Nishu aur pyaari hoti jaati hai 😍",
+        hint: "9 level hain… dekho kaise ek level aur upar jaati ho 💖",
+        win: "MAX LEVEL! 🎉 Par pyaar ka level kabhi max nahi hota ♾️❤️",
+        praise: ["Aur pyaari ho gayi 😍", "Level up! Dil bhi up 💖", "Ye kaise kar leti ho? 🥹", "Wah! Aur ek level ✨", "Dil dhak-dhak 💓"],
+        couple: { src: "assets/photos/2024/couple.png", lines: ["Hum dono, ek frame mein ❤️", "Ye wali nazar to dil le gayi 🥹", "Jodi ho to aisi 💑", "Pyaar hi pyaar 💕"] },
+        levels: [
+          { src: "assets/photos/2024/1.jpg", title: "Khoobsurat 🌷", cap: "Chaat khate hue bhi itni pyaari 😋", pos: "50% 12%" },
+          { src: "assets/photos/2024/2.jpg", title: "Foodie mode 🍽️", cap: "Khana mast, aur saath tumhara to aur bhi mast 🧡", pos: "50% 60%" },
+          { src: "assets/photos/2024/3.jpg", title: "Jodi no. 1 💑", cap: "Jab tum aise dekhti ho, dil pighal jata hai 🥹", pos: "50% 35%" },
+          { src: "assets/photos/2024/4.jpg", title: "Cutie pie 🍬", cap: "Ek smile aur main out ✨", pos: "50% 20%" },
+          { src: "assets/photos/2024/5.jpg", title: "Saree queen 👑", cap: "Saree mein poori Queen 👑", pos: "50% 55%" },
+          { src: "assets/photos/2024/6.jpg", title: "Masti level 😜", cap: "Zubaan nikali, aur dil le gayi 😝", pos: "50% 30%" },
+          { src: "assets/photos/2024/7.jpg", title: "Attitude level 😏", cap: "Ye wali look to jaan le legi 🍹", pos: "50% 20%" },
+          { src: "assets/photos/2024/8.jpg", title: "Pahaadon ki rani 🏔️", cap: "Phoolon jaisi, pahaadon se bhi unchi pasand 🌼", pos: "50% 55%" },
+          { src: "assets/photos/2024/9.jpg", title: "MAX LEVEL 🔥", cap: "Meri filter wali shakal pe tumhari hasi 🤣 — sabse pyaari", pos: "50% 40%" },
+        ],
+      },
+      photos: [],
+    },
     { year: 2025, title: "Pakki wali jodi",              caption: "Ab tum sirf meri aadat nahi, meri zaroorat ho.",              photos: ["assets/photos/2025/1.jpg", "assets/photos/2025/2.jpg", "assets/photos/2025/3.jpg"] },
     { year: 2026, title: "Aaj — tumhara din ✨",          caption: "8 saal baad bhi dil wahi kehta hai: sirf tum.",              photos: ["assets/photos/2026/1.jpg", "assets/photos/2026/2.jpg", "assets/photos/2026/3.jpg"] },
   ],

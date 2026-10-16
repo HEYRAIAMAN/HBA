@@ -1040,3 +1040,50 @@ body.locked .stage { visibility: hidden; }
   .cal-m { font-size: .75rem; }
   .cal-next { padding: 9px 12px; font-size: .82rem; }
 }
+
+/* 💖 Love theme: Love Level Up (2024) */
+.love-year { background: radial-gradient(620px 520px at 50% 22%, rgba(255, 70, 130, .2), transparent 70%); }
+.love-year .year-num { background: linear-gradient(180deg, #ffd6e4, #ff7aa8 55%, #d6336c); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 22px rgba(255, 90, 150, .4)); }
+.love-hearts { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.love-hearts span { position: absolute; bottom: -8%; font-size: var(--fs, 1.4rem); opacity: 0; animation: loveRise var(--d, 10s) linear var(--delay, 0s) infinite; filter: drop-shadow(0 0 6px rgba(255, 90, 150, .6)); }
+@keyframes loveRise { 0% { transform: translate(0, 0) scale(.6); opacity: 0; } 12% { opacity: .85; } 50% { transform: translate(var(--x, 0), -55vh) scale(1); } 100% { transform: translate(calc(var(--x, 0) * -1), -115vh) scale(1.15); opacity: 0; } }
+.love-card {
+  grid-column: 1 / -1; padding: 14px 12px 12px; border-radius: 18px; text-align: center; position: relative; transition: box-shadow .8s, border-color .8s;
+  background: linear-gradient(160deg, rgba(255, 110, 160, .13), rgba(255, 255, 255, .02)); border: 1px solid rgba(255, 122, 168, .45);
+}
+.love-card.maxed { border-color: var(--gold); box-shadow: 0 0 44px rgba(255, 90, 150, .4), inset 0 0 40px rgba(255, 122, 168, .15); }
+.love-card .bubble { max-width: 100%; min-height: 2.6em; font-size: 1.1rem; margin: 0 auto 10px; }
+.love-lv { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 6px; }
+.love-lvnum { padding: 3px 12px; border-radius: 999px; font-size: .85rem; letter-spacing: .1em; color: #3a1526; background: linear-gradient(135deg, #ffd6e4, #ff7aa8); box-shadow: 0 4px 14px rgba(255, 90, 150, .45); }
+.love-lvtitle { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; color: var(--rose2); }
+.love-stage {
+  position: relative; height: min(46vh, 380px); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 10px 0 0 5%;
+  background: radial-gradient(circle at 38% 38%, rgba(255, 90, 150, .22), transparent 65%), rgba(0, 0, 0, .25);
+  border: 1px dashed rgba(255, 122, 168, .4);
+}
+.love-heart { position: relative; width: min(64%, 250px); aspect-ratio: 32 / 29.6; border: 0; background: none; padding: 0; cursor: pointer; animation: loveBeat 1.5s ease-in-out infinite; transform-origin: 50% 60%; z-index: 2; }
+.love-heart.pop { animation: lovePop .6s cubic-bezier(.3, 1.6, .5, 1), loveBeat 1.5s ease-in-out .6s infinite; }
+.heart-back, .heart-photo, .heart-shine { position: absolute; display: block; -webkit-mask: var(--heart) center / contain no-repeat; mask: var(--heart) center / contain no-repeat; }
+.heart-back { inset: -3.5%; background: linear-gradient(135deg, #ffd6e4, #ff4f8b 55%, #e8c27a); filter: drop-shadow(0 8px 16px rgba(0, 0, 0, .5)); }
+.heart-photo { inset: 0; background: #2a1830; }
+.heart-photo .ph-wrap { width: 100%; height: 100%; }
+.heart-shine { inset: 0; background: linear-gradient(120deg, transparent 35%, rgba(255, 255, 255, .35) 48%, transparent 60%); background-size: 250% 100%; animation: heartShine 3.4s ease-in-out infinite; pointer-events: none; }
+.love-cap { position: relative; z-index: 2; width: min(64%, 250px); margin: 12px 0 0; font-family: var(--hand); font-weight: 700; font-size: 1.15rem; line-height: 1.1; color: var(--rose2); text-shadow: 0 2px 6px rgba(0, 0, 0, .6); text-align: center; min-height: 2.4em; }
+.love-zoom { position: absolute; z-index: 3; left: 5%; bottom: 6px; border: 0; background: rgba(12, 6, 16, .6); color: var(--gold2); font-size: .72rem; padding: 4px 10px; border-radius: 999px; cursor: pointer; }
+.love-couple { position: absolute; z-index: 3; right: 2%; bottom: 0; height: 62%; border: 0; background: none; padding: 0; cursor: pointer; transform-origin: 50% 100%; animation: wobble 3.6s ease-in-out infinite; }
+.love-couple img { height: 100%; width: auto; display: block; pointer-events: none; -webkit-user-drag: none; filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 8px 12px rgba(0, 0, 0, .5)); }
+.love-couple.squish { animation: squish .5s cubic-bezier(.3, 1.6, .5, 1), wobble 3.6s ease-in-out .5s infinite; }
+.love-dots { display: flex; justify-content: center; gap: 4px; margin-top: 10px; flex-wrap: wrap; }
+.love-dot { border: 0; background: none; cursor: pointer; font-size: 1.35rem; line-height: 1; color: rgba(255, 255, 255, .35); padding: 2px 3px; transition: transform .2s, color .3s; }
+.love-dot.on { color: #ff4f8b; text-shadow: 0 0 10px rgba(255, 79, 139, .7); }
+.love-dot.cur { transform: scale(1.35); }
+.love-card.maxed .cal-meter b { background: linear-gradient(90deg, #ff4f8b, var(--gold), #ff4f8b); background-size: 200% 100%; animation: gradmove 2s linear infinite; }
+@keyframes loveBeat { 0%, 100% { transform: scale(1); } 14% { transform: scale(1.06); } 28% { transform: scale(1); } 42% { transform: scale(1.04); } }
+@keyframes lovePop { 0% { transform: scale(.55) rotate(-8deg); } 55% { transform: scale(1.12) rotate(3deg); } 100% { transform: scale(1) rotate(0); } }
+@keyframes heartShine { 0%, 40% { background-position: 150% 0; } 80%, 100% { background-position: -50% 0; } }
+@media (max-width: 480px) {
+  .love-stage { height: min(44vh, 360px); }
+  .love-cap { font-size: 1.02rem; }
+  .love-dot { font-size: 1.15rem; padding: 1px 2px; }
+}
+:root { --heart: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29.6'><path d='M23.6,0c-3.4,0-6.3,1.9-7.6,4.7C14.7,1.9,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z'/></svg>"); }
