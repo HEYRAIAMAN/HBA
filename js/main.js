@@ -1712,6 +1712,8 @@
         }, 600);
       }, 1500);
     }
+    // lamba khat ho to thoda tez likho (~1 minute mein poora)
+    const charMs = Math.max(18, Math.min(38, Math.round(60000 / Math.max(1, full.length))));
     function typeLetter() {
       typing = true;
       textEl.classList.add('typing');
@@ -1722,7 +1724,7 @@
         if (slide.scrollHeight - slide.scrollTop - slide.clientHeight < 220) slide.scrollTop = slide.scrollHeight;
         if (i < full.length) {
           const ch = full[i - 1];
-          timer = setTimeout(step, ch === '\n' ? 300 : /[.,!?…]/.test(ch) ? 180 : 38);
+          timer = setTimeout(step, ch === '\n' ? 300 : /[.,!?…]/.test(ch) ? 180 : charMs);
         } else finish();
       })();
     }

@@ -449,17 +449,19 @@ window.CONFIG = {
 
   /* ---------------- ✉️ LAST NOTE ----------------
      Apna note yahan likho (backticks ` ` ke andar). Enter se nayi line. */
-  letter: `Meri pyaari Nishu,
+  letter: `Dear Nishu,
 
 Happy Birthday meri jaan ❤️
 
-8 saal pehle jab tum meri zindagi mein aayi thi, tab socha bhi nahi tha ki ek din tum hi meri poori duniya ban jaogi. In saalon mein humne kitna kuch saath dekha — hasi, jhagde, roothna-manana, door rehna, phir paas aana… aur har baar tumne mera haath aur kaske pakda.
+wese yesa kuch hai nhi Mere pass bolne ke liye jo Tumhe phle se na pata ho lekin me thankfull ho skta hu ki apne mujhe itna jhela but ye bhi koi bat nhi hui ye bhi apko pata hai ...me sorry bol skta hu lekin ye bhi apko hajar bar bol chuka ye bhi apko pata hai 😅 ya ye bhi ho skta hai mujhe yesa lagta hai ki apko sab pata hai par aapko pata hote huye bhi apko nhi jana mere bare
 
-Tumhari ek smile se mera poora din ban jata hai. Tumhari choti choti baatein, tumhara pagalpan, tumhara "suno na" bolna — sab kuch mujhe bahut pyaara hai.
+kher aaj ye time nhi hai ye sab bate krne ka aaj toh janmouthsav ka time hai aaj nishu diwas hai 🥳 aaj khushi maane ka time hai jiske liye hum aaj party or games khelne jange par dikat toh ye hai me dekhna kuch na kuch galat kar he dunga jisse sab pe pani fir jayega ye mtt sochna yesa me chahta hu bcz ab meri kismat pe bharosa hai apko le ke ye kese kam karti hai duniya jaha me meri kisamt jadu ki tarh kam karti hai apke aage he magic nhi chlta 🙈
 
-Thank you mujhe itna pyaar karne ke liye, mujhe samajhne ke liye, aur hamesha saath rehne ke liye. Promise karta hoon — har birthday, har din, har pal main tumhare saath rahunga.
+or yrrrrrrrrrrrrrr aap bhtt sunder lag rahe the 😍 mene sari photo itni bar dekh li naaa aap ho yrr sundar mere se jada ab man kar rha hai ki me ak syari bhi likh he du aap pe lekin abhi dimag kam nhi kar rha hai ahi rat bhar se jaga hua hu or fir gpt lagega lekin isse ye prove nhi hota ki mera pyr apke liye kam hai yaa mujhe apki chinta nhi hai offcure mujhe hai fir bhi apko kyu nhi lagta are nhi me fir se ussi bat pe a gaya lekin aaj toh apka bady hai apki bat honi chaiye naa toh kya bat karu
 
-Bas aise hi hasti raho, muskurati raho… kyunki tu ho toh sab kuch hai.
+wese toh me akele appe book likh skta hu apki akhe jo mujhe sbse jada psnd hai apke lisp wo toh bachpan se psnd hai apke gore kitne ho yrr or muh uff jinse hamesha mujhe sunnaya jata hai ye nhi wo nhi lekin fir bhi wo mujhe psnd hai bhale he tikha bolta hai but hai toh apka he apke chote chote hath kabhi pyr se gal pe nhi rakhe par me rakh leta hu khud he pkd ke apki kamr unko toh mene patle se mote hote dekha hai fir apke chote chote per jinse aap panda ki trh chlte ho girte padte rhte ho hahah 🐼 dyan rakha kro apna ab har bar Aman a ke nhi bachaeyga ha lekin Aman se acha jarur koi ayega lekin Aman jesa nhi
+
+ufff me fir se suru ho gaya lagta hai mujhe thodi der so jana chaiye me hoss me nhi hu ab syd so gud nyt bhole baba /kechi dham wale baba / golu devta apki koi bhi wish puri kare yaa meri kar jo me apke liye mangta hu toh bhi sab set ho jayega ohh wait wait me ye nhi mngta ki aap or me yesa kuch nhi bass apke liye so dont worry aap nhi a rhe meri life me ...are fir enough yrrrr Aman fir se me jata hu by bye
 
 Happy Birthday once again 🎂✨`,
 };
