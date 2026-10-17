@@ -212,7 +212,7 @@ window.CONFIG = {
     {
       year: 2023, title: "Har din tumhare naam",
       song: "y2023",
-      caption: "Tumhari smile mera sabse bada blessing hai 🙏 Kya saal tha ye — har mahine ki ek photo ✨",
+      caption: "Tumhari smile mera sabse bada blessing thi, jab meri job lagi 🙏 Kya saal tha ye — har mahine ki kitni saari photos hain ✨",
       calendar: {
         title: "Smile Calendar 2023 🙏",
         say: "Kisi bhi mahine pe tap karo ✨",
