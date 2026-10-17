@@ -85,15 +85,35 @@
     <!-- 🌟 SPOTLIGHT 1 -->
     <section class="slide spotlight" id="spot-bholi"></section>
 
-    <!-- 🎬 VIDEOS (har video ki apni slide JS se) -->
+    <!-- 🎬 VIDEOS (config mein videos daaloge to har video ki slide yahan banegi) -->
     <template id="video-slot"></template>
+
+    <!-- 🍽️ NISHU'S CAFÉ -->
+    <section class="slide" id="s-food" data-song="food">
+      <div class="slide-inner center">
+        <p class="eyebrow anim">Chapter 2</p>
+        <h2 class="script anim">Nishu's Café</h2>
+        <p class="muted anim">8 saal mein jo bhi khaya, sab is menu mein hai 😋 Order karo!</p>
+        <div class="anim" id="food-card"></div>
+      </div>
+    </section>
+
+    <!-- 🐾 CUTENESS BATTLE -->
+    <section class="slide" id="s-animals" data-song="animals">
+      <div class="slide-inner center">
+        <p class="eyebrow anim">Chapter 3</p>
+        <h2 class="script anim">Cuteness Battle</h2>
+        <p class="muted anim">Jaanwar vs Nishu… dekhte hain kaun zyada cute hai 🐾</p>
+        <div class="anim" id="animal-card"></div>
+      </div>
+    </section>
 
     <!-- ⇆ THEN vs NOW -->
     <section class="slide" id="s-thennow" data-song="thennow">
       <div class="slide-inner center">
-        <p class="eyebrow anim">Chapter 3</p>
-        <h2 class="script anim">Tab vs Ab</h2>
-        <p class="muted anim">Beech wali line ko ungli se left-right karo</p>
+        <p class="eyebrow anim">Chapter 4</p>
+        <h2 class="script anim">Facepack vs Party</h2>
+        <p class="muted anim">Ek hi ladki, do avatar 😂 Beech wali line ko left-right khiskao</p>
         <div class="compare anim" id="compare">
           <div class="cmp-layer cmp-now"></div>
           <div class="cmp-layer cmp-then"></div>
@@ -107,7 +127,7 @@
     <!-- 📸 SWIPE -->
     <section class="slide" id="s-swipe" data-song="swipe">
       <div class="slide-inner center">
-        <p class="eyebrow anim">Chapter 4</p>
+        <p class="eyebrow anim">Chapter 5</p>
         <h2 class="script anim">Pal Pal Dil Ke Paas</h2>
         <p class="muted anim">Photo ko swipe karo ya tap karo 👉</p>
         <div class="deck anim" id="deck"></div>
@@ -120,7 +140,7 @@
     <!-- 💌 REASONS -->
     <section class="slide" id="s-reasons" data-song="reasons">
       <div class="slide-inner center">
-        <p class="eyebrow anim">Chapter 5</p>
+        <p class="eyebrow anim">Chapter 6</p>
         <h2 class="script anim">Suno Na…</h2>
         <p class="muted anim">Kuch wajahein, kyun tum itni special ho 💌</p>
         <div class="reason-stage anim">
@@ -132,13 +152,16 @@
           </button>
         </div>
         <p class="muted tiny" id="reason-count"></p>
+        <button class="side-cut anim" id="reason-cut" aria-label="Nishu, tap karo" hidden>
+          <span class="bubble"></span><img alt="" draggable="false">
+        </button>
       </div>
     </section>
 
     <!-- 🎮 QUIZ -->
     <section class="slide" id="s-quiz" data-song="quiz">
       <div class="slide-inner center">
-        <p class="eyebrow anim">Chapter 6</p>
+        <p class="eyebrow anim">Chapter 7</p>
         <h2 class="script anim">Chhota Sa Quiz</h2>
         <p class="muted anim">Dekhte hain tumhe kitna yaad hai 😏</p>
         <div class="quiz-card anim" id="quiz-card"></div>
@@ -148,7 +171,7 @@
     <!-- 🎂 CAKE -->
     <section class="slide" id="s-cake" data-song="cake">
       <div class="slide-inner center">
-        <p class="eyebrow anim">Chapter 7</p>
+        <p class="eyebrow anim">Chapter 8</p>
         <h2 class="script anim">Cake Time!</h2>
         <p class="muted anim">Aankhein band karo, wish maango, aur candles bujhao 🕯️</p>
         <div class="cake-wrap anim">
@@ -163,6 +186,9 @@
             <p class="muted tiny">ya har candle pe tap karo</p>
           </div>
           <p class="cake-msg" id="cake-msg" aria-live="polite"></p>
+          <button class="side-cut cake-cut" id="cake-cut" aria-label="Nishu, tap karo" hidden>
+            <span class="bubble"></span><img alt="" draggable="false">
+          </button>
         </div>
       </div>
     </section>
@@ -195,7 +221,11 @@
     <!-- ❤️ FINALE -->
     <section class="slide" id="s-finale" data-song="letter">
       <div class="slide-inner center">
-        <div class="big-heart anim">❤️</div>
+        <div class="fin-heart anim" id="fin-heart">
+          <span class="heart-back"></span>
+          <span class="heart-photo"></span>
+          <span class="heart-shine"></span>
+        </div>
         <h2 class="script big anim">I Love You, <span data-name></span></h2>
         <p class="muted anim">Aaj, kal, aur hamesha.</p>
         <p class="foot anim">Made with ❤️ sirf <span data-name></span> ke liye</p>

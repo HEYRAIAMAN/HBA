@@ -16,7 +16,7 @@
   const center = node => { const r = node.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
 
   /* ---------- Photo with placeholder (agar file nahi mili) ---------- */
-  function photo(src, { zoom = false, alt = C.name } = {}) {
+  function photo(src, { zoom = false, alt = C.name, pos = '' } = {}) {
     const wrap = el('div', 'ph-wrap' + (zoom ? ' zoomable' : ''));
     const missing = () => {
       wrap.classList.add('missing');
@@ -27,6 +27,7 @@
     img.alt = alt;
     img.decoding = 'async';
     img.draggable = false;
+    if (pos) img.style.objectPosition = pos;   // photo ka kaunsa hissa dikhe
     img.onerror = missing;
     img.src = src;
     wrap.appendChild(img);
@@ -1091,6 +1092,196 @@
   /* =========================================================
      ⏭ CLICK NAVIGATION — "Aage" dabao, agli slide
      ========================================================= */
+  /* =========================================================
+     🍽️ NISHU'S CAFÉ — menu se order karo, bill banta hai (config: food)
+     ========================================================= */
+  (function cafe() {
+    const F = C.food, host = $('#food-card');
+    if (!host) return;
+    if (!F?.items?.length) { $('#s-food')?.remove(); return; }
+    const items = F.items;
+    host.className = 'cafe anim';
+    host.innerHTML = `
+      <div class="cafe-top">
+        <div class="bubble"></div>
+        <p class="game-title">${esc(F.title || "Nishu's Café ☕")}</p>
+        <div class="cafe-stage">
+          <span class="cafe-light l"></span><span class="cafe-light r"></span>
+          <div class="cafe-dish"><div class="cafe-empty"><span>🍽️</span><small>menu se kuch order karo</small></div></div>
+          <span class="cafe-tag"></span>
+        </div>
+      </div>
+      <div class="cafe-side">
+        <div class="cafe-menu">
+          ${items.map((it, i) => `<button class="menu-item" data-i="${i}" aria-label="${esc(it.name)} order karo">
+            <span class="mi-thumb"><img src="${esc(it.src)}" alt="" draggable="false"></span>
+            <span class="mi-text"><b>${esc(it.emoji)} ${esc(it.name)}</b><small>₹ ${esc(it.price)}</small></span>
+            <span class="mi-qty"></span>
+          </button>`).join('')}
+        </div>
+        <div class="cafe-bill">
+          <p class="bill-head">🧾 Bill · Table no. 1 (${esc(C.name)})</p>
+          <ul class="bill-list"><li class="bill-none">Abhi kuch order nahi kiya 🙈</li></ul>
+          <div class="bill-total"><span>Total</span><b class="bill-sum">₹ 0</b></div>
+          <div class="bill-stamp" hidden>PAID ✅<small>by ${esc(F.paidBy || C.from || '')} — hamesha</small></div>
+        </div>
+        <div class="cal-bar">
+          <div class="cal-meter"><span class="cal-count"></span><i><b></b></i></div>
+          <button class="btn cal-next cafe-all">Poora menu order karo 🍽️</button>
+        </div>
+        <p class="tiny muted game-hint">${esc(F.hint || '')}</p>
+      </div>`;
+    const bubble = $('.bubble', host), dish = $('.cafe-dish', host), tag = $('.cafe-tag', host);
+    const list = $('.bill-list', host), sum = $('.bill-sum', host), stamp = $('.bill-stamp', host);
+    const count = $('.cal-count', host), bar = $('.cal-meter b', host), all = $('.cafe-all', host);
+    const btns = $$('.menu-item', host);
+    const say = t => { bubble.textContent = t; bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop'); };
+    const qty = items.map(() => 0);
+    let done = false, timer = null;
+    $$('.mi-thumb img', host).forEach(img => img.addEventListener('error', () => img.remove()));
+
+    const render = () => {
+      const uniq = qty.filter(q => q > 0).length, total = qty.reduce((a, b) => a + b, 0);
+      count.textContent = `${uniq} / ${items.length} dishes chakh li 😋`;
+      bar.style.width = (uniq / items.length) * 100 + '%';
+      btns.forEach((b, i) => { b.classList.toggle('ordered', qty[i] > 0); $('.mi-qty', b).textContent = qty[i] ? '×' + qty[i] : ''; });
+      list.innerHTML = total ? items.map((it, i) => qty[i] ? `<li><span>${esc(it.emoji)} ${esc(it.name)}${qty[i] > 1 ? ' ×' + qty[i] : ''}</span><b>₹ ${esc(it.price)}</b></li>` : '').join('')
+        : '<li class="bill-none">Abhi kuch order nahi kiya 🙈</li>';
+      sum.textContent = done ? '∞ pyaar 💖' : total ? `${total} item · bill Aman bharega 😎` : '₹ 0';
+    };
+    const serve = i => {
+      const it = items[i];
+      qty[i]++;
+      const img = new Image();
+      img.alt = it.name; img.draggable = false; img.src = it.src;
+      img.onerror = () => { dish.innerHTML = `<div class="cafe-empty"><span>${esc(it.emoji)}</span><small>${esc(it.src)}</small></div>`; };
+      dish.replaceChildren(img);
+      dish.classList.remove('serve'); void dish.offsetWidth; dish.classList.add('serve');
+      if (innerWidth < 900) $('.cafe-stage', host).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      tag.textContent = `${it.emoji} ${it.name}`;
+      say(qty[i] > 1 ? `Ek aur ${it.name}? 😋 Foodie madam!` : it.line);
+      render();
+      const [x, y] = center(dish);
+      sparkle(x, y, 7, 80, 110, [it.emoji, '😋', '✨', '💖']);
+      if (!done && qty.every(q => q > 0)) finish();
+    };
+    const finish = () => {
+      done = true; clearInterval(timer); timer = null;
+      stamp.hidden = false;
+      stamp.classList.remove('pop'); void stamp.offsetWidth; stamp.classList.add('pop');
+      say(F.win || 'Poora menu khatam! 👑');
+      all.textContent = 'Naya order 🔄'; all.disabled = false;
+      render();
+      celebrate(); setTimeout(celebrate, 900);
+    };
+    const reset = () => {
+      qty.fill(0); done = false; stamp.hidden = true;
+      dish.innerHTML = '<div class="cafe-empty"><span>🍽️</span><small>menu se kuch order karo</small></div>';
+      tag.textContent = ''; all.textContent = 'Poora menu order karo 🍽️';
+      say(F.say || 'Kya order karengi? 🍽️'); render();
+    };
+    btns.forEach(b => b.addEventListener('click', () => serve(+b.dataset.i)));
+    all.addEventListener('click', () => {
+      if (done) return reset();
+      if (timer) return;
+      all.disabled = true;
+      timer = setInterval(() => {
+        const left = qty.map((q, i) => (q ? -1 : i)).filter(i => i >= 0);
+        if (!left.length) { clearInterval(timer); timer = null; all.disabled = false; return; }
+        serve(left[0]);
+      }, 650);
+    });
+    $('#s-food').addEventListener('leave', () => { clearInterval(timer); timer = null; all.disabled = false; });
+    say(F.say || 'Kya order karengi? 🍽️');
+    render();
+  })();
+
+  /* =========================================================
+     🐾 CUTENESS BATTLE — jaanwar vs Nishu (config: animals)
+     ========================================================= */
+  (function battle() {
+    const A = C.animals, host = $('#animal-card');
+    if (!host) return;
+    if (!A?.rounds?.length) { $('#s-animals')?.remove(); return; }
+    const R = A.rounds;
+    host.className = 'battle anim';
+    host.innerHTML = `
+      <div class="bubble"></div>
+      <p class="game-title">${esc(A.title || 'Cuteness Battle 🐾')}</p>
+      <div class="bt-score"><span>👸 ${esc(C.name)} <b class="bt-sn">0</b></span><span class="bt-vs">VS</span><span>🐾 Jaanwar <b class="bt-sa">0</b></span></div>
+      <p class="bt-round"></p>
+      <div class="bt-stage"></div>
+      <div class="bt-choices">
+        <button class="bt-btn bt-animal"></button>
+        <button class="bt-btn bt-nishu">👸 ${esc(C.name)} zyada cute</button>
+      </div>
+      <div class="q-actions"><button class="btn bt-next" hidden>Agla round ➜</button></div>
+      <div class="bt-final" hidden></div>`;
+    const bubble = $('.bubble', host), stage = $('.bt-stage', host), roundEl = $('.bt-round', host);
+    const sn = $('.bt-sn', host), aBtn = $('.bt-animal', host), nBtn = $('.bt-nishu', host), next = $('.bt-next', host), fin = $('.bt-final', host);
+    const choices = $('.bt-choices', host);
+    const say = t => { bubble.textContent = t; bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop'); };
+    const pick = l => l[(Math.random() * l.length) | 0];
+    let r = 0, score = 0, tries = 0, decided = false;
+
+    const cut = src => `<img class="bt-cut" src="${esc(src)}" alt="" draggable="false">`;
+    const show = () => {
+      const x = R[r];
+      decided = false; tries = 0;
+      roundEl.textContent = `Round ${r + 1} / ${R.length}: ${x.title}`;
+      stage.className = 'bt-stage';
+      stage.innerHTML = x.photo
+        ? `<figure class="bt-photo"></figure>`
+        : x.src2 ? `${cut(x.src)}<span class="bt-mid">VS</span>${cut(x.src2)}` : cut(x.src);
+      if (x.photo) $('.bt-photo', stage).appendChild(photo(x.photo, { zoom: true }));
+      $$('.bt-cut', stage).forEach(i => i.addEventListener('error', () => i.remove()));
+      aBtn.textContent = `${x.animal} zyada cute`;
+      aBtn.style.transform = '';
+      [aBtn, nBtn].forEach(b => { b.disabled = false; b.classList.remove('picked'); });
+      next.hidden = true; fin.hidden = true; choices.hidden = false; roundEl.hidden = false; stage.hidden = false;
+      say('Kaun zyada cute hai? Vote karo 👇');
+    };
+    const award = (msg, btn) => {
+      decided = true; score++;
+      sn.textContent = score;
+      stage.classList.add('win');
+      btn?.classList.add('picked');
+      [aBtn, nBtn].forEach(b => (b.disabled = true));
+      say(msg);
+      const [x, y] = center(stage);
+      sparkle(x, y - 40, 9, 90, 120, ['👑', '💖', '✨', '🏆']);
+      burst(x, y, 30, 7);
+      if (r + 1 < R.length) { next.hidden = false; next.textContent = 'Agla round ➜'; setTimeout(() => next.scrollIntoView({ behavior: 'smooth', block: 'center' }), 250); }
+      else setTimeout(finish, 1200);
+    };
+    const finish = () => {
+      choices.hidden = true; next.hidden = true; roundEl.hidden = true; stage.hidden = true;
+      fin.hidden = false;
+      fin.innerHTML = `<div class="bt-trophy">🏆</div>
+        <p class="bt-champ">Cuteness Champion</p>
+        <p class="script bt-name">${esc(C.name)}</p>
+        <p class="bt-line">Score: ${esc(C.name)} ${score} · Jaanwar 0</p>
+        <p class="muted">${esc(A.win || '')}</p>
+        <button class="btn ghost bt-again">Phir se khelo ↺</button>`;
+      $('.bt-again', fin).addEventListener('click', () => { r = 0; score = 0; sn.textContent = 0; show(); });
+      say(A.win || 'Nishu jeet gayi! 🏆');
+      celebrate(); setTimeout(celebrate, 900);
+    };
+    nBtn.addEventListener('click', () => { if (!decided) award(pick(['Sahi jawab! 👑', 'Bilkul! Koi shak? 😍', 'Correct ✅ Cuteness 100%', 'Judges bhi agree karte hain 😌']), nBtn); });
+    aBtn.addEventListener('click', () => {
+      if (decided) return;
+      const x = R[r], nope = x.nope?.length ? x.nope : ['Pakka? 🤨'];
+      tries++;
+      if (tries === 1) {
+        say(nope[0]);
+        aBtn.style.transform = `translate(${rand(-30, 30).toFixed(0)}px, ${rand(-14, 14).toFixed(0)}px) rotate(${rand(-8, 8).toFixed(0)}deg) scale(.9)`;
+        aBtn.classList.remove('shake'); void aBtn.offsetWidth; aBtn.classList.add('shake');
+      } else award(`${nope[1] || nope[0]} Judges ka faisla: ${C.name} jeet gayi 😌`, nBtn);
+    });
+    next.addEventListener('click', () => { r++; show(); });
+    show();
+  })();
+
   const Nav = (() => {
     const slides = $$('#stage > .slide');
     slides.forEach(s => $$('.anim', s).forEach((n, i) => n.style.setProperty('--i', i)));
@@ -1217,8 +1408,8 @@
   (function compare() {
     const box = $('#compare');
     const tn = C.thenNow || {};
-    $('.cmp-then', box).appendChild(photo(tn.then));
-    $('.cmp-now', box).appendChild(photo(tn.now));
+    $('.cmp-then', box).appendChild(photo(tn.then, { pos: tn.thenPos }));
+    $('.cmp-now', box).appendChild(photo(tn.now, { pos: tn.nowPos }));
     $('#then-label').textContent = tn.thenLabel || 'Tab';
     $('#now-label').textContent = tn.nowLabel || 'Ab';
     let dragging = false;
@@ -1241,8 +1432,8 @@
   (function deck() {
     const deck = $('#deck');
     C.swipe.forEach(s => {
-      const card = el('div', 'swipe-card');
-      card.appendChild(photo(s.photo));
+      const card = el('div', 'swipe-card' + (s.fit === 'contain' ? ' contain' : ''));
+      card.appendChild(photo(s.photo, { pos: s.pos }));
       card.appendChild(el('p', 'swipe-cap', esc(s.caption)));
       deck.appendChild(card);
     });
@@ -1291,6 +1482,27 @@
   /* =========================================================
      💌 REASONS — tap: card khulta hai, phir tap: agla card
      ========================================================= */
+  // 😜 side wala cutout (reasons / cake): tap karo to bolta hai
+  function sideCut(btn, cfg, icons) {
+    if (!btn || !cfg?.src) return;
+    const img = $('img', btn), bub = $('.bubble', btn), lines = cfg.lines?.length ? cfg.lines : ['😊'];
+    let k = 0;
+    img.addEventListener('error', () => btn.remove());
+    img.src = cfg.src;
+    bub.textContent = lines[0];
+    btn.hidden = false;
+    btn.addEventListener('click', () => {
+      k = (k + 1) % lines.length;
+      bub.textContent = lines[k];
+      bub.classList.remove('pop'); void bub.offsetWidth; bub.classList.add('pop');
+      btn.classList.remove('squish'); void btn.offsetWidth; btn.classList.add('squish');
+      const [x, y] = center(img);
+      sparkle(x, y - 20, 7, 60, 100, icons);
+    });
+  }
+  sideCut($('#reason-cut'), C.reasonsCutout, ['💌', '🥺', '💖', '✨']);
+  sideCut($('#cake-cut'), C.cakeCutout, ['🎂', '🍰', '😋', '✨']);
+
   (function reasons() {
     const R = C.reasons;
     const card = $('#reason-card'), num = $('#reason-num'), txt = $('#reason-text'), count = $('#reason-count');
@@ -1533,6 +1745,8 @@
   })();
 
   /* ❤️ FINALE */
+  if (C.finalePhoto) $('#fin-heart .heart-photo').appendChild(photo(C.finalePhoto, { pos: '50% 78%' }));
+  else $('#fin-heart')?.remove();
   $('#s-finale').addEventListener('enter', () => setTimeout(celebrate, 500));
   $('#replay').addEventListener('click', () => Nav.goTo(0));
 })();

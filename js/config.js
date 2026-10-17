@@ -39,8 +39,10 @@ window.CONFIG = {
     swipe:    { file: "assets/music/pal-pal-dil-ke-paas.m4a",     title: "Pal Pal Dil Ke Paas — Kishore Kumar" },
     tuhotoh:  { file: "assets/music/tu-ho-toh.m4a",               title: "Tu Ho Toh 🤌" },
     reasons:  { file: "assets/music/suno-na.m4a",                 title: "Suno Na Suno Na — Chalte Chalte" },
-    quiz:     { file: "assets/music/offcampus-black-yellow.m4a",  title: "Always black & yellow 💛" },
-    cake:     { file: "assets/music/chaka-chak.m4a",              title: "Chaka Chak — Atrangi Re" },
+    food:     { file: "assets/music/chaka-chak.m4a",              title: "Chaka Chak — Atrangi Re" },
+    animals:  { file: "assets/music/offcampus-black-yellow.m4a",  title: "Always black & yellow 💛" },
+    quiz:     { file: "assets/music/offcampus-reconnect.m4a",     title: "When you both reconnect again 💛" },
+    cake:     { file: "assets/music/hbd-meme.m4a",                title: "Aaaa Happy Birthday To You 🤣" },
     letter:   { file: "assets/music/mere-khayalon-ki-malika.m4a", title: "Mere Khayalon Ki Malika — Abhijeet" },
   },
 
@@ -355,61 +357,93 @@ window.CONFIG = {
     tuhotoh: { photo: "assets/photos/special/tu-ho-toh.jpg", song: "tuhotoh", line: "Tu ho toh…",                     sub: "sab kuch hai mere paas ❤️" },
   },
 
-  /* ---------------- 🎬 GROW-UP VIDEOS ----------------
-     Option 1 (file):    { src: "assets/videos/1.mp4", caption: "..." }
-     Option 2 (YouTube): { youtube: "VIDEO_ID", vertical: true, caption: "..." }
-     (bade videos YouTube pe "Unlisted" daal ke ID yahan likh do) */
-  videos: [
-    { src: "assets/videos/1.mp4", caption: "Chhoti si Nishu 🧸" },
-    { src: "assets/videos/2.mp4", caption: "School wali Nishu 🎒" },
-    { src: "assets/videos/3.mp4", caption: "Thodi badi ho gayi 🌸" },
-    { src: "assets/videos/4.mp4", caption: "Aur ab — meri jaan ❤️" },
-  ],
+  /* ---------------- 🎬 VIDEOS (abhi khaali — isliye video wali slides nahi banti) ----------------
+     Daalne ho to:  { src: "assets/videos/1.mp4", caption: "..." }
+     ya YouTube:    { youtube: "VIDEO_ID", vertical: true, caption: "..." } */
+  videos: [],
 
-  /* ---------------- ⇆ TAB vs AB ---------------- */
+  /* ---------------- 🍽️ NISHU'S CAFÉ ----------------
+     Har item = ek cutout (background hata hua). Tap karo to order, neeche bill banta hai. */
+  food: {
+    title: "Nishu's Café ☕ — Aaj ka Menu",
+    say: "Welcome madam! 🍽️ Kya order karengi? (menu pe tap karo)",
+    hint: "har dish pe tap karo… poora menu khatam karo to bill ka surprise hai 🧾",
+    paidBy: "Aman",
+    win: "Poora menu khatam! 🎉 Foodie Queen ka certificate aapke naam 👑",
+    items: [
+      { name: "Chatpata Chaat",  emoji: "🥣", price: "1 hug",        src: "assets/photos/more/chaat.png",   line: "Chaat chatpati, par Nishu usse bhi zyada chatpati 😋" },
+      { name: "Belgian Waffle",  emoji: "🧇", price: "1 smile",      src: "assets/photos/more/waffle.png",  line: "Aaaa… poora ek baar mein?! 😮🧇" },
+      { name: "Chocolate Pocket",emoji: "🍫", price: "2 kisses",     src: "assets/photos/more/pocket.png",  line: "Pocket of perfection… aur haath mein bhi perfection 🍫" },
+      { name: "Choco Lava",      emoji: "🍮", price: "1 sorry",      src: "assets/photos/more/lava.png",    line: "Roothi thi… isne 2 minute mein mana liya 🍫😌" },
+      { name: "Grilled Sizzler", emoji: "🍽️", price: "1 date night", src: "assets/photos/more/sizzler.png", line: "Plate saaf, dil full 🍽️ (mujhe ek bite bhi nahi mili 🥲)" },
+      { name: "Ghar ka Cake",    emoji: "🎂", price: "1 tight hug",  src: "assets/photos/more/cake.png",    line: "Cake kaatne se pehle photo zaroori hai 📸🎂" },
+      { name: "Cold Coffee",     emoji: "🥤", price: "1 sip mujhe",  src: "assets/photos/more/drink.png",   line: "Ek sip mujhe bhi do na 🥺🥤" },
+    ],
+  },
+
+  /* ---------------- 🐾 CUTENESS BATTLE ----------------
+     Har round: jaanwar vs Nishu. Jaanwar ko vote karo to… dekh lena kya hota hai 😜 */
+  animals: {
+    title: "Cuteness Battle 🐾",
+    win: "Final result: Nishu jeet gayi! 🏆 Jaanwar bhi Nishu ke hi fan nikle 🐶🐒",
+    rounds: [
+      { title: "Kaala Doggo vs Nishu",        animal: "🐕 Doggo",         src: "assets/photos/more/doggo.png",
+        nope: ["Pakka? 🤨 Doggo khud Nishu ki god mein hai!", "Doggo bol raha hai: 'bhai main Nishu ko vote karunga' 🐶"] },
+      { title: "Safed Pomeranian vs Nishu",   animal: "🐩 Pomeranian",    src: "assets/photos/more/pom.png",
+        nope: ["Fluffy hai, par Nishu se zyada fluffy dil kiska? 🤍", "Pom ne bhi haath utha ke Nishu ko vote diya 🐾"] },
+      { title: "Langur ji vs Nishu",          animal: "🐒 Langur ji",     src: "assets/photos/more/monkey.png", src2: "assets/photos/more/braid.png",
+        nope: ["Langur ji ka attitude achha hai… par Nishu ka attitude 😏", "Langur ji ne khud bola: 'didi hi jeetengi' 🐒"] },
+      { title: "Deewar ke 50 kutte vs Nishu", animal: "🐶×50 Wallpaper",  photo: "assets/photos/2025/8.jpg",
+        nope: ["50 kutte mil ke bhi haar gaye 😂", "Wallpaper bhi Nishu ko dekh ke muskura raha hai 🐶"] },
+    ],
+  },
+
+  /* ---------------- 🧖‍♀️ FACEPACK vs PARTY (purana "Tab vs Ab") ---------------- */
   thenNow: {
-    then: "assets/photos/special/then.jpg", thenLabel: "Tab 🧸",
-    now:  "assets/photos/special/now.jpg",  nowLabel:  "Ab 👑",
+    then: "assets/photos/special/then.jpg", thenLabel: "Facepack 🧖‍♀️", thenPos: "50% 35%",
+    now:  "assets/photos/special/now.jpg",  nowLabel:  "Party 💃",     nowPos: "50% 30%",
   },
 
   /* ---------------- 📸 SWIPE PHOTOS ---------------- */
   swipe: [
-    { photo: "assets/photos/swipe/1.jpg", caption: "Ye wali smile 😍" },
-    { photo: "assets/photos/swipe/2.jpg", caption: "Uff ye aankhein" },
-    { photo: "assets/photos/swipe/3.jpg", caption: "Meri favourite photo" },
-    { photo: "assets/photos/swipe/4.jpg", caption: "Pagal 😂" },
-    { photo: "assets/photos/swipe/5.jpg", caption: "Queen 👑" },
-    { photo: "assets/photos/swipe/6.jpg", caption: "Ye din yaad hai?" },
-    { photo: "assets/photos/swipe/7.jpg", caption: "Cutie pie 🥹" },
-    { photo: "assets/photos/swipe/8.jpg", caption: "Sabse pyaari ❤️" },
+    { photo: "assets/photos/swipe/1.jpg", caption: "Pahaadon ki boss lady 😎⛰️", pos: "50% 45%" },
+    { photo: "assets/photos/swipe/2.jpg", caption: "Music + Coffee = Tum ❤️" },
+    { photo: "assets/photos/swipe/3.jpg", caption: "It's now or never… maine tumhe chuna 💛" },
+    { photo: "assets/photos/swipe/4.jpg", caption: "Himachali rani 🌸 (teeno pose cute)", fit: "contain" },
+    { photo: "assets/photos/swipe/5.jpg", caption: "Red lips, no mercy 💋", pos: "50% 20%" },
   ],
 
   /* ---------------- 💌 REASONS (chhote rakhna) ---------------- */
   reasons: [
+    "Golu bhaiya se Goluuuu tak ka safar 😄",
     "Tumhari hasi — sab theek kar deti hai",
+    "Chocolate dekh ke aankhein chamak jaati hain 🍫",
+    "Mask pehen ke bhi milne aana 😷",
+    "Roothna… aur phir khud hi maan jaana 🥹",
+    "Doggo se pyaar, par mujhse zyada? 🐶",
+    "Facepack mein bhi cute lagna 🧖‍♀️",
     "Gussa karke bhi 'khana khaya?' poochna",
-    "Tumhari aankhein, seedha dil tak",
-    "Mere bure din mein tumhara saath",
     "Meri bakwaas bhi dhyan se sunna",
-    "Tumhari pagalpanti 😂",
     "8 saal baad bhi wahi butterflies 🦋",
-    "Tumhare saath chup rehna bhi achha lagta hai",
     "Tum mujhe behtar insaan banati ho",
-    "Tumhara woh 'suno na…' bolna",
-    "Har photo mein tum hi cute lagti ho",
     "Kyunki tum, tum ho ❤️",
   ],
+  reasonsCutout: { src: "assets/photos/more/pout.png", lines: ["Suno na… aur reasons padho 🥺", "Bas itne hi? Aur likho 😤", "Hmph… achha laga 😌", "Ek reason aur 💌"] },
 
-  /* ---------------- 🎮 QUIZ ----------------
-     answer = sahi option ka number (0 = pehla, 1 = doosra, ...)
-     ✏️ Pehle 2 sawaalon ke options/jawab apne hisaab se badlo! */
+  /* ---------------- 🎮 QUIZ (humari asli yaadon se) ----------------
+     answer = sahi option ka number (0 = pehla, 1 = doosra, ...) */
   quiz: [
-    { q: "Humari pehli mulaqat kahan hui thi?",          options: ["College / School", "Coaching", "Dost ke through", "Online 😜"], answer: 0 },
-    { q: "Humari pehli date pe kya khaya tha?",          options: ["Pizza 🍕", "Momos 🥟", "Gol gappe", "Yaad nahi 🙈"],         answer: 1 },
-    { q: "Mujhe tumhari kaunsi cheez sabse pasand hai?", options: ["Tumhari hasi", "Tumhara gussa 😤", "Tumhari baatein", "Sab kuch ❤️"], answer: 3, right: "Bilkul sahi! Sab kuch 😌" },
+    { q: "Humari pehli photo mein kaunsa dabba tha? 📸", options: ["Kaju katli", "Celebrations 🍫", "Dairy Milk Silk", "Laddoo 🟡"], answer: 1, right: "Haan! Celebrations ka dabba aur safar shuru 🍫🏍️" },
+    { q: "Pehle tum mujhe kya bulati thi? 😜",          options: ["Aman ji", "Jaanu", "Golu bhaiya 😂", "Oye"],                    answer: 2, right: "Golu bhaiya se Goluuuu tak 😄❤️" },
+    { q: "2019 mein coffee kahan peete the? ☕",         options: ["GVD", "Starbucks", "CCD", "Ghar pe"],                           answer: 0, right: "GVD ki coffee aur college wale din 🎓☕" },
+    { q: "Covid mein milne kaise aate the? 😷",          options: ["Bina mask", "Video call pe", "Mile hi nahi", "Mask pehen ke 😷"], answer: 3, right: "Mask ke saath hi sahi, milna to tha 😷❤️" },
+    { q: "Papa ka 'meme of the year' kya tha? 😆",       options: ["Beta padhai karo", "Phone rakho", "Aaj bahut thand h 🥶", "Khana kha lo"], answer: 2, right: "Aaj bahut thand h 🥶😂" },
+    { q: "Duniya ki sabse cute ladki kaun hai? 👑",      options: ["Pomeranian 🐩", "Nishu 👑", "Langur ji 🐒", "Sochna padega 🤔"], answer: 1, right: "Obviously tum hi 😍 (battle mein bhi jeeti thi)" },
     { q: "Main tumse kitna pyaar karta hoon?",           options: ["Bahut", "Bahut zyada", "Infinity ♾️", "Infinity se bhi zyada"], answer: 3, right: "Haan, utna hi ❤️" },
-    { q: "Duniya ki sabse cute ladki kaun hai?",         options: ["Koi aur", "Pata nahi", "Nishu 👑", "Sochna padega 🤔"],       answer: 2, right: "Obviously tum hi 😍" },
   ],
+
+  cakeCutout: { src: "assets/photos/more/cake.png", lines: ["Ye cake bhi maine hi khaya tha 😋", "Candles bujhao, phir cake mera 🎂", "Wish maangi? Kya maangi? 🙈"] },
+  finalePhoto: "assets/photos/special/finale.jpg",
 
   candles: 5,
 
