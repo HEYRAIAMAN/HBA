@@ -236,8 +236,8 @@ window.CONFIG = {
         ],
       },
       photos: [
-        { src: "assets/photos/2023/13.jpg", cap: "Roshni, raunak aur tum ✨ (bonus smile)" },
-        { src: "assets/photos/2023/14.jpg", pos: "50% 30%", cap: "Sukoon wala pal 🫶 (bonus smile)" },
+        { src: "assets/photos/2023/13.jpg", cap: "Kitne mandir gaye hum log 🙏" },
+        { src: "assets/photos/2023/14.jpg", pos: "50% 30%", cap: "Best photo of this year 📸❤️" },
       ],
     },
     {
