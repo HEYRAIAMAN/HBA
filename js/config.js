@@ -125,7 +125,7 @@ window.CONFIG = {
     },
     {
       year: 2020, title: "Door reh ke bhi paas",
-      caption: "Covid ka time… ghar pe game khelna, aur milna mask ke saath 😷🎮",
+      caption: "Covid ka time… ghar pe game khelna, dher saari baatein, YouTube aur milna mask ke saath 😷🎮",
       song: "covid",
       game: {
         title: "Covid bhagao! 🦠💉",
