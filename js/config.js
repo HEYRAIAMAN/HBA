@@ -437,10 +437,10 @@ window.CONFIG = {
      answer = sahi option ka number (0 = pehla, 1 = doosra, ...) */
   quiz: [
     { q: "Humari pehli photo mein kaunsa dabba tha? 📸", options: ["Kaju katli", "Celebrations 🍫", "Dairy Milk Silk", "Laddoo 🟡"], answer: 1, right: "Haan! Celebrations ka dabba aur safar shuru 🍫🏍️" },
-    { q: "Pehle tum mujhe kya bulati thi? 😜",          options: ["Aman ji", "Jaanu", "Golu bhaiya 😂", "Oye"],                    answer: 2, right: "Golu bhaiya se Goluuuu tak 😄❤️" },
+    { q: "Aap aur main — hum dono mein se zyada sundar kaun hai? 😏", options: ["Nishu 👸", "Aman 🤵"], answer: 0, right: "Bilkul! Sabse sundar toh Nishu hi hai 😍", wrong: "Haha nahi 😂 Sabse sundar toh Nishu hai 😍" },
     { q: "2019 mein coffee kahan peete the? ☕",         options: ["GVD", "Starbucks", "CCD", "Ghar pe"],                           answer: 0, right: "GVD ki coffee aur college wale din 🎓☕" },
-    { q: "Covid mein milne kaise aate the? 😷",          options: ["Bina mask", "Video call pe", "Mile hi nahi", "Mask pehen ke 😷"], answer: 3, right: "Mask ke saath hi sahi, milna to tha 😷❤️" },
-    { q: "Papa ka 'meme of the year' kya tha? 😆",       options: ["Beta padhai karo", "Phone rakho", "Aaj bahut thand h 🥶", "Khana kha lo"], answer: 2, right: "Aaj bahut thand h 🥶😂" },
+    { q: "Humne pehli movie kaun si dekhi thi? 🎬",       options: ["Kabir Singh", "Main Tera Hero", "Rang De Basanti", "Hero"], answer: 0, right: "Haan! Kabir Singh 🎬🍿", wrong: "Arey! Pehli movie Kabir Singh thi 🎬🍿" },
+    { q: "Hum dono mein se sabse zyada galti kiski rehti hai? 🙈", options: ["Aman 🙋‍♂️", "Ankita 🙋‍♀️"], answer: 0, right: "Sahi jawab — Aman ki 😅 Ankita toh hamesha sahi rehti hai 👑", wrong: "Galat! Galti toh hamesha Aman ki rehti hai 😅 Ankita toh hamesha sahi rehti hai 👑" },
     { q: "Duniya ki sabse cute ladki kaun hai? 👑",      options: ["Pomeranian 🐩", "Nishu 👑", "Langur ji 🐒", "Sochna padega 🤔"], answer: 1, right: "Obviously tum hi 😍 (battle mein bhi jeeti thi)" },
     { q: "Main tumse kitna pyaar karta hoon?",           options: ["Bahut", "Bahut zyada", "Infinity ♾️", "Infinity se bhi zyada"], answer: 3, right: "Haan, utna hi ❤️" },
   ],
