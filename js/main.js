@@ -377,6 +377,23 @@
         f.appendChild(ph);
         if (p.stick) f.appendChild(el('span', 'stk' + (j % 2 ? ' l' : ''), esc(p.stick)));   // emoji sticker
         if (p.cap) f.appendChild(el('figcaption', 'pol-cap', esc(p.cap)));
+        // ❓ photo pe sawaal (config: photos[].ask) — Haan / Na, dono pe pyaara jawab
+        if (p.ask?.q) {
+          const box = el('div', 'pol-ask', `
+            <p class="pol-q">${esc(p.ask.q)}</p>
+            <div class="pol-btns"><button class="pol-yes">${esc(p.ask.yes || 'Haan 😍')}</button><button class="pol-no">${esc(p.ask.no || 'Na 🙄')}</button></div>
+            <p class="pol-a" hidden></p>`);
+          const ans = $('.pol-a', box);
+          const reply = (text, icons) => {
+            ans.textContent = text; ans.hidden = false;
+            ans.classList.remove('pop'); void ans.offsetWidth; ans.classList.add('pop');
+            const [x, y] = center(ans);
+            sparkle(x, y, 9, 80, 110, icons); burst(x, y, 24, 6);
+          };
+          $('.pol-yes', box).addEventListener('click', () => reply(p.ask.yesSay || '😍', ['💖', '😍', '✨', '💑']));
+          $('.pol-no', box).addEventListener('click', () => reply(p.ask.noSay || '😌', ['💑', '❤️', '🙈', '✨']));
+          f.appendChild(box);
+        }
         grid.appendChild(f);
       });
       // 🍔 interactive: tap karo to cutout badi hoti jati hai, meters bharte hain

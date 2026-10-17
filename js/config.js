@@ -73,6 +73,7 @@ window.CONFIG = {
        jars:    { title, say, hint, days, finalText, win, jars:[{name,color,emoji,items:[{e,t}]}] } → "8 Saal Ka Hisaab" shishe wala interactive (2026 mein dekho)
        grow:    { src, say, btn, meters, steps, hint } → tap karne pe badi hone wala interactive cutout (2021 mein dekho)
        cutout:  { src: "...png", say: "..." } → side mein background hata hua photo + bolne wala bubble
+       photos[].ask: { q, yes, no, yesSay, noSay } → photo ke neeche Haan/Na wala sawaal (2026 mein dekho)
        photos:  "file.jpg" ya { src: "file.jpg", cap: "photo ke neeche likhna", fit: "contain" (poori photo dikhe), cutout: true (background hata hui png, bina frame ke), wide: true (landscape photo, poori chaudai mein), span: true / stick: "🎓" (collage mein poori chaudai / emoji sticker), pos: "50% 15%" (lambi photo ka kaunsa hissa dikhe — chehra kat raha ho to isse upar/neeche khiskao) } */
   timeline: [
     {
@@ -343,9 +344,9 @@ window.CONFIG = {
       },
       cutout: { src: "assets/photos/2026/glasses.png", say: "I don't care? Par mujhe tumhari bahut care hai 😎❤️" },
       photos: [
-        { src: "assets/photos/2026/1.jpg", wide: true, cap: "Selfie queen aur peeche main 😄 (zubaan andar kar lo 😜)", stick: "😜" },
+        { src: "assets/photos/2026/1.jpg", wide: true, cap: "Kharab photo? Wo kya hota hai 😜 — sab mein cute lagne wali Nishu 😍", stick: "😜" },
         { src: "assets/photos/2026/2.jpg", pos: "50% 20%", cap: "Chocolate ke saamne duniya bhool jaati ho 🍫", stick: "🍫" },
-        { src: "assets/photos/2026/3.jpg", wide: true, cap: "Wednesday ho ya Sunday — selfie to banti hai 🤳", stick: "🤳" },
+        { src: "assets/photos/2026/3.jpg", wide: true, ask: { q: "Saath mein badhiya lagte hain na? 🥰", yes: "Haan 😍", no: "Na 🙄", yesSay: "Haan, mujhe bhi yahi lagta hai 😍💑", noSay: "Fir bhi… mujhe toh 'Rab Ne Bana Di Jodi' lagte hain 💑❤️" } },
         { src: "assets/photos/2026/back.png", cutout: true, cap: "Phool jaisi, phool ke saath 🌼" },
       ],
     },
@@ -353,7 +354,7 @@ window.CONFIG = {
 
   /* ---------------- 🌟 SPECIAL PHOTOS (apne gaane ke saath) ---------------- */
   spotlights: {
-    bholi:   { photo: "assets/photos/special/bholi.jpg",     song: "bholi",   line: "Dekhne mein kitni bholi bhali…", sub: "…aur dil chura ke le gayi 😌" },
+    bholi:   { photo: "assets/photos/special/bholi.jpg",     song: "bholi",   line: "Dekhne mein kitni bholi bhali…", sub: "…kehti hai ye ek phase hai 😌" },
     tuhotoh: { photo: "assets/photos/special/tu-ho-toh.jpg", song: "tuhotoh", line: "Tu ho toh…",                     sub: "sab kuch hai mere paas ❤️" },
   },
 
@@ -376,7 +377,7 @@ window.CONFIG = {
       { name: "Chocolate Pocket",emoji: "🍫", price: "2 kisses",     src: "assets/photos/more/pocket.png",  line: "Pocket of perfection… aur haath mein bhi perfection 🍫" },
       { name: "Choco Lava",      emoji: "🍮", price: "1 sorry",      src: "assets/photos/more/lava.png",    line: "Roothi thi… isne 2 minute mein mana liya 🍫😌" },
       { name: "Grilled Sizzler", emoji: "🍽️", price: "1 date night", src: "assets/photos/more/sizzler.png", line: "Plate saaf, dil full 🍽️ (mujhe ek bite bhi nahi mili 🥲)" },
-      { name: "Ghar ka Cake",    emoji: "🎂", price: "1 tight hug",  src: "assets/photos/more/cake.png",    line: "Cake kaatne se pehle photo zaroori hai 📸🎂" },
+      { name: "Cake",            emoji: "🎂", price: "1 tight hug",  src: "assets/photos/more/cake.png",    line: "Cake kaatne se pehle photo zaroori hai 📸🎂" },
       { name: "Cold Coffee",     emoji: "🥤", price: "1 sip mujhe",  src: "assets/photos/more/drink.png",   line: "Ek sip mujhe bhi do na 🥺🥤" },
     ],
   },

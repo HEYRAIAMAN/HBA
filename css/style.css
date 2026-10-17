@@ -1296,3 +1296,15 @@ body.locked .stage { visibility: hidden; }
 }
 .battle .q-actions { margin-top: 12px; }
 #s-animals .slide-inner, #s-food .slide-inner { padding-bottom: 24px; }
+
+/* ❓ photo pe sawaal (Haan / Na) */
+.pol-ask { margin-top: 6px; text-align: center; color: var(--ink); }
+.pol-q { font-family: var(--hand); font-weight: 700; font-size: 1.15rem; line-height: 1.15; }
+.pol-btns { display: flex; justify-content: center; gap: 8px; margin-top: 6px; }
+.pol-btns button { padding: 6px 16px; border-radius: 999px; border: 2px solid var(--rose); cursor: pointer; font-family: var(--sans); font-weight: 600; font-size: .85rem; transition: transform .15s; }
+.pol-btns button:active { transform: scale(.92); }
+.pol-yes { background: var(--rose); color: #fff; }
+.pol-no { background: #fff; color: var(--rose); }
+.pol-a { margin-top: 6px; font-family: var(--hand); font-weight: 700; font-size: 1.15rem; line-height: 1.15; color: #b02a55; }
+.pol-a[hidden] { display: none; }
+.pol-a.pop { animation: pop .6s cubic-bezier(.3, 1.6, .5, 1); }
