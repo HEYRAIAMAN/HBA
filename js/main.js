@@ -1225,7 +1225,7 @@
     host.innerHTML = `
       <div class="bubble"></div>
       <p class="game-title">${esc(A.title || 'Cuteness Battle 🐾')}</p>
-      <div class="bt-score"><span>👸 ${esc(C.name)} <b class="bt-sn">0</b></span><span class="bt-vs">VS</span><span>🐾 Jaanwar <b class="bt-sa">0</b></span></div>
+      <div class="bt-score"><span>👸 ${esc(C.name)} <b class="bt-sn">0</b></span><span class="bt-vs">VS</span><span>🐾 Ultra cute <b class="bt-sa">0</b></span></div>
       <p class="bt-round"></p>
       <div class="bt-stage"></div>
       <div class="bt-choices">
@@ -1277,7 +1277,7 @@
       fin.innerHTML = `<div class="bt-trophy">🏆</div>
         <p class="bt-champ">Cuteness Champion</p>
         <p class="script bt-name">${esc(C.name)}</p>
-        <p class="bt-line">Score: ${esc(C.name)} ${score} · Jaanwar 0</p>
+        <p class="bt-line">Score: ${esc(C.name)} ${score} · Ultra cute 0</p>
         <p class="muted">${esc(A.win || '')}</p>
         <button class="btn ghost bt-again">Phir se khelo ↺</button>`;
       $('.bt-again', fin).addEventListener('click', () => { r = 0; score = 0; sn.textContent = 0; show(); });

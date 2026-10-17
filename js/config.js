@@ -390,7 +390,7 @@ window.CONFIG = {
     rounds: [
       { title: "Kaala Doggo vs Nishu",        animal: "🐕 Doggo",         src: "assets/photos/more/doggo.png",
         nope: ["Pakka? 🤨 Doggo khud Nishu ki god mein hai!", "Doggo bol raha hai: 'bhai main Nishu ko vote karunga' 🐶"] },
-      { title: "Safed Pomeranian vs Nishu",   animal: "🐩 Pomeranian",    src: "assets/photos/more/pom.png",
+      { title: "Safed cuteee vs Nishu",   animal: "🐩 Pomeranian",    src: "assets/photos/more/pom.png",
         nope: ["Fluffy hai, par Nishu se zyada fluffy dil kiska? 🤍", "Pom ne bhi haath utha ke Nishu ko vote diya 🐾"] },
       { title: "Langur ji vs Nishu",          animal: "🐒 Langur ji",     src: "assets/photos/more/monkey.png", src2: "assets/photos/more/braid.png",
         nope: ["Langur ji ka attitude achha hai… par Nishu ka attitude 😏", "Langur ji ne khud bola: 'didi hi jeetengi' 🐒"] },
