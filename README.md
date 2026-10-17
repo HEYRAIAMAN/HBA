@@ -56,7 +56,8 @@ assets/photos/
 
 | File ka naam | Gaana | Kahan bajega | Link |
 |---|---|---|---|
-| `hbd-meme.m4a` | Aaaa Happy Birthday To You (meme) | Shuru (Happy Birthday) | [link](https://youtube.com/shorts/SW53N_Vw23c) |
+| `mirga-naini.m4a` | Mrignaini Tu Na Jane | Shuru (Happy Birthday) | [link](https://youtube.com/shorts/z3_Ov4zzg1E) |
+| `hbd-meme.m4a` | Aaaa Happy Birthday To You (meme) | Cake 🎂 | [link](https://youtube.com/shorts/SW53N_Vw23c) |
 | `chalte-chalte.m4a` | Chalte Chalte Yun Hi Koi Mil Gaya Tha | 8 Saal Ka Safar | [link](https://youtube.com/shorts/iE9IQNyd_Aw) |
 | `voh-dekhne-mein.m4a` | Voh Dekhne Mein (Ali Zafar) | "Bholi bhali" photo | [link](https://youtube.com/shorts/e84IP6acLVk) |
 | `offcampus-reconnect.m4a` | When you both reconnect again | Videos section | [link](https://youtube.com/shorts/ex36_-5NitE) |

@@ -22,7 +22,7 @@ window.CONFIG = {
      Har section ka apna gaana hai. Scroll karte hi gaana badal jata hai.
      mp3 files "assets/music/" folder mein inhi naamon se daalo. */
   songs: {
-    hero:     { file: "assets/music/hbd-meme.m4a",                title: "Aaaa Happy Birthday To You 🤣" },
+    hero:     { file: "assets/music/mirga-naini.m4a",             title: "Mrignaini Tu Na Jane 💞" },
     timeline: { file: "assets/music/chalte-chalte.m4a",           title: "Chalte Chalte Yun Hi Koi Mil Gaya Tha" },
     seene:    { file: "assets/music/seene-se-lag-jao.m4a",        title: "Chal Wahan Jaate Hain 💞 (Seene se tum aake lag jao na) — Arijit Singh" },
     roothna:  { file: "assets/music/pal.m4a",                     title: "Pal 💞 — Arijit Singh, Shreya Ghoshal" },
