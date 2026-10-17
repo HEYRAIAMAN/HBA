@@ -410,7 +410,7 @@ window.CONFIG = {
     { photo: "assets/photos/swipe/1.jpg", caption: "Pahaadon ki boss lady 😎⛰️", pos: "50% 45%" },
     { photo: "assets/photos/swipe/2.jpg", caption: "Music + Coffee = Tum ❤️" },
     { photo: "assets/photos/swipe/3.jpg", caption: "It's now or never… maine tumhe chuna 💛" },
-    { photo: "assets/photos/swipe/4.jpg", caption: "Himachali rani 🌸 (teeno pose cute)", fit: "contain" },
+    { photo: "assets/photos/swipe/4.jpg", caption: "Uttarakhand ki rani 🌸", fit: "contain" },
     { photo: "assets/photos/swipe/5.jpg", caption: "Red lips, no mercy 💋", pos: "50% 20%" },
   ],
 
