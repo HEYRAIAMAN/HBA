@@ -1524,7 +1524,13 @@
     const R = C.reasons;
     const card = $('#reason-card'), num = $('#reason-num'), txt = $('#reason-text'), count = $('#reason-count');
     let i = 0, flipped = false, busy = false, seen = 0;
-    const setCard = k => { num.textContent = '#' + (k + 1); txt.textContent = R[k]; };
+    const setCard = k => {
+      num.textContent = '#' + (k + 1);
+      txt.textContent = R[k];
+      // lambi line ho to font thoda chhota, taaki card mein poori aaye
+      const n = [...R[k]].length;
+      txt.style.fontSize = n > 60 ? '1.45rem' : n > 42 ? '1.7rem' : '';
+    };
     const upd = () => {
       count.textContent = seen >= R.length
         ? 'Saare khul gaye… par ye list kabhi khatam nahi hogi ❤️'
