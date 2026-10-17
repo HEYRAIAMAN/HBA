@@ -286,10 +286,10 @@ window.CONFIG = {
         win: "Full charge! 🎉 Tum meri aadat nahi, meri zaroorat ho ❤️",
         afterFull: "Battery full hai… par tumhara saath kabhi full nahi hota 🥰",
         needs: [
-          { aadat: "Subah ka good morning", zaroorat: "Din nahi chalta bina iske ☀️" },
-          { aadat: "Khana khaya? ka message", zaroorat: "Isse pet nahi, dil bharta hai 🍽️" },
-          { aadat: "Raat ki call", zaroorat: "Neend nahi aati iske bina 🌙" },
-          { aadat: "Tumhari smile", zaroorat: "Meri poori battery 🔋" },
+          { aadat: "Kalesh kar leti hu 😤", zaroorat: "Energy mil jayegi ⚡" },
+          { aadat: "Aaj Sunday hai, so leti hu 😴", zaroorat: "Phir 'sar dukh raha hai' bol ke jaldi so jaungi 🤕" },
+          { aadat: "Raat mein kalesh 🌙", zaroorat: "Kalesh karke hi so jaungi 😌" },
+          { aadat: "Doodh piya 🥛", zaroorat: "Ab phir se kalesh kar leti hu 😤" },
         ],
       },
       photos: [
